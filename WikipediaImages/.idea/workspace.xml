@@ -26,7 +26,7 @@
       <file leaf-file-name="crawler.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/crawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="14" selection-start="637" selection-end="637" vertical-scroll-proportion="0.5324881">
+            <state line="35" column="16" selection-start="941" selection-end="941" vertical-scroll-proportion="0.8874802">
               <folding />
             </state>
           </provider>
@@ -96,8 +96,8 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/crawler.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/crawler.py" />
       </list>
     </option>
   </component>
@@ -388,7 +388,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/crawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="14" selection-start="637" selection-end="637" vertical-scroll-proportion="0.5324881">
+        <state line="35" column="16" selection-start="941" selection-end="941" vertical-scroll-proportion="0.8874802">
           <folding />
         </state>
       </provider>
