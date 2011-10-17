@@ -26,7 +26,7 @@
       <file leaf-file-name="crawler.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/crawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="51" selection-start="321" selection-end="321" vertical-scroll-proportion="0.31423897">
+            <state line="21" column="14" selection-start="637" selection-end="637" vertical-scroll-proportion="0.5324881">
               <folding />
             </state>
           </provider>
@@ -36,15 +36,6 @@
         <entry file="file://$PROJECT_DIR$/mwclient/page.py">
           <provider selected="true" editor-type-id="text-editor">
             <state line="246" column="35" selection-start="8223" selection-end="8223" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="__init__.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../PublshMe/PublshMe/settings/__init__.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="80" selection-start="51" selection-end="132" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -408,7 +399,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/crawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="51" selection-start="321" selection-end="321" vertical-scroll-proportion="0.31423897">
+        <state line="21" column="14" selection-start="637" selection-end="637" vertical-scroll-proportion="0.5324881">
           <folding />
         </state>
       </provider>
