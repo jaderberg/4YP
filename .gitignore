@@ -1,4 +1,6 @@
-
 .DS_Store
 .idea*
-WikipediaImages/.idea/workspace.xml
+.idea/*
+*.pyc
+.DS_Store
+*.db
