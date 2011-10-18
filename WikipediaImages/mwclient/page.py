@@ -13,11 +13,11 @@ class Page(object):
 		
 		if not info:
 			if extra_properties:
-				prop = 'info|' + '|'.join(extra_properties.iterkeys())
+				prop = 'info|url|' + '|'.join(extra_properties.iterkeys())
 				extra_props = []
 				[extra_props.extend(extra_prop) for extra_prop in extra_properties.itervalues()]					
 			else:
-				prop = 'info'
+				prop = 'info|url'
 				extra_props = ()
 			
 			info = self.site.api('query', prop = prop, titles = name, 

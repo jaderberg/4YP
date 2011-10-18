@@ -457,7 +457,7 @@ class Site(object):
 			group = group, prop = prop))
 		return listing.List(self, 'allusers', 'au', limit = limit, **kwargs)
 	def blocks(self, start = None, end = None, dir = 'older', ids = None, users = None, limit = None, 
-			prop = 'id|user|by|timestamp|expiry|reason|flags'):
+			prop = 'id|url|user|by|timestamp|expiry|reason|flags'):
 		self.require(1, 12)
 		# TODO: Fix. Fix what?
 		kwargs = dict(listing.List.generate_kwargs('bk', start = start, end = end, dir = dir, 
