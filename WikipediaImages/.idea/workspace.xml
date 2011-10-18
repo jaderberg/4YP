@@ -23,19 +23,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="crawler.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="crawler.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/crawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="16" selection-start="941" selection-end="941" vertical-scroll-proportion="0.0">
+            <state line="52" column="54" selection-start="1605" selection-end="1605" vertical-scroll-proportion="0.725">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="README" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README">
+      <file leaf-file-name="client.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mwclient/client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="19" selection-start="84" selection-end="84" vertical-scroll-proportion="0.12678288">
+            <state line="459" column="26" selection-start="14448" selection-end="14448" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="listing.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mwclient/listing.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="135" column="37" selection-start="3872" selection-end="3872" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="page.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mwclient/page.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="55" column="8" selection-start="1660" selection-end="1660" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -79,8 +97,11 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/crawler.py" />
         <option value="$PROJECT_DIR$/README" />
+        <option value="$PROJECT_DIR$/mwclient/client.py" />
+        <option value="$PROJECT_DIR$/mwclient/listing.py" />
+        <option value="$PROJECT_DIR$/mwclient/page.py" />
+        <option value="$PROJECT_DIR$/crawler.py" />
       </list>
     </option>
   </component>
@@ -110,6 +131,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -144,8 +167,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Favorites" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -223,21 +244,21 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="4" y="22" width="1276" height="778" extended-state="0" />
+    <frame x="1280" y="224" width="1280" height="800" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991204" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25079873" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25079617" sideWeight="0.670088" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -293,9 +314,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mwclient/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mwclient/RELEASE-NOTES.txt">
@@ -305,51 +324,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../PublshMe/PublshMe/settings/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="80" selection-start="51" selection-end="132" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="3" column="80" selection-start="51" selection-end="132" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Library/Caches/PyCharm10/python_stubs/466988703/__builtin__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="451" column="4" selection-start="13540" selection-end="13540" vertical-scroll-proportion="0.33224222">
-          <folding />
-        </state>
+        <state line="451" column="4" selection-start="13540" selection-end="13540" vertical-scroll-proportion="0.33224222" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="0" selection-start="46" selection-end="46" vertical-scroll-proportion="0.15213946">
-          <folding />
-        </state>
+        <state line="6" column="0" selection-start="46" selection-end="46" vertical-scroll-proportion="0.15213946" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mwclient/page.py">
+    <entry file="file://$PROJECT_DIR$/../../PublshMe/PublshMe/utils/og_get.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="246" column="35" selection-start="8223" selection-end="8223" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="10" column="42" selection-start="181" selection-end="224" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mwclient/client.py">
+    <entry file="file://$PROJECT_DIR$/README">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="8" selection-start="709" selection-end="709" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mwclient/listing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="186" column="8" selection-start="5799" selection-end="5799" vertical-scroll-proportion="0.0">
+        <state line="6" column="18" selection-start="103" selection-end="103" vertical-scroll-proportion="0.14701378">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mwclient/README.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mwclient/REFERENCE.txt">
@@ -359,23 +361,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../PublshMe/PublshMe/utils/og_get.py">
+    <entry file="file://$PROJECT_DIR$/mwclient/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="42" selection-start="181" selection-end="224" vertical-scroll-proportion="0.0">
+        <state line="459" column="26" selection-start="14448" selection-end="14448" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mwclient/listing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="135" column="37" selection-start="3872" selection-end="3872" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mwclient/page.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="8" selection-start="1660" selection-end="1660" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="16" selection-start="941" selection-end="941" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="19" selection-start="84" selection-end="84" vertical-scroll-proportion="0.12678288">
+        <state line="52" column="54" selection-start="1605" selection-end="1605" vertical-scroll-proportion="0.725">
           <folding />
         </state>
       </provider>
