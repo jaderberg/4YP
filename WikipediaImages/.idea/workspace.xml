@@ -26,7 +26,7 @@
       <file leaf-file-name="crawler.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/crawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="25" selection-start="1854" selection-end="1854" vertical-scroll-proportion="0.575">
+            <state line="88" column="42" selection-start="2806" selection-end="2806" vertical-scroll-proportion="0.8">
               <folding />
             </state>
           </provider>
@@ -131,8 +131,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Favorites" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -173,8 +173,8 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="preferences.externalResources" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -197,6 +197,20 @@
       <option name="TEST_TYPE" value="TEST_SCRIPT" />
       <option name="PATTERN" value="" />
       <option name="PUREUNITTEST" value="true" />
+      <method />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <module name="WikipediaImages" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
       <method />
     </configuration>
     <configuration default="true" type="PythonDocTestRunConfigurationType" factoryName="Python's doctests">
@@ -249,7 +263,6 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991204" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25079617" sideWeight="0.670088" order="0" side_tool="false" content_ui="tabs" />
@@ -259,6 +272,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32991204" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -337,16 +351,24 @@
         <state line="6" column="0" selection-start="46" selection-end="46" vertical-scroll-proportion="0.15213946" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../PublshMe/PublshMe/utils/og_get.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="42" selection-start="181" selection-end="224" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/README">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="18" selection-start="103" selection-end="103" vertical-scroll-proportion="0.14701378">
-          <folding />
-        </state>
+        <state line="6" column="18" selection-start="103" selection-end="103" vertical-scroll-proportion="0.14701378" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mwclient/client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="459" column="26" selection-start="14448" selection-end="14448" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mwclient/listing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="135" column="37" selection-start="3872" selection-end="3872" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mwclient/page.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="8" selection-start="1660" selection-end="1660" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mwclient/README.txt">
@@ -356,35 +378,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mwclient/REFERENCE.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="26" selection-start="2284" selection-end="2284" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="55" column="26" selection-start="2284" selection-end="2284" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mwclient/client.py">
+    <entry file="file://$PROJECT_DIR$/../../PublshMe/PublshMe/utils/og_get.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="459" column="26" selection-start="14448" selection-end="14448" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mwclient/listing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="135" column="37" selection-start="3872" selection-end="3872" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mwclient/page.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="8" selection-start="1660" selection-end="1660" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="10" column="42" selection-start="181" selection-end="224" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/crawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="25" selection-start="1854" selection-end="1854" vertical-scroll-proportion="0.575">
+        <state line="88" column="42" selection-start="2806" selection-end="2806" vertical-scroll-proportion="0.8">
           <folding />
         </state>
       </provider>
