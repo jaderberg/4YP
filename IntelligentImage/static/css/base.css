@@ -1,0 +1,131 @@
+/*
+ * Body
+ */
+body{
+    padding: 0; margin: 0;
+    height: 100%; width: 100%;
+    font-family: 'LeagueGothicRegular', sans-serif;
+    background: url('../img/grey-paper-bg.gif');
+    color: #6A6666;
+}
+
+div {
+    display: block;
+}
+
+@anchor-clr: #2E6D7B;
+
+a {
+    text-decoration: none;
+    color: @anchor-clr;
+}
+
+.rounded-corners (@radius: 5px) {
+  border-radius: @radius;
+  -webkit-border-radius: @radius;
+  -moz-border-radius: @radius;
+}
+
+.color-transition (@time: 0.218s) {
+    transition: color @time;
+    -moz-transition: color @time; /* Firefox 4 */
+    -webkit-transition: color @time; /* Safari and Chrome */
+    -o-transition: color @time; /* Opera */
+}
+
+
+
+#header {
+    padding: 0; margin: 0;
+    border-bottom: white 5px solid;
+    background: url('../img/foundation.jpeg');
+
+    h1 {
+        margin: 0;
+        padding: 20px 0 10px 0;
+        font-size: 100px;
+        color: #7cb1bd;
+        text-align: center;
+        text-transform: uppercase;
+        text-shadow: -1px -1px #444;
+        .color-transition;
+
+        &:hover {
+            color: #e3ca92;
+            .color-transition;
+        }
+    }
+
+    h2 {
+        margin: 0;
+        padding: 0 0 10px 0;
+        font-size: 28px;
+        color: #7C7C7C;
+        text-align: center;
+        text-transform: uppercase;
+        .color-transition;
+
+        &:hover {
+            color: #999898;
+            .color-transition;
+        }
+    }
+}
+
+.box-shadow (@x: 0, @y: 0, @blur: 1px, @color: rgba(0, 0, 0, 0.5)) {
+    @val: @x @y @blur @color;
+    box-shadow:         @val;
+    -webkit-box-shadow: @val;
+    -moz-box-shadow:    @val;
+}
+
+.box-indent () {
+    @val: 1px 1px 0px white, inset 1px 1px 0px #d5d5d5;
+    box-shadow:         @val;
+    -webkit-box-shadow: @val;
+    -moz-box-shadow:    @val;
+}
+
+.inset-box () {
+    background-color: #eee;
+    overflow: hidden;
+    .box-indent;
+    .rounded-corners(10px);
+}
+
+.smooth-box {
+    margin: 50px auto;
+    padding: 5px 10px 5px 10px;
+    max-width: 410px;
+    .inset-box;
+
+    h1 {
+        margin: 10px 10px 10px 10px;
+        padding: 0;
+        font-size: 45px;
+        float: left;
+    }
+
+    #upload-img {
+        float: left;
+        width: 30px;
+        height: 50px;
+        margin: 18px 6px 0 20px;
+    }
+
+    .form-holder {
+        margin: 20px 10px 20px 10px;
+    }
+
+    input {
+        font-family: 'LeagueGothicRegular', sans-serif;
+        font-size: 20px;
+        color: #8E8E8E;
+    }
+}
+
+.img-preview-box {
+    margin: 50px auto;
+    max-width: 500px;
+    .inset-box;
+}
