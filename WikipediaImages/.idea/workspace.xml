@@ -26,7 +26,7 @@
       <file leaf-file-name="crawler.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/crawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="88" column="42" selection-start="2806" selection-end="2806" vertical-scroll-proportion="0.8">
+            <state line="83" column="65" selection-start="2614" selection-end="2614" vertical-scroll-proportion="0.55">
               <folding />
             </state>
           </provider>
@@ -388,7 +388,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/crawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="88" column="42" selection-start="2806" selection-end="2806" vertical-scroll-proportion="0.8">
+        <state line="83" column="65" selection-start="2614" selection-end="2614" vertical-scroll-proportion="0.55">
           <folding />
         </state>
       </provider>
