@@ -9,7 +9,6 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js" type="text/javascript"></script>
 
     <script type="text/javascript" src="{{ STATIC_URL }}js/less-1.1.3.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}js/base.js"></script>
 </head>
 <body>
 
@@ -30,9 +29,19 @@
         </div>
     </div>
 
-    <div class="img-preview-box">
-        hello
+    <div id="img-preview-box">
+
+        <img id="img-preview" src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Buckingham_Palace%2C_London_-_April_2009.jpg/800px-Buckingham_Palace%2C_London_-_April_2009.jpg">
+{#        <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/30_St_Mary_Axe_from_Leadenhall_Street.jpg/400px-30_St_Mary_Axe_from_Leadenhall_Street.jpg">#}
+       <a class="button" href="">Go Gadget Tagger</a>
     </div>
+
+    <div id="credit">
+        Copyright 2011 <a href="http://about.me/jaderberg" target="_blank">Max Jaderberg</a>
+    </div>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/base.js"></script>
+
 
 </body>
 </html>

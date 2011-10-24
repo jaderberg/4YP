@@ -140,8 +140,8 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="preferences.externalResources" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -226,13 +226,13 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1280" y="224" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25079617" sideWeight="0.670088" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25079617" sideWeight="0.670088" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -335,9 +335,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mwclient/client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="13" selection-start="2035" selection-end="2035" vertical-scroll-proportion="-0.07350689">
-          <folding />
-        </state>
+        <state line="82" column="13" selection-start="2035" selection-end="2035" vertical-scroll-proportion="-0.07350689" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mwclient/REFERENCE.txt">
@@ -347,37 +345,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mwclient/README.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="0" selection-start="2306" selection-end="2448" vertical-scroll-proportion="0.044410415">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/images_from_dump.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="40" selection-start="42" selection-end="42" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/crawler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="18" selection-start="1643" selection-end="1991" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="55" column="0" selection-start="2306" selection-end="2448" vertical-scroll-proportion="0.044410415" />
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/Library/Caches/PyCharm10/python_stubs/466988703/posix.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="520" column="4" selection-start="10671" selection-end="10671" vertical-scroll-proportion="0.3323124">
-          <folding />
-        </state>
+        <state line="520" column="4" selection-start="10671" selection-end="10671" vertical-scroll-proportion="0.3323124" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/images_from_dump.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="40" selection-start="42" selection-end="42" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crawler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="18" selection-start="1643" selection-end="1991" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/decompress_xml_parts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="12" selection-start="327" selection-end="327" vertical-scroll-proportion="0.36753446">
-          <folding />
-        </state>
+        <state line="15" column="12" selection-start="327" selection-end="327" vertical-scroll-proportion="0.36753446" />
       </provider>
     </entry>
   </component>
