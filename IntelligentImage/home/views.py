@@ -1,4 +1,9 @@
 from django.template.response import TemplateResponse
+from home.forms import UploadedImageForm
 
 def home(request):
-    return TemplateResponse(request, 'home.html')
+
+    image_form = UploadedImageForm()
+
+    return TemplateResponse(request, 'home.html', {'form': image_form})
+
