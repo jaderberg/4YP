@@ -1,0 +1,6 @@
+<div class="tagged-img-wrap">
+    <img id="tagged-img" src="{{ image.image.url }}">
+</div>
+<form id="untagged-img-form" style="display: none;" method="post" action="{% url tag_image image.pk %}">{% csrf_token %}
+    <input type="submit" style="">
+</form>

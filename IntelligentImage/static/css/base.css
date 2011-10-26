@@ -11,6 +11,16 @@
     -o-transition: color @time; /* Opera */
 }
 
+.opacity-transition (@time: 0.218s) {
+    transition: opacity @time;
+    -moz-transition: opacity @time; /* Firefox 4 */
+    -webkit-transition: opacity @time; /* Safari and Chrome */
+    -o-transition: opacity @time; /* Opera */
+}
+
+html {
+    height: 100%; width: 100%;
+}
 
 body{
     padding: 0; margin: 0;
@@ -44,7 +54,12 @@ a {
 }
 
 
-
+#page {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -100px;
+}
 
 #header {
     padding: 0; margin: 0;
@@ -138,12 +153,12 @@ a {
 @img-preview-width: 600px;
 @img-preview-margin: 20px;
 
-#img-preview-box {
+.img-smooth-box {
     margin: 50px auto;
     max-width: @img-preview-width;
     .inset-box;
 
-    img {
+    #img-preview {
         display: block;
         max-width: @img-preview-width - @img-preview-margin*2;
         margin: @img-preview-margin auto;
@@ -163,13 +178,13 @@ a.button {
 
 }
 
-#credit {
+#credit{
     font-family: Helvetica, sans-serif;
     font-size: 10px;
     text-shadow: 1px 1px 0 white;
     text-align: center;
     margin-top: 10px;
-    margin-bottom: 30px;
+    padding-bottom: 10px;
     color: #8E8E8E;
 
     a {
@@ -177,6 +192,73 @@ a.button {
 
         &:hover {
             text-decoration: underline;
+        }
+    }
+}
+
+.push {
+    height: 120px;
+
+}
+
+#loading-box img{
+    display: block;
+    margin: 10px auto;
+}
+
+.tagged-img-wrap {
+
+    position: relative;
+    margin: 20px;
+    padding: 0;
+
+    img {
+        margin: 0;
+        padding: 0;
+        width: 560px;
+        
+    }
+
+    .img-tag {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        opacity: 0.5;
+        .opacity-transition;
+
+
+        .tag-border {
+            border: white 2px dashed;
+            margin: 0;
+            padding: 0;
+        }
+
+        .tag-label {
+            position: relative;
+            bottom: -3px;
+            margin: 0;
+            padding:  4px;
+            line-height: 10px;
+            font-family: 'Helvetica', san-serif;
+            border: #111;
+            background-color: #333;
+            color: #fff;
+            font-size: 10px;
+            opacity: 0;
+        }
+
+        &:hover .tag-label {
+            .opacity-transition;
+            opacity: 1;
+        }
+
+        &:hover {
+            .opacity-transition;
+            opacity: 0.8;
+        }
+
+        &:hover .tag-border {
+            border: white 2px solid;
         }
     }
 }
