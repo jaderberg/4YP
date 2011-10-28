@@ -1,0 +1,102 @@
+= Summary =
+
+This package allows you to interact with a python session from matlab and interact with a matlab session from python. Here's how you use it:
+
+  # Create a Wormhole object, which creates a connection to a python or matlab interpreter
+  # Send data to interpreter  using "put" method
+  # Execute commands using "execute" method
+  # Retrieve data using "get" method
+
+The only supported data type is n-dimensional float arrays.
+
+Data is sent through a TCP connection. Since I hard code the port numbers, you can only have one matlab-to-python connection and one python-to-matlab connection at a time.
+
+= Installation =
+
+Install the python scripts into the right place using:
+
+{{{
+   $ sudo python setup.py install
+}}}
+
+Then put the matlab scripts Wormhole.m and open_wormhole.m somewhere on your matlab path.
+
+= Use matlab from python =
+
+Create a Wormhole object in your python session:
+
+{{{
+   >>> from Wormhole import Wormhole
+   >>> W = Wormhole()
+}}}
+
+This command will hang until you create the matlab end. In another shell:
+
+{{{
+   $ matlab
+   >> open_wormhole
+}}}
+
+(Note: if you use matlab -nodesktop, you may not be able to stop the open_wormhole function with Control-C, at least for 2010b). Send some data to matlab:
+
+{{{
+   >>> import numpy as np
+   >>> W.put("x",np.arange(5)) # creates variable "x" in matlab, whose value is given by the second argument.
+}}}
+
+Do something with it in matlab:
+
+{{{
+   >>> W.execute("y = x.^2")
+}}}
+
+Retrieve variables from matlab session:
+
+{{{
+   >>> W.get("y")
+   array([  0.,   1.,   4.,   9.,  16.])
+}}}
+
+= Use python from matlab =
+
+Start the python side of the wormhole:
+
+{{{
+   $ open_wormhole.py
+}}}
+
+Create a Wormhole object in matlab
+
+{{{
+   >> W = Wormhole
+}}}
+
+Send some data to python:
+
+{{{
+   >> W.put("x",0:4)
+}}}
+
+Do something with it in python
+
+{{{
+   >> W.execute("y = x**2")
+}}}
+
+Retrieve variables from python session:
+
+{{{
+   >> W.get("y")
+
+   ans =
+
+        1     2     3     4     5
+}}}
+
+= Close the connection =
+
+Use Control-C to terminate open_wormhole.py or the matlab function open_wormhole. Then you can create another Wormhole object and the port will be reused.
+
+= Comments =
+
+Note that the process isn't totally symmetric between python and matlab: in both cases, you have to start the python side first. That's because matlab doesn't have a built-in TCP server.

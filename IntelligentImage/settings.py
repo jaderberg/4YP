@@ -9,6 +9,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+MATLAB_SERVER = 'http://localhost:4000'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -132,6 +134,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'IntelligentImage.home',
+    'IntelligentImage.djmatlab',
 )
 
 # A sample logging configuration. The only tangible logging
