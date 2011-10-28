@@ -1,4 +1,5 @@
-function visualindex_plot_matches(model, matches, im1, im2, sz1, sz2)
+function visualindex_plot_matches(model, matches, im1, im2, sz1, sz2, offset)
+
 
 h1 = size(im1,1) ; w1 = size(im1,2) ;
 h2 = size(im2,1) ; w2 = size(im2,2) ;
@@ -18,8 +19,15 @@ im3(1:h2,w1+(1:w2),:) = im2 ;
 S1 = diag([s1 s1 s1 1]) ;
 S2 = diag([s2 s2 s2 1]) ;
 
+% Correct plotting for offsets in query image
+trans = zeros(size(matches.f2));
+if exist('offset','var')
+    trans(1,:) = trans(1,:) + offset(1)*ones(size(trans(1,:)));
+    trans(2,:) = trans(2,:) + offset(2)*ones(size(trans(2,:)));
+end
+
 f1 = S1 * matches.f1 ;
-f2 = S2 * matches.f2 ;
+f2 = S2 * matches.f2 + trans;
 f2(1,:) = f2(1,:) + w1 ;
 
 cla ;
