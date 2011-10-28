@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Sample Tagged Image</title>
+    <style>
+        div { display: block; }
+        a {
+            border: none;
+            text-decoration: none;
+        } a:visited {
+            border: none;
+        } a:after {
+            border: none;
+        }
+        .tagged-img-wrap { position: relative; margin: 20px; padding: 0; }
+        .tagged-img-wrap img { margin: 0; padding: 0; width: 560px; }
+        .tagged-img-wrap .img-tag { margin: 0; padding: 0; position: absolute; opacity: 0.5; transition: opacity 0.218s; -moz-transition: opacity 0.218s; /* Firefox 4 */ -webkit-transition: opacity 0.218s; /* Safari and Chrome */ -o-transition: opacity 0.218s; /* Opera */ }
+        .tagged-img-wrap .img-tag .tag-border { border: white 2px dashed; margin: 0; padding: 0; } .tagged-img-wrap .img-tag .tag-label { position: relative; bottom: -3px; margin: 0; padding: 4px; line-height: 10px; font-family: 'Helvetica', san-serif; border: #111; background-color: #333; color: #fff; font-size: 10px; opacity: 0; }
+        .tagged-img-wrap .img-tag:hover .tag-label { transition: opacity 0.218s; -moz-transition: opacity 0.218s; /* Firefox 4 */ -webkit-transition: opacity 0.218s; /* Safari and Chrome */ -o-transition: opacity 0.218s; /* Opera */ opacity: 1; }
+        .tagged-img-wrap .img-tag:hover { transition: opacity 0.218s; -moz-transition: opacity 0.218s; /* Firefox 4 */ -webkit-transition: opacity 0.218s; /* Safari and Chrome */ -o-transition: opacity 0.218s; /* Opera */ opacity: 0.8; }
+        .tagged-img-wrap .img-tag:hover .tag-border { border: white 2px solid; }
+    </style>
+</head>
+<body>
+
+    <h1>Example of tagged image</h1>
+
+    <div class="tagged-img-wrap">
+    <img id="tagged-img" src="http://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Buckingham_Palace%2C_London_-_April_2009.jpg/800px-Buckingham_Palace%2C_London_-_April_2009.jpg">
+
+        <a style="left: 200px; top: 120px;" class="img-tag" href="http://en.wikipedia.org/wiki/Buckingham_Palace" target="_blank">
+            <div style="width: 300px; height:100px;" class="tag-border"></div>
+            <span class="tag-label">Buckingham Palace</span>
+        </a>
+
+        <a style="left: 50px; top: 50px;" class="img-tag" href="http://en.wikipedia.org/wiki/Victoria_Memorial_(London)" target="_blank">
+            <div style="width: 80px; height:100px;" class="tag-border"></div>
+            <span class="tag-label">Victoria Memorial</span>
+        </a>
+    </div>
+
+</body>
+</html>
