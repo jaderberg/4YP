@@ -9,7 +9,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-MATLAB_SERVER = 'http://localhost:4000'
+MATLAB_SERVER = 'http://localhost'
+MATLAB_SERVER_PORT = 4000
 
 BASE_URL = 'http://intelligent-image.com'
 
