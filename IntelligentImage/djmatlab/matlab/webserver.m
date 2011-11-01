@@ -32,6 +32,8 @@ function webserver(port,config)
 % Function is written by D.Kroon University of Twente (November 2010)
 
 % Config of the HTTP server
+close all;
+
 defaultoptions=struct('www_folder','www','temp_folder','www/temp','verbose',true,'defaultfile','/index.html','mtime1',0.8,'mtime2',3);
 
 if(~exist('config','var')), config=defaultoptions;

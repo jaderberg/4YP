@@ -11,6 +11,8 @@ MANAGERS = ADMINS
 
 MATLAB_SERVER = 'http://localhost:4000'
 
+BASE_URL = 'http://intelligent-image.com'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
