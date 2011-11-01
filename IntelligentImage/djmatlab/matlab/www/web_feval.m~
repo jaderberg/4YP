@@ -19,7 +19,12 @@ function json_response = web_feval(headers, config)
         headers.Content.(field_names{i}) = urldecode(headers.Content.(field_names{i}));
     end
     
-    response.content = '';
+%     if size(field_names)
+%         response.content = headers.Content;
+%     else
+%         response.content = '';
+%     end
+    
     
     func_path_check = false;
     arguments_check = false;
@@ -50,8 +55,7 @@ function json_response = web_feval(headers, config)
     response.success = 'true';
     response.message = 'Successfully completed request';
 
-    response.content.func_path = func_path;
-    response.content.arguments = arguments;
+    response.content = 
     
     json_response = mat2json(response);
     

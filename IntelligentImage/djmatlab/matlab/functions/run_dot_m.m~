@@ -20,10 +20,9 @@ function result = run_dot_m( file_to_run, arguments )
 
 %     Add function path to current path
     addpath(dir);
-    if isstruct(arguments)
-        result = feval(func_name, arguments);
-    else
+    if arguments == false
         result = feval(func_name);
+    else
     end
 end
 
