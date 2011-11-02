@@ -1,7 +1,7 @@
 <div class="tagged-img-wrap">
     <img id="tagged-img" src="{{ image.image.url }}">
     {% for object in objects %}
-        <a style="left: {{ object.left }}px; top: {{ object.top }}px;" class="img-tag" href="{{ object.url }}" target="_blank">
+        <a style="left: {{ object.left }}px; bottom: {{ object.top }}px;" class="img-tag" href="{{ object.url }}" target="_blank">
             <div style="width: {{ object.width }}px; height:{{ object.height }}px;" class="tag-border"></div>
             <span class="tag-label">{{ object.label }}</span>
         </a>

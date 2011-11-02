@@ -11,6 +11,8 @@ from home.models import UploadedImage
 import time
 from os.path import basename
 
+IMAGE_WIDTH = 560
+
 @json_response
 def upload_image(request):
 
@@ -60,24 +62,40 @@ def tag_image(request, image_id):
     # DO SOMETHING WITH THE IMAGE
     query_image_path = uploaded_image.image.path
 
+#    Retrieve a match
     results = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/demo_getobjects.m', {'image_path': query_image_path, 'display': 1}, maxtime=999999)
 
     if results['success'] == 'false':
         response['error'] = 'Something went wrong...'
         return response
 
+#    Extract the title
     result = results['result']
+    query_image = result['query_image']
     match = result['match']
     object_name = re.findall(r'(?P<name>\w+)_\d+\.\w+', basename(match['path']))
     rectangle = match['rectangle']
+#    Transform the rectangle to web displayed size
+    original_width = uploaded_image.image.width
+    original_height = uploaded_image.image.height
+    print original_width, IMAGE_WIDTH
+    new_height = IMAGE_WIDTH*float(original_height)/float(original_width)
+    print original_height, new_height
+    scale_factor = float(IMAGE_WIDTH)/float(original_width)
+    print scale_factor
+
+    left = int(scale_factor*rectangle['left'])
+    top = int(scale_factor*(original_height-rectangle['top']))
+    width = int(scale_factor*rectangle['width'])
+    height = int(scale_factor*rectangle['height'])
 
     objects.append({
         'label': object_name[0].title() if object_name else 'Unknown Object',
         'url': 'http://en.wikipedia.org/wiki/%s' % slugify(object_name[0]).title() if object_name else '',
-        'left': rectangle['left'],
-        'top': rectangle['top'],
-        'width': rectangle['width'],
-        'height': rectangle['height'],
+        'left': left,
+        'top': top,
+        'width': width,
+        'height': height,
     })
 
     print objects[0]
