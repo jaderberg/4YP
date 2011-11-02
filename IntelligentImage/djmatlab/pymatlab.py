@@ -11,6 +11,7 @@ MATLAB_FOLDER = '%s/matlab' % os.path.realpath(os.path.dirname(__file__))
 
 class Matlab(object):
     eval_func = 'web_feval.m'
+    running = False
 
     def __init__(self, server='http://localhost', port=None, app_name='djmatlab'):
         self.server = '%s%s' % (server, ':%s' % port if port else '')
@@ -47,7 +48,9 @@ class Matlab(object):
         return result
 
     def _open_page(self, page_name, arguments={}, timeout=10):
+        self.running = True
         page = urllib2.urlopen('%s/%s' % (self.server, page_name), urllib.urlencode(arguments), timeout)
+        self.running = False
         return simplejson.loads(page.read())
 
 

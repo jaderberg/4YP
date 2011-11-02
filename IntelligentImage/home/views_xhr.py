@@ -1,5 +1,7 @@
+import re
 from django.http import HttpResponseRedirect
 from django.template.context import RequestContext
+from django.template.defaultfilters import slugify
 from django.template.loader import render_to_string
 from djmatlab import matlab
 from home.decorators import json_response
@@ -56,33 +58,47 @@ def tag_image(request, image_id):
     objects = []
 
     # DO SOMETHING WITH THE IMAGE
-    ########### TAKE THIS OUT IN PRODUCTION!!!!
     query_image_path = uploaded_image.image.path
-    print query_image_path
+
     results = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/demo_getobjects.m', {'image_path': query_image_path, 'display': 1}, maxtime=999999)
+
     if results['success'] == 'false':
         response['error'] = 'Something went wrong...'
         return response
+
     result = results['result']
     match = result['match']
-    print basename(match['path'])
-    ##################################
+    object_name = re.findall(r'(?P<name>\w+)_\d+\.\w+', basename(match['path']))
+    rectangle = match['rectangle']
+
     objects.append({
-        'label': 'Buckingham Palace',
-        'url': 'http://en.wikipedia.org/wiki/Buckingham_Palace',
-        'left': 200,
-        'top': 120,
-        'width': 300,
-        'height': 100,
+        'label': object_name[0].title() if object_name else 'Unknown Object',
+        'url': 'http://en.wikipedia.org/wiki/%s' % slugify(object_name[0]).title() if object_name else '',
+        'left': rectangle['left'],
+        'top': rectangle['top'],
+        'width': rectangle['width'],
+        'height': rectangle['height'],
     })
-    objects.append({
-        'label': 'Victoria Memorial',
-        'url': 'http://en.wikipedia.org/wiki/Victoria_Memorial_(London)',
-        'left': 50,
-        'top': 50,
-        'width': 80,
-        'height': 100,
-    })
+
+    print objects[0]
+
+
+#    objects.append({
+#        'label': 'Buckingham Palace',
+#        'url': 'http://en.wikipedia.org/wiki/Buckingham_Palace',
+#        'left': 200,
+#        'top': 120,
+#        'width': 300,
+#        'height': 100,
+#    })
+#    objects.append({
+#        'label': 'Victoria Memorial',
+#        'url': 'http://en.wikipedia.org/wiki/Victoria_Memorial_(London)',
+#        'left': 50,
+#        'top': 50,
+#        'width': 80,
+#        'height': 100,
+#    })
 
     response['success'] = True
     response['html'] = render_to_string('tagged_image.html', {'image': uploaded_image, 'objects': objects}, context_instance=RequestContext(request))
