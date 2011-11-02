@@ -1,10 +1,10 @@
 % Max Jaderberg 2011
 
-function demo_selector()
+function done = demo_selector()
     % Demonstrate visualindex on a subsection of an image
     
     % setup VLFeat
-    run vlfeat/toolbox/vl_setup ;
+    run /Users/jaderberg/Sites/4YP/visualindex/vlfeat/toolbox/vl_setup ;
 
     % build a list of images by sourcing a standard dataset
     [conf, imdb] = db_helper() ;
@@ -67,5 +67,6 @@ function demo_selector()
     visualindex_plot_matches(model, matches{1}, thumb_{1}, thumb, sz_{1}, sz, sub_rect(1:2)) ;
 
     fprintf('Query finished!\n');
+    done = 'Done';
     
     

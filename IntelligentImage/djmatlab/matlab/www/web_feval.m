@@ -43,7 +43,7 @@ function json_response = web_feval(headers, config)
     if arguments_check
         arguments = json2mat(headers.Content.arguments);
     else
-        arguments = false;
+        arguments = '';
     end
     
     response.result = run_dot_m(func_path, arguments);

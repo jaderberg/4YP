@@ -1,11 +1,13 @@
 from django.http import HttpResponseRedirect
 from django.template.context import RequestContext
 from django.template.loader import render_to_string
+from djmatlab import matlab
 from home.decorators import json_response
 from django.core.urlresolvers import reverse
 from home.forms import UploadedImageForm
 from home.models import UploadedImage
 import time
+from os.path import basename
 
 @json_response
 def upload_image(request):
@@ -53,11 +55,18 @@ def tag_image(request, image_id):
     # List of recognised objects
     objects = []
 
-    image_file = uploaded_image.image.file
     # DO SOMETHING WITH THE IMAGE
     ########### TAKE THIS OUT IN PRODUCTION!!!!
-    time.sleep(2)
-    ###################################
+    query_image_path = uploaded_image.image.path
+    print query_image_path
+    results = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/demo_getobjects.m', {'image_path': query_image_path, 'display': 1}, maxtime=999999)
+    if results['success'] == 'false':
+        response['error'] = 'Something went wrong...'
+        return response
+    result = results['result']
+    match = result['match']
+    print basename(match['path'])
+    ##################################
     objects.append({
         'label': 'Buckingham Palace',
         'url': 'http://en.wikipedia.org/wiki/Buckingham_Palace',

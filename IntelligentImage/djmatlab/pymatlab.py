@@ -27,7 +27,7 @@ class Matlab(object):
 
     def is_function_processor_working(self):
         try:
-            result = self.run('%s/test_sum.m' % MATLAB_FOLDER, {'echo': 'Matlab: Function processor is working!'})
+            result = self.run('%s/test_functions/test_sum.m' % MATLAB_FOLDER, {'echo': 'Matlab: Function processor is working!'})
             if result['success'] == 'true':
                 return True
         except urllib2.URLError:
@@ -46,7 +46,7 @@ class Matlab(object):
             result = self._open_page(self.eval_func, page_args)
         return result
 
-    def _open_page(self, page_name, arguments={}, timeout=1):
+    def _open_page(self, page_name, arguments={}, timeout=10):
         page = urllib2.urlopen('%s/%s' % (self.server, page_name), urllib.urlencode(arguments), timeout)
         return simplejson.loads(page.read())
 
