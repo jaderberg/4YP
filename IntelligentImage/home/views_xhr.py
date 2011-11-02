@@ -63,6 +63,9 @@ def tag_image(request, image_id):
     query_image_path = uploaded_image.image.path
 
 #    Retrieve a match
+    while matlab.running:
+#       Matlab is already processing something, wait
+        time.sleep(2)
     results = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/demo_getobjects.m', {'image_path': query_image_path, 'display': 1}, maxtime=999999)
 
     if results['success'] == 'false':
@@ -78,11 +81,7 @@ def tag_image(request, image_id):
 #    Transform the rectangle to web displayed size
     original_width = uploaded_image.image.width
     original_height = uploaded_image.image.height
-    print original_width, IMAGE_WIDTH
-    new_height = IMAGE_WIDTH*float(original_height)/float(original_width)
-    print original_height, new_height
     scale_factor = float(IMAGE_WIDTH)/float(original_width)
-    print scale_factor
 
     left = int(scale_factor*rectangle['left'])
     top = int(scale_factor*(original_height-rectangle['top']))
@@ -90,7 +89,7 @@ def tag_image(request, image_id):
     height = int(scale_factor*rectangle['height'])
 
     objects.append({
-        'label': object_name[0].title() if object_name else 'Unknown Object',
+        'label': object_name[0].replace('_', ' ').title() if object_name else 'Unknown Object',
         'url': 'http://en.wikipedia.org/wiki/%s' % slugify(object_name[0]).title() if object_name else '',
         'left': left,
         'top': top,
