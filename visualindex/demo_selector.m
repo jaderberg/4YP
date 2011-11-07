@@ -7,7 +7,7 @@ function done = demo_selector()
     run /Users/jaderberg/Sites/4YP/visualindex/vlfeat/toolbox/vl_setup ;
 
     % build a list of images by sourcing a standard dataset
-    [conf, imdb] = db_helper() ;
+    [conf, imdb] = db_full_helper() ;
     selTrain = find(imdb.images.set == imdb.sets.TRAIN) ;
     selTest = find(imdb.images.set == imdb.sets.TEST) ;
     images = imdb.images.name(selTrain) ;
@@ -66,6 +66,22 @@ function done = demo_selector()
     figure(4) ; clf ;
     visualindex_plot_matches(model, matches{1}, thumb_{1}, thumb, sz_{1}, sz, sub_rect(1:2)) ;
 
+%         Plot affine transformed rectangle to matched image
+    match_image.id = find(imdb.images.id == ids(1));
+    match_image.sz = imdb.images.size(:, match_image.id);
+    match_image.path = fullfile(imdb.dir, imdb.images.name{match_image.id});
+    match_image.image = imread(match_image.path);
+    match_image.matches = matches{1};
+    figure(3); clf;
+    imagesc(match_image.image) ; title(sprintf('Best match: %s', match_image.path)) ;
+    axis image off ; drawnow ;
+    rect_corners = [sub_rect(1) sub_rect(1) sub_rect(1)+sub_rect(3) sub_rect(1)+sub_rect(3); sub_rect(2) sub_rect(2)+sub_rect(4) sub_rect(2) sub_rect(2)+sub_rect(4); 1 1 1 1];
+    rect_corners = inv(match_image.matches.H)*rect_corners;
+    line([rect_corners(1,1) rect_corners(1,1) rect_corners(1,4) rect_corners(1,4) ; rect_corners(1,2) rect_corners(1,3) rect_corners(1,2) rect_corners(1,3) ], [rect_corners(2,1) rect_corners(2,1) rect_corners(2,4) rect_corners(2,4) ; rect_corners(2,2) rect_corners(2,3) rect_corners(2,2) rect_corners(2,3) ], 'color', 'r');
+    vl_plotframe([match_image.matches.f1]) ;
+    axis image off ; drawnow ;
+
+    
     fprintf('Query finished!\n');
     done = 'Done';
     

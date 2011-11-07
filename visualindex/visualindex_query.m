@@ -81,6 +81,7 @@ end
 
 [score, best] = max(score) ;
 matches.A = A{best} ;
+matches.H = [A{best} T{best} ; 0 0 1];
 matches.ok = ok{best} ;
 matches.f1 = f1(:, m1(matches.ok)) ;
 matches.f2 = f2(:, m2(matches.ok)) ;
