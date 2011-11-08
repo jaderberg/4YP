@@ -1,6 +1,6 @@
 % Max Jaderberg 2011
 
-function done = demo_selector()
+function model = demo_selector(model)
     % Demonstrate visualindex on a subsection of an image
     
     % setup VLFeat
@@ -19,8 +19,10 @@ function done = demo_selector()
     % ------------------------------------------------------------------
 
     if exist(conf.modelPath, 'file')
-        fprintf('Loading index found at %s\n', conf.modelPath) ;
-        model = load(conf.modelPath) ;
+        if ~exist('model', 'var')
+            fprintf('Loading index found at %s\n', conf.modelPath) ;
+            model = load(conf.modelPath) ;
+        end
     else
         fprintf('Creating a new index at %s\n', conf.modelPath) ;
         model = visualindex_build(images, ids, 'numWords', conf.numWords) ;
@@ -76,13 +78,17 @@ function done = demo_selector()
     imagesc(match_image.image) ; title(sprintf('Best match: %s', match_image.path)) ;
     axis image off ; drawnow ;
     rect_corners = [sub_rect(1) sub_rect(1) sub_rect(1)+sub_rect(3) sub_rect(1)+sub_rect(3); sub_rect(2) sub_rect(2)+sub_rect(4) sub_rect(2) sub_rect(2)+sub_rect(4); 1 1 1 1];
-    rect_corners = inv(match_image.matches.H)*rect_corners;
+%     Inverse of an affine transform
+%     (http://en.wikipedia.org/wiki/Affine_transformation)
+    A_ = inv(match_image.matches.A); 
+    H = [A_ A_*match_image.matches.T; 0 0 1];
+    rect_corners = H*rect_corners;
     line([rect_corners(1,1) rect_corners(1,1) rect_corners(1,4) rect_corners(1,4) ; rect_corners(1,2) rect_corners(1,3) rect_corners(1,2) rect_corners(1,3) ], [rect_corners(2,1) rect_corners(2,1) rect_corners(2,4) rect_corners(2,4) ; rect_corners(2,2) rect_corners(2,3) rect_corners(2,2) rect_corners(2,3) ], 'color', 'r');
     vl_plotframe([match_image.matches.f1]) ;
     axis image off ; drawnow ;
 
     
     fprintf('Query finished!\n');
-    done = 'Done';
+    
     
     
