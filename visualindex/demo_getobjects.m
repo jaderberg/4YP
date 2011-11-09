@@ -47,6 +47,14 @@ function result = demo_getobjects(args)
 %     Get matches
     [ids, scores, matches] = visualindex_query(model, im) ;
 
+    result.query_image.path = imagePath;
+    result.query_image.sz = sz;
+    result.matches = {};
+    
+    if scores(1) < 15
+%         There's no recognisable object in this image :(
+        return
+    end
     match_image.id = find(imdb.images.id == ids(1));
     match_image.sz = imdb.images.size(:, match_image.id);
     match_image.path = fullfile(imdb.dir, imdb.images.name{match_image.id});
@@ -75,10 +83,6 @@ function result = demo_getobjects(args)
     end
     
     
-    result.query_image.path = imagePath;
-    result.query_image.sz = sz;
-    result.matches = {};
-        
     match.rectangle.top = ymax; match.rectangle.left = xmin;
     match.rectangle.width = width; match.rectangle.height = height;
     match.path = match_image.path;

@@ -52,7 +52,7 @@ class Matlab(object):
         page = urllib2.urlopen('%s/%s' % (self.server, page_name), urllib.urlencode(arguments), timeout)
         self.running = False
         a = page.read()
-        print a
+#        print a
         return simplejson.loads(a)
 
 
