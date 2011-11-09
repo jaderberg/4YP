@@ -46,8 +46,8 @@ function result = demo_getobjects(args)
     
 %     Get matches
 %     [ids, scores, matches] = visualindex_query(model, im) ;
-%     [ids, scores, matches] = visualindex_query(model, im, 'exclude', [48.9584 224.6665 245.0729 276.9313]) ;
-    [ids, scores, matches] = visualindex_query(model, im, 'exclude', [48.9584 224.6665 245.0729 276.9313; 524.0848 272.6909 242.9507 157.3576]) ;
+    [ids, scores, matches] = visualindex_query(model, im, 'exclude', [48.9584 224.6665 245.0729 276.9313]) ;
+%     [ids, scores, matches] = visualindex_query(model, im, 'exclude', [48.9584 224.6665 245.0729 276.9313; 461.2021 212.9303 317.7049 146.0708]) ;
 
     result.query_image.path = imagePath;
     result.query_image.sz = sz;
@@ -60,6 +60,7 @@ function result = demo_getobjects(args)
     end
     
     match_image.id = find(imdb.images.id == ids(1));
+    match_image.class = imdb.images.class(match_image.id)
     match_image.sz = imdb.images.size(:, match_image.id);
     match_image.path = fullfile(imdb.dir, imdb.images.name{match_image.id});
     match_image.image = imread(match_image.path);

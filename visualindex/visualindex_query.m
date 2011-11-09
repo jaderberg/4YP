@@ -25,6 +25,7 @@ depth = min(model.rerankDepth, numel(model.index.ids)) ;
 if ~isempty(opts.exclude)
 %     For each exclusion region (row of exclusion matrix)
     for e = 1:size(opts.exclude, 1)
+        new_frames = []; new_descrs = single([]);
         exclusion_region = opts.exclude(e,:);
 %         Exclusion region is defined by a rectangle
         xmin = exclusion_region(1); ymin = exclusion_region(2); 
@@ -32,8 +33,8 @@ if ~isempty(opts.exclude)
         for f = 1:size(frames, 2)
             fx = frames(1,f); fy = frames(2,f);
             if fx < xmin || fy < ymin || fy > ymax || fx > xmax
-                new_frames(:,f) = frames(:,f);
-                new_descrs(:,f) = descrs(:,f);
+                new_frames(:,end+1) = frames(:,f);
+                new_descrs(:,end+1) = descrs(:,f);
             end
         end
         frames = new_frames;
