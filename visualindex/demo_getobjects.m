@@ -12,7 +12,7 @@ function result = demo_getobjects(args)
     run /Users/jaderberg/Sites/4YP/visualindex/vlfeat/toolbox/vl_setup ;
 
     % build a list of images by sourcing a standard dataset
-    [conf, imdb] = db_helper() ;
+    [conf, imdb] = db_full_helper() ;
     selTrain = find(imdb.images.set == imdb.sets.TRAIN) ;
     selTest = find(imdb.images.set == imdb.sets.TEST) ;
     images = imdb.images.name(selTrain) ;
@@ -72,20 +72,18 @@ function result = demo_getobjects(args)
         rectangle('Position', rect, 'EdgeColor', 'r');
         figure(3) ; clf ;
         visualindex_plot_matches(model, match_image.matches, match_image.image, im, match_image.sz, sz) ;
-%         Plot affine transformed rectangle to matched image
-        figure(2);
-        rect_corners = [xmin xmin xmax xmax; ymin ymax ymin ymax; 1 1 1 1];
-        rect_corners = inv(match_image.matches.H)*rect_corners;
-        line([rect_corners(1,1) rect_corners(1,1) rect_corners(1,4) rect_corners(1,4) ; rect_corners(1,2) rect_corners(1,3) rect_corners(1,2) rect_corners(1,3) ], [rect_corners(2,1) rect_corners(2,1) rect_corners(2,4) rect_corners(2,4) ; rect_corners(2,2) rect_corners(2,3) rect_corners(2,2) rect_corners(2,3) ], 'color', 'r');
-        vl_plotframe([match_image.matches.f1]) ;
     end
     
     
     result.query_image.path = imagePath;
     result.query_image.sz = sz;
-    result.match.rectangle.top = ymax; result.match.rectangle.left = xmin;
-    result.match.rectangle.width = width; result.match.rectangle.height = height;
-    result.match.path = match_image.path;
+    result.matches = {};
+        
+    match.rectangle.top = ymax; match.rectangle.left = xmin;
+    match.rectangle.width = width; match.rectangle.height = height;
+    match.path = match_image.path;
+    
+    result.matches{1} = match;
     
     fprintf('Query Complete!');
     

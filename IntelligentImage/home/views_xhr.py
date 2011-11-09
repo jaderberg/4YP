@@ -66,38 +66,39 @@ def tag_image(request, image_id):
     while matlab.running:
 #       Matlab is already processing something, wait
         time.sleep(2)
-    results = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/demo_getobjects.m', {'image_path': query_image_path, 'display': 1}, maxtime=999999)
+    resp = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/demo_getobjects.m', {'image_path': query_image_path, 'display': 1}, maxtime=999999)
 
-    if results['success'] == 'false':
+    if resp['success'] == 'false':
         response['error'] = 'Something went wrong...'
         return response
 
 #    Extract the title
-    result = results['result']
+    result = resp['result']
     query_image = result['query_image']
-    match = result['match']
-    object_name = re.findall(r'(?P<name>\w+)_\d+\.\w+', basename(match['path']))
-    rectangle = match['rectangle']
-#    Transform the rectangle to web displayed size
-    original_width = uploaded_image.image.width
-    original_height = uploaded_image.image.height
-    scale_factor = float(IMAGE_WIDTH)/float(original_width)
+    matches = result['matches']
+    for match in matches:
+        object_name = re.findall(r'(?P<name>\w+)_\d+\.\w+', basename(match['path']))
+        rectangle = match['rectangle']
+    #    Transform the rectangle to web displayed size
+        original_width = uploaded_image.image.width
+        original_height = uploaded_image.image.height
+        scale_factor = float(IMAGE_WIDTH)/float(original_width)
 
-    left = int(scale_factor*rectangle['left'])
-    top = int(scale_factor*(original_height-rectangle['top']))
-    width = int(scale_factor*rectangle['width'])
-    height = int(scale_factor*rectangle['height'])
+        left = int(scale_factor*rectangle['left'])
+        top = int(scale_factor*(original_height-rectangle['top']))
+        width = int(scale_factor*rectangle['width'])
+        height = int(scale_factor*rectangle['height'])
 
-    objects.append({
-        'label': object_name[0].replace('_', ' ').title() if object_name else 'Unknown Object',
-        'url': 'http://en.wikipedia.org/wiki/%s' % slugify(object_name[0]).title() if object_name else '',
-        'left': left,
-        'top': top,
-        'width': width,
-        'height': height,
-    })
+        objects.append({
+            'label': object_name[0].replace('_', ' ').title() if object_name else 'Unknown Object',
+            'url': 'http://en.wikipedia.org/wiki/%s' % slugify(object_name[0]).title() if object_name else '',
+            'left': left,
+            'top': top,
+            'width': width,
+            'height': height,
+        })
 
-    print objects[0]
+    print objects
 
 
 #    objects.append({
