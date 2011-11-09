@@ -1,4 +1,4 @@
-function [ids, scores, matches] = visualindex_query(model, im)
+function [ids, scores, matches] = visualindex_query(model, im, varargin)
 % VISUALINDEX_QUERY  Search index for matching images
 %   [IDS, SCORES, MATCHES] = VISUALINDEX_QUERY(MODEL, IM) searches the
 %   index MODEL for images matching the query image IM. It returns
@@ -12,11 +12,35 @@ function [ids, scores, matches] = visualindex_query(model, im)
 
 % Author: Andrea Vedaldi
 
+opts.exclude = [];
+opts = vl_argparse(opts, varargin);
+
 % reranking depth cannot be larger than the number of indexed images
 depth = min(model.rerankDepth, numel(model.index.ids)) ;
 
 % extract the features, visual words, and histogram for the query images
 [frames, descrs] = visualindex_get_features(model, im) ;
+
+% Delete frames (and associated descrs) that are in exclusion regions
+if ~isempty(opts.exclude)
+%     For each exclusion region (row of exclusion matrix)
+    for e = 1:size(opts.exclude, 1)
+        exclusion_region = opts.exclude(e,:);
+%         Exclusion region is defined by a rectangle
+        xmin = exclusion_region(1); ymin = exclusion_region(2); 
+        xmax = xmin + exclusion_region(3); ymax = ymin + exclusion_region(4);
+        for f = 1:size(frames, 2)
+            fx = frames(1,f); fy = frames(2,f);
+            if fx < xmin || fy < ymin || fy > ymax || fx > xmax
+                new_frames(:,f) = frames(:,f);
+                new_descrs(:,f) = descrs(:,f);
+            end
+        end
+        frames = new_frames;
+        descrs = new_descrs;
+    end
+end
+
 words = visualindex_get_words(model, descrs) ;
 histogram = visualindex_get_histogram(model, words) ;
 
