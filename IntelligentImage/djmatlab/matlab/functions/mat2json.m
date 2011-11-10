@@ -26,7 +26,11 @@ switch class(M)
         for i=1:length(M)
             J=[J,mat2json(M{i}),','];
         end
-        J=[J,']'];
+        if J == '[';
+            J='[]';
+        else
+            J(end) = ']';
+        end
     otherwise
         if isnumeric(M) % notice looseness in not converting single numbers into arrays
             if length(M(:))==1

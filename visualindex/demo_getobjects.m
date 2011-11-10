@@ -62,10 +62,12 @@ function result = demo_getobjects(args)
     while pass_number < max_objects*max_tries_per_object
        
         [ids, scores, matches] = visualindex_query(model, im, 'exclude', exclusion_matrix) ;
-
-        if scores(1) < 6
+        
+        score = full(scores(1));
+        fprintf('Match has %d inliers. ', score);
+        if scores(1) < 8
 %             There's no recognisable object in this image :(
-            fprintf('Query Complete - no objects found');
+            fprintf('Not enough inliers - no objects found\n');
             return
         end
         
@@ -74,8 +76,10 @@ function result = demo_getobjects(args)
         
         if find(result.classes == match_image.class)
 %             This object has already been found in the image
+            fprintf('The recognised object has already been found\n');
             current_tries = current_tries + 1;
             if current_tries >= max_tries_per_object
+                fprintf('Search stopped as no new object found\n');
                 break
             else
                 continue
@@ -116,12 +120,15 @@ function result = demo_getobjects(args)
         match.path = match_image.path;
 
 %         add match to results
-        result.matches{1} = match;
+        result.matches{end+1} = match;
+        
+        fprintf('Added to matches! \n');
         
 %         add rectangle of match to exclusion region
         exclusion_matrix(end+1,:) = rect;
         
         if length(result.matches) >= max_objects
+            fprintf('Search stopped as max_objects hit\n');
             break            
         end
         
@@ -129,7 +136,7 @@ function result = demo_getobjects(args)
     end
     
     
-    fprintf('Query Complete - object(s) found');
+    fprintf('Query Complete - object(s) found\n');
     
     
     

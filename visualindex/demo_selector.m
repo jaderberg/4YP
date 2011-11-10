@@ -81,7 +81,7 @@ function model = demo_selector(model)
 %     Inverse of an affine transform
 %     (http://en.wikipedia.org/wiki/Affine_transformation)
     A_ = inv(match_image.matches.A); 
-    H = [A_ A_*match_image.matches.T; 0 0 1];
+    H = [A_ -1*A_*match_image.matches.T; 0 0 1];
     rect_corners = H*rect_corners;
     line([rect_corners(1,1) rect_corners(1,1) rect_corners(1,4) rect_corners(1,4) ; rect_corners(1,2) rect_corners(1,3) rect_corners(1,2) rect_corners(1,3) ], [rect_corners(2,1) rect_corners(2,1) rect_corners(2,4) rect_corners(2,4) ; rect_corners(2,2) rect_corners(2,3) rect_corners(2,2) rect_corners(2,3) ], 'color', 'r');
     vl_plotframe([match_image.matches.f1]) ;
