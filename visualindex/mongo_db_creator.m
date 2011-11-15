@@ -109,11 +109,12 @@ function [conf, coll] = mongo_db_creator(varargin)
             end
             
         end
-        a = regexp(groundtruth_files{i}, '([\w_]+)_[0-9]+_good|ok|junk.txt', 'tokens') ;
+        filename = groundtruth_files{i};
+        a = regexp(groundtruth_files{i}, '([\w_]+)_[0-9]+_(good|ok|junk).txt', 'tokens') ;
         if ~isempty(a),
-            cl = a{1} ;
+            cl = a{1}{1};
             instances = textread(fullfile(conf.gtDir, groundtruth_files{i}), ...
-                               '%s') ;
+                               '%s %*f %*f %*f %*f') ;
             for j = 1:length(instances)
                 im_doc = coll.findOne(BasicDBObject('name', char([instances{j} '.jpg'])));
                 if isempty(im_doc)
