@@ -14,6 +14,7 @@ function [conf, coll] = mongo_db_creator(varargin)
     import com.mongodb.BasicDBObject;
     import com.mongodb.DBObject;
     import com.mongodb.DBCursor;
+    import org.bson.types.ObjectId;
     
     opts.server = '127.0.0.1'; opts.port = [];
     opts.db = 'imdb'; opts.collection = 'images';
