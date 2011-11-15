@@ -5,6 +5,7 @@ function [conf, coll] = mongo_db_creator(varargin)
 %   Code from http://stackoverflow.com/questions/3886461/connecting-to-mongodb-from-matlab
 %   NB: For mongodb driver reference see http://www.mongodb.org/display/DOCS/Java+Tutorial
 
+
     javaaddpath('mongo-2.7.2.jar')
 
     import com.mongodb.Mongo;
@@ -40,14 +41,14 @@ function [conf, coll] = mongo_db_creator(varargin)
     
 %     Get the data files
     if ~exist(conf.gtDir, 'dir')
-        fprintf('Downloading and unpacking Oxford building datset gt to %s\n', gtDir) ;
-        vl_xmkdir(gtDir) ;
-        untar('/Volumes/4YP/visualindex/gt_files_170407.tgz',gtDir) ;
+        fprintf('Downloading and unpacking Oxford building datset gt to %s\n', conf.gtDir) ;
+        vl_xmkdir(conf.gtDir) ;
+        untar('/Volumes/4YP/visualindex/gt_files_170407.tgz',conf.gtDir) ;
     end
     if ~exist(conf.imageDir, 'dir')
-        fprintf('Downloading and unpacking Oxford building datset images to %s\n', imageDir) ;
-        vl_xmkdir(imageDir) ;
-        untar('/Volumes/4YP/visualindex/oxbuild_images.tgz',imageDir) ;
+        fprintf('Downloading and unpacking Oxford building datset images to %s\n', conf.imageDir) ;
+        vl_xmkdir(conf.imageDir) ;
+        untar('/Volumes/4YP/visualindex/oxbuild_images.tgz',conf.imageDir) ;
     end
     
 %     Has the database been created?
@@ -59,14 +60,6 @@ function [conf, coll] = mongo_db_creator(varargin)
     end
     
 %     No database has been created, let's do it
-    classes = {} ;
-    function c = decodeClass(cl)
-        cl = char(cl) ;
-        c = find(strcmp(cl,classes)) ;
-        if ~isempty(c), return ; end
-        classes{end+1} = cl ;
-        c = length(classes) ;
-    end
 
     for i=1:length(files)
 %         For each image build a document
@@ -90,11 +83,52 @@ function [conf, coll] = mongo_db_creator(varargin)
     end
     
 %     Need to index name?
-%     coll.createIndex(BasicDBObject('name', 1));
+    coll.createIndex(BasicDBObject('name', 1));
     
 %     Ok, now assign a class from the groundtruth files and which set they
 %     are in (train/test)
+    groundtruth_files = dir(fullfile(conf.gtDir, '*.txt')) ;
+    groundtruth_files = {groundtruth_files(~[groundtruth_files.isdir]).name} ;
+    
+    for i=1:length(groundtruth_files)
+        a = regexp(groundtruth_files{i}, '([\w_]+)_[0-9]+_query.txt', 'tokens') ;
+        if ~isempty(a)
+            cl= a{1} ;
+            instances = textread(fullfile(conf.gtDir, groundtruth_files{i}), ...
+                               '%s %*f %*f %*f %*f') ;
+            for j = 1:length(instances)
+                name = char([instances{j}(6:end) '.jpg']);
+                im_doc = coll.findOne(BasicDBObject('name', name));
+                if isempty(im_doc)
+%                     No found image with that name
+                    continue
+                end
+                im_doc.put('set', 'test');
+                im_doc.put('class', char(cl));
+                coll.save(im_doc);
+            end
+            
+        end
+        a = regexp(groundtruth_files{i}, '([\w_]+)_[0-9]+_good|ok|junk.txt', 'tokens') ;
+        if ~isempty(a),
+            cl = a{1} ;
+            instances = textread(fullfile(conf.gtDir, groundtruth_files{i}), ...
+                               '%s') ;
+            for j = 1:length(instances)
+                im_doc = coll.findOne(BasicDBObject('name', char([instances{j} '.jpg'])));
+                if isempty(im_doc)
+%                     No found image with that name
+                    continue
+                end
+                im_doc.put('set', 'train');
+                im_doc.put('class', char(cl));
+                coll.save(im_doc);
+            end
+        end
+    end
+    
+%     If needed, you can get the classes by coll.distinct('class');
 
-
+%     And for reference you can do coll.find(BasicDBObject('class', BasicDBObject('$exists', 0))).count()
     
 end
