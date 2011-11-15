@@ -13,7 +13,7 @@ function model = mongo_build_index(coll, varargin)
     import com.mongodb.DBCursor;
     import org.bson.types.ObjectId;
 
-    opts.numWords = 100 ;
+    opts.numWords = 10000 ;
     opts.numKMeansIterations = 20 ;
     opts = vl_argparse(opts, varargin) ;
     
