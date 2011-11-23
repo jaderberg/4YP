@@ -66,7 +66,7 @@ function model_coll = mongo_build_index(coll, conf, varargin)
     
     
     save([conf.dataDir 'model-index-frames.mat'], 'frames') ;
-    save([conf.dataDir 'model-index-descrs.mat'], 'descrs') ;
+    save([conf.dataDir 'model-index-descrs.mat'], '-v7.3', 'descrs') ;
     save([conf.dataDir 'model-index-ids.mat'], 'ids') ;
     clear frames descrs ids im_frames im_descrs;
 
