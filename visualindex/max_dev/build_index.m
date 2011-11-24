@@ -40,7 +40,7 @@ vocab.size = opts.numWords ;
 
 % read features
 num_images = coll.find().count();
-num_images = 100;
+num_images = 50;
 descrs = [];
 
 % Randomly sample the descrs for word creation (rule of thumb
