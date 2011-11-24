@@ -1,10 +1,12 @@
 % Max Jaderberg
 
 function model_coll = mongo_build_index(coll, conf, varargin)
-% This creates the visual index for the dataset
+% This creates the visual index for the dataset. Data stored in mongoDB for
+% image data, model data stored in filesystem
 
     conf.dataDir = [conf.dataDir '/'];
-
+    
+    addpath('max_dev');
 
     javaaddpath('mongo-2.7.2.jar')
 
