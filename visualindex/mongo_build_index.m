@@ -6,8 +6,8 @@ function model_coll = mongo_build_index(coll, conf, varargin)
 
     conf.dataDir = [conf.dataDir '/'];
     
-    addpath('max_dev');
 
+    
     javaaddpath('mongo-2.7.2.jar')
 
     import com.mongodb.Mongo;
