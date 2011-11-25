@@ -13,7 +13,8 @@ while {1} {
     eof                          {break}
     "The authenticity of host"   {send "yes\r"}
     "password:"                  {send "$password\r"}
-	":~%"                        {send "(cd 4YP && matlab -nodesktop -nosplash -r test)\r"}
+	":~%"                        {send "(cd 4YP && nohup nice matlab -nodesktop -nosplash -r test &)\r"
+								  send "exit\r"}
 	"M A T L A B"				 {send "exit\r"}
   }
 }

@@ -24,6 +24,8 @@ vl_xmkdir(conf.wordsDataDir);
 % Setup
 opts.numWords = 10000 ;
 opts.numKMeansIterations = 20 ;
+opts.forceWords = 0; opts.forceFeatures = 0;
+opts.skipFeatures = 0;
 opts = vl_argparse(opts, varargin) ;
 
 randn('state',0) ;
@@ -40,7 +42,6 @@ vocab.size = opts.numWords ;
 
 % read features
 num_images = coll.find().count();
-num_images = 50;
 descrs = [];
 
 % Randomly sample the descrs for word creation (rule of thumb
@@ -55,52 +56,66 @@ else
 end
 p_ = ceil(1/p);
 
-for i = 1:num_images
-%     Retrieve the image database entry
-    image = coll.find().sort(BasicDBObject('name', 1)).skip(i-1).limit(1).toArray.get(0);
-    image_id = image.get('_id').toString.toCharArray';
-    im_frames = mongo_get_frames(coll, 'id', image_id);
-    im_descrs = mongo_get_descrs(coll, 'id', image_id);
-    image_name = image.get('name');
+if opts.skipFeatures && exist(fullfile(conf.modelDataDir, 'sampledescrs.mat'), 'file')
+%     Just load the saved sample descrs for word creation
+    descrs = load(fullfile(conf.modelDataDir, 'sampledescrs.mat'));
 
-    if (~isempty(im_frames)) && (~isempty(im_descrs))
-%         The sift features are already computed
-       fprintf('Already added image %s (%d of %d)\n', image.get('name'), i, num_images) ;
-    else
-%         Compute the features
-        fprintf('Adding image %s (%d of %d)\n', image.get('name'), i, num_images) ;
+else
+    
+    for i = 1:num_images
+    %     Retrieve the image database entry
+        image = coll.find().sort(BasicDBObject('name', 1)).skip(i-1).limit(1).toArray.get(0);
+        image_id = image.get('_id').toString.toCharArray';
+        im_frames = mongo_get_frames(coll, 'id', image_id);
+        im_descrs = mongo_get_descrs(coll, 'id', image_id);
+        image_name = image.get('name');
 
-        im = imread(fullfile(image.get('directory'), image_name)) ;
-        [im_frames,im_descrs] = visualindex_get_features(model, im) ;
-
-%         Add to mongoDB
-        im_model = BasicDBObject();
-        im_model.put('frames', serialize(im_frames,3));
-        im_model.put('descrs', serialize(im_descrs,3));
-        image.put('model', im_model);
-        coll.save(image);
-    end
-    
-%     Add to filesystem
-    if ~exist(fullfile(conf.framesDataDir, [image_name '-frames.mat']), 'file')
-        save(fullfile(conf.framesDataDir, [image_name '-frames.mat']), 'im_frames');
-        save(fullfile(conf.descrsDataDir, [image_name '-descrs.mat']), 'im_descrs');
-    end
-    
-    clear im_frames image im_model;
-    
-%     Randomly sample for word creation
-    r = randi([1 p_], size(im_descrs, 2), 1);
-    sample_descrs = im_descrs(:, r==p_);
-    if ~isempty(sample_descrs)
-        if isempty(descrs)
-            descrs = sample_descrs;
-        else
-            descrs = [descrs sample_descrs];
+        if opts.forceFeatures
+            im_frames = []; im_descrs = [];
         end
+
+        if (~isempty(im_frames)) && (~isempty(im_descrs))
+    %         The sift features are already computed
+           fprintf('Already added image %s (%d of %d)\n', image.get('name'), i, num_images) ;
+        else
+    %         Compute the features
+            fprintf('Adding image %s (%d of %d)\n', image.get('name'), i, num_images) ;
+
+            im = imread(fullfile(image.get('directory'), image_name)) ;
+            [im_frames,im_descrs] = visualindex_get_features(model, im) ;
+
+    %         Add to mongoDB
+            im_model = BasicDBObject();
+            im_model.put('frames', serialize(im_frames,3));
+            im_model.put('descrs', serialize(im_descrs,3));
+            image.put('model', im_model);
+            coll.save(image);
+        end
+
+    %     Add to filesystem
+        if ~exist(fullfile(conf.framesDataDir, [image_name '-frames.mat']), 'file')
+            save(fullfile(conf.framesDataDir, [image_name '-frames.mat']), 'im_frames');
+            save(fullfile(conf.descrsDataDir, [image_name '-descrs.mat']), 'im_descrs');
+        end
+
+        clear im_frames image im_model;
+
+    %     Randomly sample for word creation
+        r = randi([1 p_], size(im_descrs, 2), 1);
+        sample_descrs = im_descrs(:, r==p_);
+        if ~isempty(sample_descrs)
+            if isempty(descrs)
+                descrs = sample_descrs;
+            else
+                descrs = [descrs sample_descrs];
+            end
+        end
+
+        clear r sample_descrs im_descrs;
     end
+
+    save(fullfile(conf.modelDataDir, 'sampledescrs.mat'), 'descrs');
     
-    clear r sample_descrs im_descrs;
 end
 
 clear p p_ total_descrs;
@@ -114,9 +129,9 @@ clear p p_ total_descrs;
 % for quantization.
 
 vocab_file = fullfile(conf.modelDataDir, 'vocab.mat');
-if ~exist(vocab_file, 'file')
-    fprintf('Creating vocabulary with %d words\n', opts.numWords);
-    [vocab.centers, vocab.tree] = annkmeans(descrs, opts.numWords, 'verbose', true) ;
+if (~exist(vocab_file, 'file')) || opts.forceWords
+    fprintf('Creating vocabulary with %d words\n', vocab.size);
+    [vocab.centers, vocab.tree] = annkmeans(descrs, vocab.size, 'verbose', true) ;
     save(vocab_file, '-STRUCT', 'vocab');
 else
     fprintf('Loading existing vocabulary (%s)\n', vocab_file);
@@ -136,7 +151,11 @@ for t = 1:num_images
     image = coll.find().sort(BasicDBObject('name', 1)).skip(t-1).limit(1).toArray.get(0);
     image_id = image.get('_id').toString.toCharArray';
     image_name = image.get('name');
-    im_words = mongo_get_words(coll, 'id', image_id);
+    if opts.forceWords
+        im_words = [];
+    else
+        im_words = mongo_get_words(coll, 'id', image_id);
+    end
     im_model = image.get('model');
     
     if ~isempty(im_words)
@@ -159,9 +178,7 @@ for t = 1:num_images
                          vocab.size,1) ;
    
     
-    if ~exist(fullfile(conf.wordsDataDir, [image_name '-words.mat']), 'file')
-        save(fullfile(conf.wordsDataDir, [image_name '-words.mat']), 'im_words');
-    end
+    save(fullfile(conf.wordsDataDir, [image_name '-words.mat']), 'im_words');
 
     ids{t} = image_id;
     histograms{t} = im_histogram;
@@ -184,7 +201,12 @@ end
 for t = 1:num_images
     image = coll.findOne(BasicDBObject('_id', ObjectId(ids{t})));
     image_name = image.get('name');
-    im_histogram = mongo_get_histogram(coll, 'id', ids{t});
+    if opts.forceWords
+        im_histogram = [];
+    else
+        im_histogram = mongo_get_histogram(coll, 'id', ids{t});
+    end
+    
     if ~isempty(im_histogram)
 %         Histogram is already there
         fprintf('Already created histogram for %s\n', image_name);
@@ -197,9 +219,7 @@ for t = 1:num_images
         coll.save(image);
     end
 
-    if ~exist(fullfile(conf.histogramsDataDir, [image_name '-histogram.mat']), 'file')
-        save(fullfile(conf.histogramsDataDir, [image_name '-histogram.mat']), 'im_histogram');
-    end
+    save(fullfile(conf.histogramsDataDir, [image_name '-histogram.mat']), 'im_histogram');
     
     histograms(:,t) = im_histogram;
 end
