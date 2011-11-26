@@ -58,8 +58,9 @@ p_ = ceil(1/p);
 
 if opts.skipFeatures && exist(fullfile(conf.modelDataDir, 'sampledescrs.mat'), 'file')
 %     Just load the saved sample descrs for word creation
-    descrs = load(fullfile(conf.modelDataDir, 'sampledescrs.mat'));
-
+    descrs_struct = load(fullfile(conf.modelDataDir, 'sampledescrs.mat'));
+    descrs = descrs_struct.descrs;
+    clear descrs_struct;
 else
     
     for i = 1:num_images
