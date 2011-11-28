@@ -1,25 +1,11 @@
 % Max Jaderberg 23/11/11
 
-function [histograms ids] = build_index( coll, conf, varargin )
+function [histograms ids vocab] = build_index( coll, conf, varargin )
 %BUILD_INDEX Builds the index for the dataset images
 %   Saves to the mongodb as well as saving in data folder for redundancy.
 
 import com.mongodb.BasicDBObject;
 import org.bson.types.ObjectId;
-
-
-% Create file structure for saving the index
-conf.modelDataDir = [conf.dataDir '/model'];
-conf.framesDataDir = [conf.dataDir '/frames'];
-conf.descrsDataDir = [conf.dataDir '/descrs'];
-conf.histogramsDataDir = [conf.dataDir '/histograms'];
-conf.wordsDataDir = [conf.dataDir '/words'];
-vl_xmkdir(conf.modelDataDir); 
-vl_xmkdir(conf.framesDataDir);
-vl_xmkdir(conf.descrsDataDir);
-vl_xmkdir(conf.histogramsDataDir);
-vl_xmkdir(conf.wordsDataDir);
-
 
 % Setup
 opts.numWords = 10000 ;

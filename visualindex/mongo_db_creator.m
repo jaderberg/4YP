@@ -2,6 +2,7 @@
 
 function [conf, coll] = mongo_db_creator(varargin)
 %     Creates the mongodb database with the images.
+%   Remeber to run mongodb! /usr/local/Cellar/mongodb/2.0.1-x86_64/bin/mongod --dbpath /Volumes/4YP/mongodb/data/
 %   Code from http://stackoverflow.com/questions/3886461/connecting-to-mongodb-from-matlab
 %   NB: For mongodb driver reference see http://www.mongodb.org/display/DOCS/Java+Tutorial
 
@@ -39,6 +40,18 @@ function [conf, coll] = mongo_db_creator(varargin)
     conf.dataDir = [conf.imageDir '-index'] ;
     conf.thumbDir = [conf.imageDir] ;
     conf.modelPath = fullfile(conf.dataDir, 'model_mongo.mat') ;
+    
+    % Create file structure for saving the index
+    conf.modelDataDir = [conf.dataDir '/model'];
+    conf.framesDataDir = [conf.dataDir '/frames'];
+    conf.descrsDataDir = [conf.dataDir '/descrs'];
+    conf.histogramsDataDir = [conf.dataDir '/histograms'];
+    conf.wordsDataDir = [conf.dataDir '/words'];
+    vl_xmkdir(conf.modelDataDir); 
+    vl_xmkdir(conf.framesDataDir);
+    vl_xmkdir(conf.descrsDataDir);
+    vl_xmkdir(conf.histogramsDataDir);
+    vl_xmkdir(conf.wordsDataDir);
     
 %     Get the data files
     if ~exist(conf.gtDir, 'dir')
