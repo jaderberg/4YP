@@ -1,3 +1,5 @@
+% Max Jaderberg 28/11/11
+
 function result = image_query( im, histograms, ids, vocab, conf, coll, varargin )
 %IMAGE_QUERY returns the matched images from the query
 
@@ -36,14 +38,17 @@ function result = image_query( im, histograms, ids, vocab, conf, coll, varargin 
     fprintf('Getting words...\n');
     fake_model.vocab = vocab;
     words = visualindex_get_words(fake_model, descrs);
+    clear descrs;
     
 %     Get the histogram
     fprintf('Getting histogram...\n');
     histogram = visualindex_get_histogram(fake_model, words);
     
+    
     % compute histogram-based score
-    fprintf('Getting histogram-based matches');
+    fprintf('Getting histogram-based matches\n');
     scores = histogram' * histograms ;
+    clear histogram histograms;
 
     % apply geometric verification to the top matches
     [scores, perm] = sort(scores, 'descend') ;
@@ -51,14 +56,32 @@ function result = image_query( im, histograms, ids, vocab, conf, coll, varargin 
 %     Spatially verify the top matches until we get a spatial match!
     for i=1:length(scores)
         perm_ind = perm(i);
-        match_id = ids(perm_ind);
+        match_id = ids{perm_ind};
 %         Get the words and frames for potential match
         db_im = coll.findOne(BasicDBObject('_id', ObjectId(match_id)));
         db_model = db_im.get('model');
         match_words = eval(db_model.get('words'));
         match_frames = eval(db_model.get('frames'));
+        [match_score, match] = verify(match_frames, match_words, ...
+                                   frames, words, ...
+                                   size(im)) ;
+        fprintf('Found match with %d inliers - ', match_score);
+%        If there are enough inliers (the score) we have found a spatially
+%        verified match
+        if match_score > 15
+%             this is definitely a match
+            fprintf('thats good enough!\n');
+            break
+        else
+            fprintf('not good enough, looking for another...\n');
+            clear db_im db_model match_words match_frames match_score match perm_ind match_id;
+        end
         
     end
+    
+    result.id = match_id;
+    result.score = match_score;
+    result.match = match;
     
 end
 
