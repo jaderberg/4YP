@@ -11,6 +11,7 @@ from home.models import UploadedImage
 import time
 from os.path import basename
 from django.conf import settings
+import os
 
 IMAGE_WIDTH = 560
 
@@ -50,13 +51,35 @@ def get_session_key(request):
     return response
 
 @json_response
-def get_log(request, session_key):
+def get_log(request):
+    session_key = request.GET.get('key')
     filename = '%slogs/%s-log.txt' % (settings.MEDIA_ROOT, session_key)
-    f = open(filename, 'r')
-    response = {
-        'success': True,
-        'lines': f.readlines(),
-    }
+    try:
+        f = open(filename, 'r')
+        response = {
+            'success': True,
+            'lines': f.readlines(),
+        }
+    except IOError:
+        response = {
+            'success': False,
+            'message': 'Key invalid',
+        }
+    return response
+
+@json_response
+def log_cleanup(request):
+    session_key = request.GET.get('key')
+    filename = '%slogs/%s-log.txt' % (settings.MEDIA_ROOT, session_key)
+    try:
+        os.remove(filename)
+        response = {
+            'success': True,
+        }
+    except IOError:
+        response = {
+            'success': False,
+        }
     return response
 
 @json_response

@@ -263,10 +263,14 @@ a.button {
     }
 }
 
+#log-box {
+    max-width: 800px;
+}
+
 #log-window {
     background-color: #333333;
     margin: 20px;
-    padding: 10px;
+    padding: 5px 10px 5px 10px;
 
     p {
         color: #33ff00;

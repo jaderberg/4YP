@@ -38,12 +38,12 @@
         </div>
 
         <div id="img-preview-box" class="img-smooth-box" style="display: none;">
-            <a data-sessionurl="{% url get_session_key %}" id="tag-img-button" class="button" href="">Tag Image</a>
+            <a data-logcleanupurl="{% url log_cleanup %}" data-sessionurl="{% url get_session_key %}" data-logurl="{% url get_log %}" id="tag-img-button" class="button" href="">Tag Image</a>
         </div>
 
         <div id="log-box" class="img-smooth-box" style="display:none;">
             <div id="log-window">
-                <p> > <span>Hello world!</span></p>
+                <p id="log-first-line"> > <span>Connecting to query engine...</span></p>
             </div>
         </div>
 

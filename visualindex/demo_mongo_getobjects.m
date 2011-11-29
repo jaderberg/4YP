@@ -79,13 +79,15 @@ function result = demo_mongo_getobjects(args)
     
     frames = []; descrs = [];
     
+    fprintf(log_file, 'Starting match process...\n');
+    
     while pass_number < max_objects*max_tries_per_object
         
         [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
 
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
-        if best_match.score < 8
+        if best_match.score < 10
             fprintf('Score not large enough to be certain - no match\n');
             fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break
@@ -166,6 +168,7 @@ function result = demo_mongo_getobjects(args)
         end
         
         pass_number = pass_number + 1;
+        fprintf(log_file, 'Looking for another object...\n');
         
     end
     
