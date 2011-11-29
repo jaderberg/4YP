@@ -49,7 +49,7 @@ function result = demo_mongo_getobjects(args)
         axis image off ; drawnow ;
     end
     
-    best_match = image_query(im, histograms, ids, vocab, conf, coll);
+    [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll);
     
     db_im = coll.findOne(BasicDBObject('_id', ObjectId(best_match.id)));
     fprintf('Object found: %s\n', db_im.get('class'));

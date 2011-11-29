@@ -1,17 +1,28 @@
 % Max Jaderberg 28/11/11
 
-function result = image_query( im, histograms, ids, vocab, conf, coll, varargin )
+function [result frames descrs] = image_query( im, histograms, ids, vocab, conf, coll, varargin )
 %IMAGE_QUERY returns the matched images from the query
+
+    profile on;
 
     import com.mongodb.BasicDBObject;
     import org.bson.types.ObjectId;
 
     opts.exclude = [];  
+    opts.depth = 20;
+    opts.frames = []; opts.descrs = [];
     opts = vl_argparse(opts, varargin);
     
+    frames = opts.frames; descrs = opts.descrs;
+    clear opts.frames opts.descrs;
+    
 %     Get the features from the query image
-    fprintf('Getting features...\n');
-    [frames descrs] = visualindex_get_features([], im);
+    if isempty(frames)
+        fprintf('Getting features...\n');
+        [frames descrs] = visualindex_get_features([], im);
+    else
+        fprintf('Already got features!\n');
+    end
     
     % Delete frames (and associated descrs) that are in exclusion regions
     if ~isempty(opts.exclude)
@@ -47,14 +58,14 @@ function result = image_query( im, histograms, ids, vocab, conf, coll, varargin 
     
     % compute histogram-based score
     fprintf('Getting histogram-based matches\n');
-    scores = histogram' * histograms ;
+    scores = tf_idf_scores(histogram, histograms) ;
     clear histogram histograms;
 
     % apply geometric verification to the top matches
     [scores, perm] = sort(scores, 'descend') ;
     
 %     Spatially verify the top matches until we get a spatial match!
-    for i=1:length(scores)
+    for i=1:opts.depth
         perm_ind = perm(i);
         match_id = ids{perm_ind};
 %         Get the words and frames for potential match
@@ -62,13 +73,15 @@ function result = image_query( im, histograms, ids, vocab, conf, coll, varargin 
         db_model = db_im.get('model');
         match_words = eval(db_model.get('words'));
         match_frames = eval(db_model.get('frames'));
-        [match_score, match] = verify(match_frames, match_words, ...
+        [match_score, matches(i)] = verify(match_frames, match_words, ...
                                    frames, words, ...
                                    size(im)) ;
-        fprintf('Found match with %d inliers - ', match_score);
+        fprintf('Found match (%s) with %d inliers - ', db_im.get('name'), match_score);
+%         Add tf-idf to spatial score to avoid ties
+        scores(i) = match_score + scores(i);
 %        If there are enough inliers (the score) we have found a spatially
 %        verified match
-        if match_score > 15
+        if match_score > 10
 %             this is definitely a match
             fprintf('thats good enough!\n');
             break
@@ -79,10 +92,21 @@ function result = image_query( im, histograms, ids, vocab, conf, coll, varargin 
         
     end
     
-    result.id = match_id;
-    result.score = match_score;
-    result.match = match;
+    [best_score ind] = max(scores(1:opts.depth));
     
+    match_perm = perm(ind);
+    result.id = ids{match_perm};
+    result.score = best_score;
+    result.match = matches(ind);
+    
+    profile viewer;
+    
+end
+
+%---------------------------------------------------------------------
+function scores = tf_idf_scores(histogram, histograms)
+%     The histogram scores
+    scores = histogram' * histograms ;
 end
 
 % --------------------------------------------------------------------
