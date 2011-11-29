@@ -1,0 +1,2234 @@
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',28,1)">demo_mongo_getobjects at 28</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/bos_4.jpg
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (oxford_001085.jpg) with 72 inliers - thats good enough!
+Match has a score of 7.211196e+01. Found new object, hertford
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match is in excluded classes set (hertford)
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (hertford)
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (hertford)
+Found match (all_souls_000132.jpg) with 6 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (hertford)
+Potential match has no class - ignoring it
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete - no objects found :(
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 585
+Content-Type: text/html; charset=UTF-8
+
+
+uiopen('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/diary',1)
+close all
+webserver(4000)
+Webserver Available on http://localhost:4000/
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 371
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2F420072cd47618aedbf6d7003e5cf941a-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fbos_5.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '371'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/bos_5.jpg
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (oxford_001085.jpg) with 72 inliers - thats good enough!
+Match has a score of 7.211196e+01. Found new object, hertford
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match is in excluded classes set (hertford)
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (hertford)
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (hertford)
+Found match (all_souls_000132.jpg) with 6 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (hertford)
+Potential match has no class - ignoring it
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 694
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 377
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2F1fd775932919723d392f06a4a8b64425-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fashmolean_3.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '377'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/ashmolean_3.jpg
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (ashmolean_000305.jpg) with 53 inliers - thats good enough!
+Match has a score of 5.310849e+01. Found new object, ashmolean
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Found match (bodleian_000395.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000440.jpg) with 6 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (ashmolean)
+Found match (radcliffe_camera_000420.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000470.jpg) with 5 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 711
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 378
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2Fdf02500a8195437f60fa33f6fb8e7eb9-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fbod-keble_18.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '378'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/bod-keble_18.jpg
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (keble_000028.jpg) with 55 inliers - thats good enough!
+Match has a score of 5.510604e+01. Found new object, keble
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Found match (all_souls_000145.jpg) with 9 inliers - thats good enough!
+Match has a score of 9.092469e+00. Found new object, radcliffe_camera
+Added to matches! 
+Search stopped as max_objects hit
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 905
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 377
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2F5075054846ed5200e8b5db225a588aff-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fashmolean_4.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '377'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/ashmolean_4.jpg
+Exception "java.lang.ClassNotFoundException: com.intellij.openapi.editor.RawText"while constructing DataFlavor for: application/x-java-jvm-local-objectref; class=com.intellij.openapi.editor.RawText
+Exception "java.lang.ClassNotFoundException: com.intellij.openapi.editor.RawText"while constructing DataFlavor for: application/x-java-jvm-local-objectref; class=com.intellij.openapi.editor.RawText
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (ashmolean_000305.jpg) with 53 inliers - thats good enough!
+Match has a score of 5.310849e+01. Found new object, ashmolean
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Found match (bodleian_000395.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000440.jpg) with 6 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (ashmolean)
+Found match (radcliffe_camera_000420.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000470.jpg) with 5 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 711
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 373
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2Fe18065effcd6d6a188841797c33eb0e4-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fchch_10.JPG%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '373'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/chch_10.JPG
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Found match (christ_church_000228.jpg) with 109 inliers - thats good enough!
+Match has a score of 1.092136e+02. Found new object, christ_church
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (christ_church)
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 720
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 378
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2F5b23411a5590f13014eeb2d107dcce86-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fbod-keble_19.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '378'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/bod-keble_19.jpg
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (keble_000028.jpg) with 55 inliers - thats good enough!
+Match has a score of 5.510604e+01. Found new object, keble
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Found match (all_souls_000145.jpg) with 9 inliers - thats good enough!
+Match has a score of 9.092469e+00. Found new object, radcliffe_camera
+Added to matches! 
+Search stopped as max_objects hit
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 905
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 373
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2F92d7aa5c60bf77b23c09344dc352e2ea-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fchch_11.JPG%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '373'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/chch_11.JPG
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Found match (christ_church_000228.jpg) with 109 inliers - thats good enough!
+Match has a score of 1.092136e+02. Found new object, christ_church
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (christ_church)
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Potential match is in excluded classes set (christ_church)
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 720
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 371
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2F7a2200e0665a8cf97b002e5ace7f0a65-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fbos_6.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '371'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/bos_6.jpg
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (oxford_001085.jpg) with 72 inliers - thats good enough!
+Match has a score of 7.211196e+01. Found new object, hertford
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match is in excluded classes set (hertford)
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (hertford)
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (hertford)
+Found match (all_souls_000132.jpg) with 6 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (hertford)
+Potential match has no class - ignoring it
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 694
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /test_connect.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 17
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+app_name=djmatlab
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '17'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 56
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 192
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fdjmatlab%2Fmatlab%2Ftest_functions%2Ftest_sum.m&arguments=%7B%22echo%22%3A+%22Matlab%3A+Function+processor+is+working%21%22%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '192'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 285
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 377
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2F60e5d43177975da7c8e268252c645a30-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fashmolean_5.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '377'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/ashmolean_5.jpg
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (ashmolean_000305.jpg) with 53 inliers - thats good enough!
+Match has a score of 5.310849e+01. Found new object, ashmolean
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Found match (bodleian_000395.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000440.jpg) with 6 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (ashmolean)
+Found match (radcliffe_camera_000420.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000470.jpg) with 5 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 711
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 377
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2F0c0698570df21b240408b499a0eaaee1-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fashmolean_6.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '377'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/ashmolean_6.jpg
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (ashmolean_000305.jpg) with 53 inliers - thats good enough!
+Match has a score of 5.310849e+01. Found new object, ashmolean
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Found match (bodleian_000395.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000440.jpg) with 6 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (ashmolean)
+Found match (radcliffe_camera_000420.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000470.jpg) with 5 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 711
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 377
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2F2f79adfd295f897d22e91ea4f832c974-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fashmolean_7.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '377'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/ashmolean_7.jpg
+Exception "java.lang.ClassNotFoundException: com.intellij.openapi.editor.RawText"while constructing DataFlavor for: application/x-java-jvm-local-objectref; class=com.intellij.openapi.editor.RawText
+Exception "java.lang.ClassNotFoundException: com.intellij.openapi.editor.RawText"while constructing DataFlavor for: application/x-java-jvm-local-objectref; class=com.intellij.openapi.editor.RawText
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (ashmolean_000305.jpg) with 53 inliers - thats good enough!
+Match has a score of 5.310849e+01. Found new object, ashmolean
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Found match (bodleian_000395.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000440.jpg) with 6 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (ashmolean)
+Found match (radcliffe_camera_000420.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000470.jpg) with 5 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a22; path=/
+Expires: Thu, 19 Nov 1980 08:00:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate, post-check=0, pre-check=0
+Pragma: no-cache
+Connection: close
+Content-Length: 711
+Content-Type: text/html; charset=UTF-8
+
+
+POST /web_feval.m HTTP/1.1
+Accept-Encoding: identity
+Content-Length: 377
+Host: localhost:4000
+Content-Type: application/x-www-form-urlencoded
+Connection: close
+User-Agent: Python-urllib/2.6
+
+func_path=%2FUsers%2Fjaderberg%2FSites%2F4YP%2Fvisualindex%2Fdemo_mongo_getobjects.m&arguments=%7B%22log_file%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Flogs%2Facadce44ad42bf55ecaa1c593b519e8e-log.txt%22%2C+%22image_path%22%3A+%22%2FUsers%2Fjaderberg%2FSites%2F4YP%2FIntelligentImage%2Fmedia%2Fuploads%2Fashmolean_8.jpg%22%2C+%22display%22%3A+1%7D
+              Post: [1x1 struct]
+    AcceptEncoding: 'identity'
+     ContentLength: '377'
+              Host: 'localhost:4000'
+       ContentType: [1x1 struct]
+        Connection: 'close'
+         UserAgent: 'Python-urllib/2.6'
+           Content: [1x1 struct]
+
+VLFeat 0.9.13 ready.
+{Warning: Invalid file or directory
+'/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/mongo-2.7.2.jar'.} 
+> In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',276,1)">javaclasspath>local_validate_dynamic_path at 276</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',184,1)">javaclasspath>local_javapath at 184</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaclasspath.m',119,1)">javaclasspath at 119</a>
+  In <a href="matlab: opentoline('/Applications/MATLAB_R2011a.app/toolbox/matlab/general/javaaddpath.m',69,1)">javaaddpath at 69</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/mongo_db_creator.m',10,1)">mongo_db_creator at 10</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m',31,1)">demo_mongo_getobjects at 31</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/functions/run_dot_m.m',24,1)">run_dot_m at 24</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/www/web_feval.m',49,1)">web_feval at 49</a>
+  In <a href="matlab: opentoline('/Users/jaderberg/Sites/4YP/IntelligentImage/djmatlab/matlab/webserver.m',117,1)">webserver at 117</a>
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/ashmolean_8.jpg
+Getting features...
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Found match (ashmolean_000305.jpg) with 53 inliers - thats good enough!
+Match has a score of 5.310849e+01. Found new object, ashmolean
+Added to matches! 
+Already got features!
+Getting words...
+Getting histogram...
+Getting histogram-based matches
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Found match (bodleian_000395.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000440.jpg) with 6 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match is in excluded classes set (ashmolean)
+Found match (radcliffe_camera_000420.jpg) with 5 inliers - not good enough, looking for another...
+Found match (radcliffe_camera_000470.jpg) with 5 inliers - not good enough, looking for another...
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Potential match has no class - ignoring it
+Match has a score of 0. Score not large enough to be certain - no match
+Query complete
+HTTP/1.0 200 OK
+Date: Tue, 12 Oct 2010 09:19:05 GMT
+Server: Matlab Webserver
+X-Powered-By: Matlab7.12.0.635 (R2011a)
+Set-Cookie: SESSID=5322082bf473207961031e3df1f45a

@@ -17,6 +17,8 @@ urlpatterns = patterns('',
     url(r'^$', 'IntelligentImage.home.views.home', name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^upload/$', 'IntelligentImage.home.views_xhr.upload_image', name='upload_image'),
+    url(r'^session/$', 'IntelligentImage.home.views_xhr.get_session_key', name='get_session_key'),
+    url(r'^log/(?P<session_key>[0-9a-f]+)/$', 'IntelligentImage.home.views_xhr.get_log', name='get_log'),
     url(r'^tag/(?P<image_id>[0-9]+)/$', 'IntelligentImage.home.views_xhr.tag_image', name='tag_image'),
 
 )

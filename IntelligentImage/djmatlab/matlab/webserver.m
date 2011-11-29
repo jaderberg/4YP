@@ -119,6 +119,7 @@ while(true)
                 html=['<html><body><font color="#FF0000">Error in file : ' name ...
                     '.m</font><br><br><font color="#990000"> The file returned the following error: <br>' ...
                     ME.message '</font></body></html>'];
+                fprintf(ME.message);
             end
             rmpath(pathstr)
             header=make_html_http_header(html,found);

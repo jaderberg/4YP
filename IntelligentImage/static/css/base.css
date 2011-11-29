@@ -262,3 +262,14 @@ a.button {
         }
     }
 }
+
+#log-window {
+    background-color: #333333;
+    margin: 20px;
+    padding: 10px;
+
+    p {
+        color: #33ff00;
+        font-family: consolas, monaco, "Courier New", courier, monospace
+    }
+}

@@ -22,9 +22,7 @@
             <a href="http://twitter.com/maxjaderberg" target="_blank"><h2>Max Jaderberg</h2></a>
         </div>
 
-        <div id="loading-box" class="smooth-box" style="display: none;">
-            <img src="{{ STATIC_URL }}img/loading.gif">
-        </div>
+
 
         <div id="upload-box" class="smooth-box">
             <div style="height: 70px;">
@@ -40,11 +38,20 @@
         </div>
 
         <div id="img-preview-box" class="img-smooth-box" style="display: none;">
-            <a id="tag-img-button" class="button" href="">Tag Image</a>
+            <a data-sessionurl="{% url get_session_key %}" id="tag-img-button" class="button" href="">Tag Image</a>
         </div>
 
+        <div id="log-box" class="img-smooth-box" style="display:none;">
+            <div id="log-window">
+                <p> > <span>Hello world!</span></p>
+            </div>
+        </div>
 
         <div id="tagged-img-box" class="img-smooth-box" style="display: none;">
+        </div>
+
+        <div id="loading-box" class="smooth-box" style="display: none;">
+            <img src="{{ STATIC_URL }}img/loading.gif">
         </div>
 
         <div class="push"></div>

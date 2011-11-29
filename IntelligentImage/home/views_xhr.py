@@ -10,6 +10,7 @@ from home.forms import UploadedImageForm
 from home.models import UploadedImage
 import time
 from os.path import basename
+from django.conf import settings
 
 IMAGE_WIDTH = 560
 
@@ -41,6 +42,24 @@ def upload_image(request):
     return response
 
 @json_response
+def get_session_key(request):
+    response = {
+        'success': True,
+        'key': request.session.session_key,
+    }
+    return response
+
+@json_response
+def get_log(request, session_key):
+    filename = '%slogs/%s-log.txt' % (settings.MEDIA_ROOT, session_key)
+    f = open(filename, 'r')
+    response = {
+        'success': True,
+        'lines': f.readlines(),
+    }
+    return response
+
+@json_response
 def tag_image(request, image_id):
 
     if not request.method == 'POST':
@@ -66,7 +85,8 @@ def tag_image(request, image_id):
     while matlab.running:
 #       Matlab is already processing something, wait
         time.sleep(2)
-    resp = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/demo_getobjects.m', {'image_path': query_image_path, 'display': 1}, maxtime=999999)
+    
+    resp = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m', {'image_path': query_image_path, 'display': 1, 'log_file': '%slogs/%s-log.txt' % (settings.MEDIA_ROOT, request.POST.get('key'))}, maxtime=999999)
 
     if resp['success'] == 'false':
         response['error'] = 'Something went wrong...'
@@ -89,34 +109,21 @@ def tag_image(request, image_id):
         width = int(scale_factor*rectangle['width'])
         height = int(scale_factor*rectangle['height'])
 
+        try:
+            object_class = match['class']
+        except KeyError:
+            object_class = object_name[0] if object_name else 'Unknown Object'
+
+
+
         objects.append({
-            'label': object_name[0].replace('_', ' ').title() if object_name else 'Unknown Object',
-            'url': 'http://en.wikipedia.org/wiki/%s' % slugify(object_name[0]).title() if object_name else '',
+            'label': object_class.replace('_', ' ').title(),
+            'url': 'http://en.wikipedia.org/wiki/%s' % slugify(object_class).title(),
             'left': left,
             'top': top,
             'width': width,
             'height': height,
         })
-
-    print objects
-
-
-#    objects.append({
-#        'label': 'Buckingham Palace',
-#        'url': 'http://en.wikipedia.org/wiki/Buckingham_Palace',
-#        'left': 200,
-#        'top': 120,
-#        'width': 300,
-#        'height': 100,
-#    })
-#    objects.append({
-#        'label': 'Victoria Memorial',
-#        'url': 'http://en.wikipedia.org/wiki/Victoria_Memorial_(London)',
-#        'left': 50,
-#        'top': 50,
-#        'width': 80,
-#        'height': 100,
-#    })
 
     response['success'] = True
     response['html'] = render_to_string('tagged_image.html', {'image': uploaded_image, 'objects': objects}, context_instance=RequestContext(request))

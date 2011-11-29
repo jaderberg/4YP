@@ -3,7 +3,7 @@
 function [result frames descrs] = image_query( im, histograms, ids, vocab, conf, coll, varargin )
 %IMAGE_QUERY returns the matched images from the query
 
-    profile on;
+    %profile on;
 
     import com.mongodb.BasicDBObject;
     import org.bson.types.ObjectId;
@@ -11,6 +11,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
     opts.exclude = [];  
     opts.depth = 20;
     opts.frames = []; opts.descrs = [];
+    opts.excludeClasses = {};
     opts = vl_argparse(opts, varargin);
     
     frames = opts.frames; descrs = opts.descrs;
@@ -49,7 +50,6 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
     fprintf('Getting words...\n');
     fake_model.vocab = vocab;
     words = visualindex_get_words(fake_model, descrs);
-    clear descrs;
     
 %     Get the histogram
     fprintf('Getting histogram...\n');
@@ -70,6 +70,30 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
         match_id = ids{perm_ind};
 %         Get the words and frames for potential match
         db_im = coll.findOne(BasicDBObject('_id', ObjectId(match_id)));
+        
+%         if the potential match is in the excluded classes set, continue
+        match_class = db_im.get('class');
+        if ~isempty(match_class)
+            if find(ismember(opts.excludeClasses, match_class)==1)
+                fprintf('Potential match is in excluded classes set (%s)\n', db_im.get('class'));
+                if i == opts.depth
+                    result.score = 0;
+                    return
+                else
+                    continue
+                end
+            end
+        else
+            fprintf('Potential match has no class - ignoring it\n');
+            if i == opts.depth
+                result.score = 0;
+                return
+            else
+                scores(i) = 0; 
+                continue
+            end
+        end
+        
         db_model = db_im.get('model');
         match_words = eval(db_model.get('words'));
         match_frames = eval(db_model.get('frames'));
@@ -81,7 +105,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
         scores(i) = match_score + scores(i);
 %        If there are enough inliers (the score) we have found a spatially
 %        verified match
-        if match_score > 10
+        if match_score >= 8
 %             this is definitely a match
             fprintf('thats good enough!\n');
             break
@@ -96,10 +120,10 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
     
     match_perm = perm(ind);
     result.id = ids{match_perm};
-    result.score = best_score;
+    result.score = full(best_score);
     result.match = matches(ind);
     
-    profile viewer;
+    %profile viewer;
     
 end
 
