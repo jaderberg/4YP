@@ -7,7 +7,7 @@ function [conf, coll] = mongo_db_creator(varargin)
 %   NB: For mongodb driver reference see http://www.mongodb.org/display/DOCS/Java+Tutorial
 
 
-    javaaddpath('mongo-2.7.2.jar')
+%     javaaddpath('mongo-2.7.2.jar')
 
     import com.mongodb.Mongo;
     import com.mongodb.DB;

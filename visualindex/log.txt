@@ -1,9 +1,6 @@
-Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
-Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
-Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
-Query image /Users/jaderberg/Desktop/chch.jpg
+Query image /Users/jaderberg/Desktop/keble.jpg
 Starting match process...
-Match has a score of 1.092136e+02. Found new object, christ_church
+Match has a score of 5.209933e+01. Found new object, keble
 Added to matches! 
 Looking for another object...
 Match has a score of 0. Score not large enough to be certain - no match

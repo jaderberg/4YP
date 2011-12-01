@@ -1,15 +1,20 @@
 % Max Jaderberg 28/11/11
 
-function result = demo_mongo_getobjects(args)
+function [result fuckme] = demo_mongo_getobjects(args)
 %     Returns the name, link and rectangle coordinates for object in image
 %     Uses the 5k oxford dataset at time of writing 29/11/11
 
-    javaaddpath('/Users/jaderberg/Sites/4YP/visualindex/mongo-2.7.2.jar')
+    
 
+    %javaaddpath('/Users/jaderberg/Sites/4YP/visualindex/mongo-2.7.2.jar')
+
+    
+    
     addpath('/Users/jaderberg/Sites/4YP/visualindex/max_dev');
     
     import com.mongodb.BasicDBObject;
     import org.bson.types.ObjectId;
+    
 
     imagePath = args.image_path;
     display = 0;
@@ -24,31 +29,43 @@ function result = demo_mongo_getobjects(args)
     
     figures = 1;
     
+    
+    
     % setup VLFeat
     run /Users/jaderberg/Sites/4YP/visualindex/vlfeat/toolbox/vl_setup ;
+    
     
 %     Get the database collection + configuration file
     [conf, coll] = mongo_db_creator();
     
-%     Either load or create the histograms and ids
-    if exist(fullfile(conf.modelDataDir, 'histograms.mat'), 'file') 
-%         assume ids and vocab files are present
-        fprintf('Loading histograms in %s\n', conf.modelDataDir);
-        fprintf(log_file, 'Loading histograms in %s\n', conf.modelDataDir);
-        m = load(fullfile(conf.modelDataDir, 'histograms.mat'));
-        histograms = m.histograms;
-        fprintf('Loading ids in %s\n', conf.modelDataDir);
-        fprintf(log_file, 'Loading ids in %s\n', conf.modelDataDir);
-        m = load(fullfile(conf.modelDataDir, 'ids.mat'));
-        ids = m.ids;
-        fprintf('Loading vocab in %s\n', conf.modelDataDir);
-        fprintf(log_file, 'Loading vocab in %s\n', conf.modelDataDir);
-        vocab = load(fullfile(conf.modelDataDir, 'vocab.mat'));
-        clear m;
-    else
-        fprintf('Beginning visual index building...\n');
-        fprintf(log_file, 'Beginning visual index building...\n');
-        [histograms ids vocab] = build_index(coll, conf, 'numWords', conf.numWords);
+    
+%     See if the global variables exist
+    global histograms
+    global ids
+    global vocab
+    
+    
+    if isempty(histograms) || isempty(ids) || isempty(vocab)
+    %     Either load or create the histograms and ids
+        if exist(fullfile(conf.modelDataDir, 'histograms.mat'), 'file') 
+    %         assume ids and vocab files are present
+            fprintf('Loading histograms in %s\n', conf.modelDataDir);
+            fprintf(log_file, 'Loading histograms in %s\n', conf.modelDataDir);
+            m = load(fullfile(conf.modelDataDir, 'histograms.mat'));
+            histograms = m.histograms;
+            fprintf('Loading ids in %s\n', conf.modelDataDir);
+            fprintf(log_file, 'Loading ids in %s\n', conf.modelDataDir);
+            m = load(fullfile(conf.modelDataDir, 'ids.mat'));
+            ids = m.ids;
+            fprintf('Loading vocab in %s\n', conf.modelDataDir);
+            fprintf(log_file, 'Loading vocab in %s\n', conf.modelDataDir);
+            vocab = load(fullfile(conf.modelDataDir, 'vocab.mat'));
+            clear m;
+        else
+            fprintf('Beginning visual index building...\n');
+            fprintf(log_file, 'Beginning visual index building...\n');
+            [histograms ids vocab] = build_index(coll, conf, 'numWords', conf.numWords);
+        end
     end
     
     %     Read Image
@@ -72,6 +89,8 @@ function result = demo_mongo_getobjects(args)
     result.query_image.sz = sz;
     result.matches = {};
     result.classes = {};
+    global fuckme
+    fuckme = 2;
     
     exclusion_matrix = [];
     pass_number = 1;
