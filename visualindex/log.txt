@@ -1,7 +1,9 @@
-Query image /Users/jaderberg/Desktop/keble.jpg
+Query image /Users/jaderberg/Desktop/bod-keble.jpg
 Starting match process...
-Match has a score of 5.209933e+01. Found new object, keble
+Match has a score of 5.530057e+01. Found new object, keble
 Added to matches! 
 Looking for another object...
-Match has a score of 0. Score not large enough to be certain - no match
+Match has a score of 1.425317e+01. Found new object, radcliffe_camera
+Added to matches! 
+Search stopped as max_objects hit
 Query complete

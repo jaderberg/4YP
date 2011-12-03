@@ -54,6 +54,8 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
 %     Get the histogram
     fprintf('Getting histogram...\n');
     histogram = visualindex_get_histogram(fake_model, words);
+%     times by tf-idf weights
+    histogram = histogram.*vocab.weights;
     
     
     % compute histogram-based score
