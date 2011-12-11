@@ -6,12 +6,10 @@ function result = demo_mongo_getobjects(args)
 
     
 
-    %javaaddpath('/Users/jaderberg/Sites/4YP/visualindex/mongo-2.7.2.jar')
+    %javaaddpath('/Users/jaderberg/Sites/4YP/visualindex/oxford_dataset/mongo-2.7.2.jar')
 
     
-    
-    addpath('/Users/jaderberg/Sites/4YP/visualindex/max_dev');
-    
+        
     import com.mongodb.BasicDBObject;
     import org.bson.types.ObjectId;
     
