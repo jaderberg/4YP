@@ -10,7 +10,7 @@ import org.bson.types.ObjectId;
 % Setup
 opts.numWords = 10000 ;
 opts.numKMeansIterations = 20 ;
-opts.forceWords = 0; opts.forceFeatures = 0;
+opts.forceWords = 0; 
 opts.skipFeatures = 0;
 opts = vl_argparse(opts, varargin) ;
 
@@ -53,31 +53,21 @@ else
     %     Retrieve the image database entry
         image = coll.find().sort(BasicDBObject('name', 1)).skip(i-1).limit(1).toArray.get(0);
         image_id = image.get('_id').toString.toCharArray';
-        im_frames = mongo_get_frames(coll, 'id', image_id);
-        im_descrs = mongo_get_descrs(coll, 'id', image_id);
         image_name = image.get('name');
 
-        if opts.forceFeatures
-            im_frames = []; im_descrs = [];
-        end
 
-        if (~isempty(im_frames)) && (~isempty(im_descrs))
-    %         The sift features are already computed
-           fprintf('Already added image %s (%d of %d)\n', image.get('name'), i, num_images) ;
-        else
-    %         Compute the features
-            fprintf('Adding image %s (%d of %d)\n', image.get('name'), i, num_images) ;
 
-            im = imread(fullfile(image.get('directory'), image_name)) ;
-            [im_frames,im_descrs] = visualindex_get_features(model, im) ;
+%         Compute the features
+        fprintf('Adding image %s (%d of %d)\n', image.get('name'), i, num_images) ;
 
-    %         Add to mongoDB
-            im_model = BasicDBObject();
-            im_model.put('frames', serialize(im_frames,3));
-            im_model.put('descrs', serialize(im_descrs,3));
-            image.put('model', im_model);
-            coll.save(image);
-        end
+        im = imread(fullfile(image.get('directory'), image_name)) ;
+        [im_frames,im_descrs] = visualindex_get_features(model, im) ;
+
+%         Add to mongoDB
+        im_model = BasicDBObject();
+        im_model.put('frames', serialize(im_frames,3));
+        image.put('model', im_model);
+        coll.save(image);
 
     %     Add to filesystem
         if ~exist(fullfile(conf.framesDataDir, [image_name '-frames.mat']), 'file')
@@ -149,7 +139,9 @@ for t = 1:num_images
         fprintf('Already got words for %s\n', image_name);
     else
         fprintf('Getting words for %s\n', image_name);
-        im_descrs = mongo_get_descrs(coll, 'id', image_id);
+        im_descrs_struct = load(fullfile(conf.descrsDataDir, [image_name '-descrs.mat']));
+        im_descrs = im_descrs_struct.im_descrs;
+        clear im_descrs_struct;
         fake_model.vocab.tree = vocab.tree; fake_model.vocab.centers = vocab.centers;
         im_words = visualindex_get_words(fake_model, im_descrs);
         im_model.put('words', serialize(im_words));
@@ -158,6 +150,8 @@ for t = 1:num_images
     end
     
     clear im_descrs;
+%     delete the descrs file (its not needed ever again)
+    delete(fullfile(conf.descrsDataDir, [image_name '-descrs.mat']));
     
    
     im_histogram = sparse(double(im_words),1,...

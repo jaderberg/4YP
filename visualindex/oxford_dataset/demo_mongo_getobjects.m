@@ -34,7 +34,7 @@ function result = demo_mongo_getobjects(args)
     
     
 %     Get the database collection + configuration file
-    [conf, coll] = mongo_db_creator();
+    [conf, coll] = mongo_db_creator('rootDir', '/Volumes/4YP/oxford_visualindex');
     
     
 %     See if the global variables exist

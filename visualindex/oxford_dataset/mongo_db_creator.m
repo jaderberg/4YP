@@ -2,7 +2,7 @@
 
 function [conf, coll] = mongo_db_creator(varargin)
 %     Creates the mongodb database with the images.
-%   Remeber to run mongodb! /usr/local/Cellar/mongodb/2.0.1-x86_64/bin/mongod --dbpath /Volumes/4YP/mongodb/data/
+%   Remeber to run mongodb! /usr/local/Cellar/mongodb/2.0.1-x86_64/bin/mongod --dbpath /Volumes/4YP/oxford_visualindex/mongo_db/
 %   Code from http://stackoverflow.com/questions/3886461/connecting-to-mongodb-from-matlab
 %   NB: For mongodb driver reference see http://www.mongodb.org/display/DOCS/Java+Tutorial
 
@@ -123,7 +123,6 @@ function [conf, coll] = mongo_db_creator(varargin)
             end
             
         end
-        filename = groundtruth_files{i};
         a = regexp(groundtruth_files{i}, '([\w_]+)_[0-9]+_(good|ok|junk).txt', 'tokens') ;
         if ~isempty(a),
             cl = a{1}{1};
