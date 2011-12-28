@@ -1,0 +1,9 @@
+Query image /Users/jaderberg/Desktop/bod-keble.jpg
+Starting match process...
+Match has a score of 4.828195e+01. Found new object, keble
+Added to matches! 
+Looking for another object...
+Match has a score of 1.525150e+01. Found new object, radcliffe_camera
+Added to matches! 
+Search stopped as max_objects hit
+Query complete
