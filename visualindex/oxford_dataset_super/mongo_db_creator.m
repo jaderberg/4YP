@@ -47,12 +47,14 @@ function [conf, coll] = mongo_db_creator(varargin)
     conf.descrsDataDir = [conf.dataDir '/descrs'];
     conf.histogramsDataDir = [conf.dataDir '/histograms'];
     conf.wordsDataDir = [conf.dataDir '/words'];
+    conf.superhistsDataDir = [conf.dataDir '/superhists'];
     conf.classhistsDataDir = [conf.dataDir '/classhists'];
     vl_xmkdir(conf.modelDataDir); 
     vl_xmkdir(conf.framesDataDir);
     vl_xmkdir(conf.descrsDataDir);
     vl_xmkdir(conf.histogramsDataDir);
     vl_xmkdir(conf.wordsDataDir);
+    vl_xmkdir(conf.superhistsDataDir);
     vl_xmkdir(conf.classhistsDataDir);
     
 %     Get the data files

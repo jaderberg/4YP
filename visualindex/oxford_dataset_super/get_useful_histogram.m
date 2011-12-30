@@ -1,12 +1,21 @@
 % Max Jaderberg 28/12/11
 
-function useful_histogram = get_useful_histogram(q_im_f, q_im_w, q_im_h, I_f, I_w, I_h, vocab)
+function useful_histogram = get_useful_histogram(q_im_f, q_im_w, q_im_h, I_f, I_w, I_h, vocab, varargin)
 % q_im_f: frames of query image
 % q_im_w: words of query image
 % q_im_h: the tfidf weighted histogram of query image
 % I_f: cells with frames of images to verify against
 % I_w: cells with words of images to verify against
 % I_h: the tfidf weighted histograms of images to verify against
+
+    opts.exclude = 0;
+    opts = vl_argparse(opts, varargin);
+    
+    if length(I_f) == 1 && opts.exclude
+%         its a singleton!
+        useful_histogram = q_im_h;
+        return
+    end
 
     verified_words = sparse([]);
     useful_histograms = sparse([]);
@@ -15,6 +24,9 @@ function useful_histogram = get_useful_histogram(q_im_f, q_im_w, q_im_h, I_f, I_
 
 %     for each image to verify against
     for i=1:length(I_f)
+        if opts.exclude == i
+            continue
+        end
         [score matches] = spatially_verify(q_im_f, q_im_w, I_f{i}, I_w{i}, 0);
         if score > 5
             unique_verified_words = unique(matches.words);
@@ -25,8 +37,10 @@ function useful_histogram = get_useful_histogram(q_im_f, q_im_w, q_im_h, I_f, I_
         end
     end
     
-    useful_words = sum(verified_words, 1) ~= 0;
+    useful_words = sum(verified_words, 2) ~= 0;
     
 %     image augmentation
-    useful_histogram = useful_words.*q_im_h + sum(useful_histograms, 1);
+    useful_words
+    q_im_h
+    useful_histogram = useful_words.*q_im_h + sum(useful_histograms, 2);
     

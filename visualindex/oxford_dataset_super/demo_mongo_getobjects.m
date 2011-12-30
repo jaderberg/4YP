@@ -66,6 +66,10 @@ function result = demo_mongo_getobjects(args)
         end
     end
     
+    fprintf('SUPERCHARGING!!!!\n');
+    [class_names class_hists useful_histograms] = supercharge_images(coll, conf, vocab);
+
+    
     %     Read Image
     fprintf('Query image %s\n', imagePath) ;
     fprintf(log_file, 'Query image %s\n', imagePath) ;
