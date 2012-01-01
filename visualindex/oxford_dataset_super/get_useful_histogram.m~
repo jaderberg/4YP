@@ -38,9 +38,11 @@ function useful_histogram = get_useful_histogram(q_im_f, q_im_w, q_im_h, I_f, I_
     useful_words = sum(verified_words, 2) ~= 0;
     
     if isempty(useful_words)
-        useful_words = sparse(1:vocab.size, 1, 0);
+        useful_words = 
     end
     
 %     image augmentation
+    useful_words
+    q_im_h
     useful_histogram = useful_words.*q_im_h + sum(useful_histograms, 2);
     

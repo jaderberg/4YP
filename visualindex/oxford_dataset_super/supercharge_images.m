@@ -3,8 +3,9 @@
 function [m_classes super_class_histograms useful_histograms] = supercharge_images(coll, conf, vocab)
 
     if exist(fullfile(conf.modelDataDir, 'useful_histograms.mat') ,'file')
+        fprintf('Loading precomputed histograms...\n');
         temp_struct = load(fullfile(conf.modelDataDir, 'class_names.mat'));
-        m_classes = temp_struct.class_names;
+        m_classes = temp_struct.m_classes;
         temp_struct = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
         super_class_histograms = temp_struct.super_class_histograms;
         temp_struct = load(fullfile(conf.modelDataDir, 'useful_histograms.mat'));
@@ -66,8 +67,9 @@ function [m_classes super_class_histograms useful_histograms] = supercharge_imag
                     useful_histogram(I(1:end-300)) = 0;
                     save(fullfile(conf.superhistsDataDir, [id '-superhist.mat']), 'useful_histogram');
                 else
+                    fprintf('Already created super hist for image %d of %d\n', j, length(class_ids));
                     useful_hist_struct = load(fullfile(conf.superhistsDataDir, [id '-superhist.mat']));
-                    useful_histogram = useful_hist_struct.useful_histograms;
+                    useful_histogram = useful_hist_struct.useful_histogram;
                     clear useful_hist_struct;
                 end
     %             add to list of useful histograms and save a copy
