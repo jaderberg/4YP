@@ -67,7 +67,7 @@ function result = demo_mongo_getobjects(args)
     end
     
     fprintf('SUPERCHARGING!!!!\n');
-    [class_names class_hists useful_histograms] = supercharge_images(coll, conf, vocab);
+    [class_names class_hists useful_histograms useful_ids] = supercharge_images(coll, conf, vocab);
 
     
     %     Read Image
@@ -102,6 +102,7 @@ function result = demo_mongo_getobjects(args)
     
     while pass_number < max_objects*max_tries_per_object
         
+        match_class(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
         [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
 
         fprintf('Match has a score of %d. ', best_match.score);

@@ -1,6 +1,6 @@
-Query image /Users/jaderberg/Desktop/keble.jpg
+Query image /Users/jaderberg/Desktop/bos.jpg
 Starting match process...
-Match has a score of 3.630588e+01. Found new object, keble
+Match has a score of 6.935917e+01. Found new object, hertford
 Added to matches! 
 Looking for another object...
 Match has a score of 0. Score not large enough to be certain - no match
