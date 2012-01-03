@@ -49,6 +49,7 @@ function [conf, coll] = mongo_db_creator(varargin)
     conf.wordsDataDir = [conf.dataDir '/words'];
     conf.superhistsDataDir = [conf.dataDir '/superhists'];
     conf.classhistsDataDir = [conf.dataDir '/classhists'];
+    conf.classesDataDir = [conf.dataDir '/classes'];
     vl_xmkdir(conf.modelDataDir); 
     vl_xmkdir(conf.framesDataDir);
     vl_xmkdir(conf.descrsDataDir);
@@ -56,6 +57,7 @@ function [conf, coll] = mongo_db_creator(varargin)
     vl_xmkdir(conf.wordsDataDir);
     vl_xmkdir(conf.superhistsDataDir);
     vl_xmkdir(conf.classhistsDataDir);
+    vl_xmkdir(conf.classesDataDir);
     
 %     Get the data files
     if ~exist(conf.gtDir, 'dir')
