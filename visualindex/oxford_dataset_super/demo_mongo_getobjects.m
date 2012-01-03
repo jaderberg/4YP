@@ -41,6 +41,9 @@ function result = demo_mongo_getobjects(args)
     global histograms
     global ids
     global vocab
+    global class_names
+    global class_hists
+    global classes_useful_hists
     
     
     if isempty(histograms) || isempty(ids) || isempty(vocab)
@@ -64,10 +67,11 @@ function result = demo_mongo_getobjects(args)
             fprintf(log_file, 'Beginning visual index building...\n');
             [histograms ids vocab] = build_index(coll, conf, 'numWords', conf.numWords);
         end
+        fprintf('SUPERCHARGING!!!!\n');
+        [class_names class_hists classes_useful_hists] = supercharge_images(coll, conf, vocab);
     end
     
-    fprintf('SUPERCHARGING!!!!\n');
-    [class_names class_hists useful_histograms useful_ids] = supercharge_images(coll, conf, vocab);
+    
 
     
     %     Read Image
