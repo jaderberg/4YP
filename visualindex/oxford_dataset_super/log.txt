@@ -1,7 +1,7 @@
-Query image /Users/jaderberg/Desktop/keble.jpg
+Query image /Users/jaderberg/Desktop/balliol.jpg
 Starting match process...
-Match has a score of 3.630588e+01. Found new object, keble
+Match has a score of 1.205088e+01. Found new object, balliol
 Added to matches! 
 Looking for another object...
-Match has a score of 0. Score not large enough to be certain - no match
+Match has a score of 5.030357e+00. Score not large enough to be certain - no match
 Query complete

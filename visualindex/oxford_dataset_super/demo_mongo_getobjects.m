@@ -61,14 +61,21 @@ function result = demo_mongo_getobjects(args)
             fprintf('Loading vocab in %s\n', conf.modelDataDir);
             fprintf(log_file, 'Loading vocab in %s\n', conf.modelDataDir);
             vocab = load(fullfile(conf.modelDataDir, 'vocab.mat'));
+            fprintf('Loading precomputed super histograms...\n');
+            m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
+            class_names = m.m_classes;
+            m = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
+            class_hists = m.super_class_histograms;
+            m = load(fullfile(conf.modelDataDir, 'classes_useful_hists.mat'));
+            classes_useful_hists = m.classes_useful_hists;
             clear m;
         else
             fprintf('Beginning visual index building...\n');
             fprintf(log_file, 'Beginning visual index building...\n');
             [histograms ids vocab] = build_index(coll, conf, 'numWords', conf.numWords);
+             fprintf('SUPERCHARGING!!!!\n');
+            [class_names class_hists classes_useful_hists] = supercharge_images(coll, conf, vocab);
         end
-        fprintf('SUPERCHARGING!!!!\n');
-        [class_names class_hists classes_useful_hists] = supercharge_images(coll, conf, vocab);
     end
     
     
@@ -106,12 +113,13 @@ function result = demo_mongo_getobjects(args)
     
     while pass_number < max_objects*max_tries_per_object
         
-        match_class(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
-        [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
+%         match_class(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
+%         [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
+        [best_match frames descrs] = image_query2(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
 
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
-        if best_match.score < 10
+        if best_match.score < 8
             fprintf('Score not large enough to be certain - no match\n');
             fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break

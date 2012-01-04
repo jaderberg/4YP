@@ -2,17 +2,6 @@
 
 function [m_classes super_class_histograms classes_useful_hists] = supercharge_images(coll, conf, vocab)
 
-    if exist(fullfile(conf.modelDataDir, 'useful_histograms.mat') ,'file')
-        fprintf('Loading precomputed histograms...\n');
-        temp_struct = load(fullfile(conf.modelDataDir, 'class_names.mat'));
-        m_classes = temp_struct.m_classes;
-        temp_struct = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
-        super_class_histograms = temp_struct.super_class_histograms;
-        temp_struct = load(fullfile(conf.modelDataDir, 'classes_useful_hists.mat'));
-        classes_useful_hists = temp_struct.classes_useful_hists;
-        clear temp_struct;
-        return
-    end
 
     import com.mongodb.BasicDBObject;
 

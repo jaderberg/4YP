@@ -55,11 +55,7 @@ function match_class(im, class_histograms, classes, vocab, conf, coll, varargin)
 %     times by tf-idf weights
     histogram = histogram.*vocab.weights;
     
-    
-    for i=1:length(classes)
-        class_histograms(:,i) = (1/sum(class_histograms(:,i)))*class_histograms(:,i);
-    end
-    
+
 %     Class match score
     scores = full(histogram' * class_histograms) ;
     

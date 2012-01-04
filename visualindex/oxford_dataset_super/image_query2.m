@@ -7,7 +7,8 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
     import org.bson.types.ObjectId;
 
     opts.exclude = [];  
-    opts.depth = 10;
+    opts.image_depth = 2;
+    opts.class_depth = 3;
     opts.frames = []; opts.descrs = [];
     opts.excludeClasses = {};
     opts = vl_argparse(opts, varargin);
@@ -55,17 +56,87 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
 %     times by tf-idf weights
     histogram = histogram.*vocab.weights;
     
-%     REMOVE THIS ONCE NORMALIZATION IS DONE IN THE INDEXING STAGE!!!!
-    for i=1:length(classes)
-        class_histograms(:,i) = (1/sum(class_histograms(:,i)))*class_histograms(:,i);
-    end
-%     -=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
     
 %     Class match score
-    scores = full(histogram' * class_histograms) ;
+    class_scores = full(histogram' * class_histograms) ;
     
-    [scores, perm] = sort(scores, 'descend') ;
+    [class_scores, perm] = sort(class_scores, 'descend') ;
     
-    for i=1:length(scores)
-        fprintf('%s : %f\n', classes{perm(i)}, scores(i));
+%     for the top classes, spatially verify to confirm class and matched
+%     region
+    spatially_verified = 0;
+    if length(class_scores) > opts.class_depth
+        class_limit = opts.class_depth;
+    else
+        class_limit = length(class_scores);
     end
+    for i=1:class_limit
+        class_name = classes{perm(i)};
+        
+        if find(ismember(opts.excludeClasses, class_name)==1)
+            fprintf('Matched class is in excluded classes set (%s)\n', class_name);
+            if i == length(class_scores)
+                result.score = 0;
+                return
+            else
+                continue
+            end
+        end
+        
+        fprintf('Checking if %s (score: %f)\n', classes{perm(i)}, class_scores(i));
+
+%         load the useful histograms for the class
+        temp = load(fullfile(conf.classesDataDir, class_name, 'class_ids.mat'));
+        class_images_ids = temp.class_ids;
+        temp = load(fullfile(conf.classesDataDir, class_name, 'class_useful_hists.mat'));
+        class_useful_hists = temp.class_useful_hists;
+        clear temp;
+        
+        image_scores = full(histogram' * class_useful_hists);
+        [image_scores im_perm] = sort(image_scores, 'descend');
+
+%         spatially verify an image
+        if opts.image_depth < length(class_images_ids)
+            im_limit = opts.image_depth;
+        else
+            im_limit = length(class_images_ids);
+        end
+        for j=1:im_limit;
+            match_id = class_images_ids{im_perm(j)};
+            %         Get the words and frames for potential match
+            db_im = coll.findOne(BasicDBObject('_id', ObjectId(match_id)));
+            db_model = db_im.get('model');
+            match_words = eval(db_model.get('words'));
+            match_frames = eval(db_model.get('frames'));
+            [match_score, matches(j)] = spatially_verify(match_frames, match_words, ...
+                                       frames, words, ...
+                                       size(im)) ;
+            matches(j).id = match_id;
+            fprintf('Found match (%s) with %d inliers - ', db_im.get('name'), match_score);
+            %         Add tf-idf to spatial score to avoid ties
+            image_scores(j) = match_score + image_scores(j);
+            if match_score >= 8
+                fprintf('thats good enough!\n');
+                spatially_verified = 1;
+                break
+            else
+                fprintf('not good enough, looking for another...\n');
+                clear db_im db_model match_words match_frames match_score match_id matches;        
+            end
+        end
+        
+        if spatially_verified
+            break
+        end
+    end
+    
+    
+    
+    [best_score ind] = max(image_scores(1:im_limit));
+    
+    result.score = full(best_score);
+    if ~exist('matches', 'var')
+        return
+    end
+    result.match = matches(ind);
+    result.id = result.match.id;
