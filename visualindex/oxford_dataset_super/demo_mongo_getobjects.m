@@ -4,7 +4,7 @@ function result = demo_mongo_getobjects(args)
 %     Returns the name, link and rectangle coordinates for object in image
 %     Uses the 5k oxford dataset at time of writing 29/11/11
 
-    
+    profile on;
 
     %javaaddpath('/Users/jaderberg/Sites/4YP/visualindex/oxford_dataset/mongo-2.7.2.jar')
 
@@ -115,11 +115,11 @@ function result = demo_mongo_getobjects(args)
         
 %         match_class(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
 %         [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
-        [best_match frames descrs] = image_query2(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
+        [best_match frames descrs] = image_query2(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs, 'pass_number', pass_number);
 
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
-        if best_match.score < 8
+        if best_match.score < 5
             fprintf('Score not large enough to be certain - no match\n');
             fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break
@@ -212,7 +212,7 @@ function result = demo_mongo_getobjects(args)
    
     
     
-    
+    profile viewer;
     
     
     

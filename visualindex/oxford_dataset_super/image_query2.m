@@ -7,6 +7,7 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
     import org.bson.types.ObjectId;
 
     opts.exclude = [];  
+    opts.pass_number = 1;
     opts.image_depth = 2;
     opts.class_depth = 3;
     opts.frames = []; opts.descrs = [];
@@ -108,6 +109,22 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
             db_model = db_im.get('model');
             match_words = eval(db_model.get('words'));
             match_frames = eval(db_model.get('frames'));
+%           -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+%             use only USEFUL words for RANSAC
+            useful_words = find(class_useful_hists(:,im_perm(j)) > 0);
+            new_words = [];
+            for k=1:length(useful_words)
+                word_i = find(match_words == useful_words(k));
+                if isempty(new_words)
+                    new_words = match_words(word_i);
+                    new_frames = match_frames(:, word_i);
+                else
+                    new_words = [new_words match_words(word_i)];
+                    new_frames = [new_frames match_frames(:, word_i)];
+                end
+            end
+            match_frames = new_frames; clear new_frames;
+            match_words = new_words; clear new_words;
             [match_score, matches(j)] = spatially_verify(match_frames, match_words, ...
                                        frames, words, ...
                                        size(im)) ;
@@ -115,7 +132,7 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
             fprintf('Found match (%s) with %d inliers - ', db_im.get('name'), match_score);
             %         Add tf-idf to spatial score to avoid ties
             image_scores(j) = match_score + image_scores(j);
-            if match_score >= 8
+            if match_score >= opts.pass_number*5
                 fprintf('thats good enough!\n');
                 spatially_verified = 1;
                 break

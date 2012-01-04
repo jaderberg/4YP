@@ -7,6 +7,13 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,s2)
     % find the features that are mapped to the same visual words
     [drop,m1,m2] = intersect(w1,w2) ;
     numMatches = length(drop) ;
+    fprintf('RANSAC: %d of the same words appear in each image\n', numMatches); 
+    if numMatches < 3
+        matches.lol = 'jk';
+        score = 0;
+        return
+    end
+    
 
     % get the 2D coordinates of these features in homogeneous notation
     X1 = f1(1:2, m1) ;
@@ -14,7 +21,7 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,s2)
     X1(3,:) = 1 ;
     X2(3,:) = 1 ;
 
-    thresh = max(max(s2)*0.02, 10) ;
+    thresh = max(max(s2)*0.02, 10)*1; 
 
     % RANSAC
     randn('state',0) ;
