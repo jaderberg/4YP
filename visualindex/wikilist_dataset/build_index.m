@@ -17,7 +17,6 @@ opts = vl_argparse(opts, varargin) ;
 randn('state',0) ;
 rand('state',0) ;
 
-model.rerankDepth = 40 ;
 vocab.size = opts.numWords ;
 
 
@@ -27,7 +26,8 @@ vocab.size = opts.numWords ;
 % Extract SIFT features from each image.
 
 % read features
-num_images = coll.find().count();
+coll_ims = coll.find();
+num_images = coll_ims.count();
 descrs = [];
 
 % Randomly sample the descrs for word creation (rule of thumb
@@ -51,31 +51,19 @@ else
     
     for i = 1:num_images
     %     Retrieve the image database entry
-        image = coll.find().sort(BasicDBObject('name', 1)).skip(i-1).limit(1).toArray.get(0);
+        image = coll_ims.next();
         image_id = image.get('_id').toString.toCharArray';
-        image_name = image.get('name');
-
-
 
 %         Compute the features
         fprintf('Adding image %s (%d of %d)\n', image.get('name'), i, num_images) ;
-
-        im = imread(fullfile(image.get('directory'), image_name)) ;
+        im = imread(image.get('path')) ;
         [im_frames,im_descrs] = visualindex_get_features(model, im) ;
 
-%         Add to mongoDB
-        im_model = BasicDBObject();
-        im_model.put('frames', serialize(im_frames,3));
-        image.put('model', im_model);
-        coll.save(image);
+%         Add to filesystem
+        save(fullfile(conf.framesDataDir, [image_id '-frames.mat']), 'im_frames');
+        save(fullfile(conf.descrsDataDir, [image_id '-descrs.mat']), 'im_descrs');
 
-    %     Add to filesystem
-        if ~exist(fullfile(conf.framesDataDir, [image_name '-frames.mat']), 'file')
-            save(fullfile(conf.framesDataDir, [image_name '-frames.mat']), 'im_frames');
-            save(fullfile(conf.descrsDataDir, [image_name '-descrs.mat']), 'im_descrs');
-        end
-
-        clear im_frames image im_model;
+        clear im_frames image;
 
     %     Randomly sample for word creation
         r = randi([1 p_], size(im_descrs, 2), 1);
@@ -124,68 +112,56 @@ clear descrs;
 % weights, and then reweight the histograms.
 
 histograms = cell(1, num_images) ;
+coll_ims = coll.find();
 for t = 1:num_images
-    image = coll.find().sort(BasicDBObject('name', 1)).skip(t-1).limit(1).toArray.get(0);
+    image = coll_ims.next();
     image_id = image.get('_id').toString.toCharArray';
     image_name = image.get('name');
     if opts.forceWords
         im_words = [];
     else
-        im_words = mongo_get_words(coll, 'id', image_id);
+        im_words = load_words(image_id, conf);
     end
-    im_model = image.get('model');
     
     if ~isempty(im_words)
         fprintf('Already got words for %s\n', image_name);
     else
         fprintf('Getting words for %s\n', image_name);
-        im_descrs_struct = load(fullfile(conf.descrsDataDir, [image_name '-descrs.mat']));
-        im_descrs = im_descrs_struct.im_descrs;
-        clear im_descrs_struct;
-        fake_model.vocab.tree = vocab.tree; fake_model.vocab.centers = vocab.centers;
-        im_words = visualindex_get_words(fake_model, im_descrs);
-        im_model.put('words', serialize(im_words));
-        coll.save(image);
-        clear fake_model;
+        im_descrs = load_descrs(image_id, conf);
+        im_words = visualindex_get_words(vocab, im_descrs);
+        save(fullfile(conf.wordsDataDir, [image_id '-words.mat']), 'im_words');
     end
     
     clear im_descrs;
-%     delete the descrs file (its not needed ever again)
-    delete(fullfile(conf.descrsDataDir, [image_name '-descrs.mat']));
     
+%     delete the descrs file (its not needed ever again)
+    delete(fullfile(conf.descrsDataDir, [image_id '-descrs.mat']))
    
+    
     im_histogram = sparse(double(im_words),1,...
                          ones(length(im_words),1), ...
                          vocab.size,1) ;
-   
     
-    save(fullfile(conf.wordsDataDir, [image_name '-words.mat']), 'im_words');
-
     ids{t} = image_id;
-    histograms{t} = im_histogram;
+    histograms{t} = im_histogram;    
 end
-
-clear im_words im_histogram;
-
-histograms = cat(2, histograms{:});
-
-clear image im_words im_histogram;
+clear im_words image im_histogram image_id;
 
 % compute IDF weights
-if ~isfield(vocab, 'weights')
-    vocab.weights = log((size(histograms,2)+1) ...
-                            ./  (max(sum(histograms > 0,2),eps))) ;
-    save(vocab_file, '-STRUCT', 'vocab');
-end
+histograms = cat(2, histograms{:});
+vocab.weights = log((size(histograms,2)+1)./(max(sum(histograms > 0,2),eps))) ;
+save(vocab_file, '-STRUCT', 'vocab');
 
 % weight and normalize histograms
+coll_ims = coll.find();
 for t = 1:num_images
-    image = coll.findOne(BasicDBObject('_id', ObjectId(ids{t})));
+    image = coll_ims.next();
+    image_id = image.get('_id').toString.toCharArray';
     image_name = image.get('name');
     if opts.forceWords
         im_histogram = [];
     else
-        im_histogram = mongo_get_histogram(coll, 'id', ids{t});
+        im_histogram = load_histogram(image_id, conf);
     end
     
     if ~isempty(im_histogram)
@@ -193,15 +169,13 @@ for t = 1:num_images
         fprintf('Already created histogram for %s\n', image_name);
     else
         fprintf('Creating histogram for %s\n', image_name)
+%         apply weightingz
         h = histograms(:,t) .*  vocab.weights ;
         im_histogram = h / norm(h) ;
-        im_model = image.get('model');
-        im_model.put('histogram', serialize(im_histogram, 3));
-        coll.save(image);
+        clear h;
+        save(fullfile(conf.histogramsDataDir, [image_id '-histogram.mat']), 'im_histogram');
     end
 
-    save(fullfile(conf.histogramsDataDir, [image_name '-histogram.mat']), 'im_histogram');
-    
     histograms(:,t) = im_histogram;
 end
 

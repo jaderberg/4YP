@@ -1,6 +1,6 @@
 % Max Jaderberg 7/1/12
 
-function [conf, model, coll] = wikilist_db_creator(root_dir, image_dir, varargin)
+function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, varargin)
 % This creates the database + filestructure for the wiki list dataset
 %   Remeber to run mongodb! /usr/local/Cellar/mongodb/2.0.1-x86_64/bin/mongod --dbpath /Volumes/4YP/wikilist_visualindex/mongo_db/
 %   Code from http://stackoverflow.com/questions/3886461/connecting-to-mongodb-from-matlab
@@ -60,14 +60,7 @@ function [conf, model, coll] = wikilist_db_creator(root_dir, image_dir, varargin
     
 %     Get the file names
     files = dir(fullfile(conf.imageDir, '*.jpg')) ;
-    files = {files(~[files.isdir]).name} ;
-    
-    if length(files) <= coll.getCount()
-        fprint('All images are already in db\n');
-        model = load(fullfile(conf.modelDataDir, 'model.mat'));
-        return
-    end
-    
+    files = {files(~[files.isdir]).name} ;   
     files = sort(files); % sort alphabetically
     n_images = length(files);
     fprintf('Found %d jpgs\n', n_images);
@@ -94,6 +87,7 @@ function [conf, model, coll] = wikilist_db_creator(root_dir, image_dir, varargin
         image_doc.put('path', fullfile(conf.imageDir, filename));
         if ~isempty(coll.findOne(image_doc))
 %             There is already this image in the collection
+            fprintf('Image already added.\n');
             continue
         end
         
@@ -124,10 +118,10 @@ function [conf, model, coll] = wikilist_db_creator(root_dir, image_dir, varargin
     
     fprintf('%d added, %d failed to add\n', n_images - failed, failed);
     
-%     Create an index on 'name' for fast querying
-    coll.createIndex(BasicDBObject('name', 1));
+% %     Create an index on 'name' for fast querying
+%     coll.createIndex(BasicDBObject('name', 1));
     
-    model.classes.class_names = classes;
+    class_names = classes;
     clear classes;
+    save(fullfile(conf.modelDataDir, 'class_names.mat'), 'class_names');
     fprintf('Found %d classes\n', length(model.classes.class_names));
-    save(fullfile(conf.modelDataDir, 'model.mat'), '-STRUCT', 'model');
