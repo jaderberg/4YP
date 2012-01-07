@@ -57,7 +57,7 @@ else
 %         Compute the features
         fprintf('Adding image %s (%d of %d)\n', image.get('name'), i, num_images) ;
         im = imread(image.get('path')) ;
-        [im_frames,im_descrs] = visualindex_get_features(model, im) ;
+        [im_frames,im_descrs] = visualindex_get_features(im) ;
 
 %         Add to filesystem
         save(fullfile(conf.framesDataDir, [image_id '-frames.mat']), 'im_frames');

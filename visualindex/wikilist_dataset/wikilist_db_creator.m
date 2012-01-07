@@ -63,6 +63,7 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     files = {files(~[files.isdir]).name} ;   
     files = sort(files); % sort alphabetically
     n_images = length(files);
+    
     fprintf('Found %d jpgs\n', n_images);
     
     classes = {};
@@ -123,5 +124,10 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     
     class_names = classes;
     clear classes;
-    save(fullfile(conf.modelDataDir, 'class_names.mat'), 'class_names');
+    if isempty(class_names)
+        t = load(fullfile(conf.modelDataDir, 'class_names.mat'));
+        class_names = t.class_names;
+    else
+        save(fullfile(conf.modelDataDir, 'class_names.mat'), 'class_names');
+    end
     fprintf('Found %d classes\n', length(class_names));
