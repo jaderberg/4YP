@@ -124,4 +124,4 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     class_names = classes;
     clear classes;
     save(fullfile(conf.modelDataDir, 'class_names.mat'), 'class_names');
-    fprintf('Found %d classes\n', length(model.classes.class_names));
+    fprintf('Found %d classes\n', length(class_names));
