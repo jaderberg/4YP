@@ -20,7 +20,7 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
 %     Get the features from the query image
     if isempty(frames)
         fprintf('Getting features...\n');
-        [frames descrs] = visualindex_get_features([], im);
+        [frames descrs] = visualindex_get_features(im);
     else
         fprintf('Already got features!\n');
     end
@@ -106,11 +106,11 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
             match_id = class_images_ids{im_perm(j)};
             %         Get the words and frames for potential match
             db_im = coll.findOne(BasicDBObject('_id', ObjectId(match_id)));
-            db_model = db_im.get('model');
-            match_words = eval(db_model.get('words'));
-            match_frames = eval(db_model.get('frames'));
+            match_words = load_words(match_id, conf);
+            match_frames = load_frames(match_id, conf);
 %           -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-%             use only USEFUL words for RANSAC
+%             use only USEFUL words for RANSAC (TODO: MOVE TO
+%             PREPROCESSING)
             useful_words = find(class_useful_hists(:,im_perm(j)) > 0);
             new_words = [];
             for k=1:length(useful_words)

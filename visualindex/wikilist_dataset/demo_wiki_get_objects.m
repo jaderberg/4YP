@@ -1,43 +1,49 @@
-% Max Jaderberg 28/11/11
+% Max Jaderberg 8/1/12
 
-function result = demo_mongo_getobjects(args)
-%     Returns the name, link and rectangle coordinates for object in image
-%     Uses the 5k oxford dataset at time of writing 29/11/11
+function result = demo_wiki_get_objects(args)
+% Returns the matched object and region of matchings. Must run
+% preprocess_solution.m once before this works. Also the mongodb java
+% library must be imported by running javaaddpath(mongo-2.7.2.jar')
 
-    profile on;
+%--------------------------------------------------------------------------
+% SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
+    ROOT_DIR = '/Volumes/4YP/wikilist_visualindex';
+%=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-    %javaaddpath('/Users/jaderberg/Sites/4YP/visualindex/oxford_dataset/mongo-2.7.2.jar')
-
-    
-        
     import com.mongodb.BasicDBObject;
     import org.bson.types.ObjectId;
     
-
+%     parse input arguments
     imagePath = args.image_path;
     display = 0;
     if isfield(args, 'display')
         display = args.display;
     end
     
+%     setup log file
     if ~isfield(args, 'log_file')
         args.log_file = 'log.txt';
     end
     log_file = fopen(args.log_file, 'w');
     
     figures = 1;
-    
-    
-    
+
     % setup VLFeat
     run /Users/jaderberg/Sites/4YP/visualindex/vlfeat/toolbox/vl_setup ;
     
+%     load config file
+    try
+        conf = load(fullfile(ROOT_DIR, 'conf.mat'));
+    catch err
+        fprintf('ERROR: could not find conf.mat. Make sure preprocess_solution.m has been run.\n');
+        result = 0;
+        return
+    end
     
-%     Get the database collection + configuration file
-    [conf, coll] = mongo_db_creator('rootDir', '/Volumes/4YP/oxford_visualindex_super');
+%     load mongo collection
+    coll = mongo_get_collection();
     
-    
-%     See if the global variables exist
+%     define global variables to avoid reloading from disk
     global histograms
     global ids
     global vocab
@@ -45,45 +51,31 @@ function result = demo_mongo_getobjects(args)
     global class_hists
     global classes_useful_hists
     
-    
     if isempty(histograms) || isempty(ids) || isempty(vocab)
-    %     Either load or create the histograms and ids
-        if exist(fullfile(conf.modelDataDir, 'histograms.mat'), 'file') 
-    %         assume ids and vocab files are present
-            fprintf('Loading histograms in %s\n', conf.modelDataDir);
-            fprintf(log_file, 'Loading histograms in %s\n', conf.modelDataDir);
-            m = load(fullfile(conf.modelDataDir, 'histograms.mat'));
-            histograms = m.histograms;
-            fprintf('Loading ids in %s\n', conf.modelDataDir);
-            fprintf(log_file, 'Loading ids in %s\n', conf.modelDataDir);
-            m = load(fullfile(conf.modelDataDir, 'ids.mat'));
-            ids = m.ids;
-            fprintf('Loading vocab in %s\n', conf.modelDataDir);
-            fprintf(log_file, 'Loading vocab in %s\n', conf.modelDataDir);
-            vocab = load(fullfile(conf.modelDataDir, 'vocab.mat'));
-            fprintf('Loading precomputed super histograms...\n');
-            m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
-            class_names = m.m_classes;
-            m = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
-            class_hists = m.super_class_histograms;
-            m = load(fullfile(conf.modelDataDir, 'classes_useful_hists.mat'));
-            classes_useful_hists = m.classes_useful_hists;
-            clear m;
-        else
-            fprintf('Beginning visual index building...\n');
-            fprintf(log_file, 'Beginning visual index building...\n');
-            [histograms ids vocab] = build_index(coll, conf, 'numWords', conf.numWords);
-             fprintf('SUPERCHARGING!!!!\n');
-            [class_names class_hists classes_useful_hists] = supercharge_images(coll, conf, vocab);
-        end
+        fprintf('Loading histograms from %s\n', conf.modelDataDir);
+        fprintf(log_file, 'Loading histograms from %s\n', conf.modelDataDir);
+        m = load(fullfile(conf.modelDataDir, 'histograms.mat'));
+        histograms = m.histograms;
+        fprintf('Loading ids from %s\n', conf.modelDataDir);
+        fprintf(log_file, 'Loading ids from %s\n', conf.modelDataDir);
+        m = load(fullfile(conf.modelDataDir, 'ids.mat'));
+        ids = m.ids;
+        fprintf('Loading vocab from %s\n', conf.modelDataDir);
+        fprintf(log_file, 'Loading vocab from %s\n', conf.modelDataDir);
+        vocab = load(fullfile(conf.modelDataDir, 'vocab.mat'));
+        fprintf('Loading super histograms...\n');
+        m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
+        class_names = m.m_classes;
+        m = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
+        class_hists = m.super_class_histograms;
+        m = load(fullfile(conf.modelDataDir, 'classes_useful_hists.mat'));
+        classes_useful_hists = m.classes_useful_hists;
+        clear m;
     end
-    
-    
 
-    
     %     Read Image
-    fprintf('Query image %s\n', imagePath) ;
-    fprintf(log_file, 'Query image %s\n', imagePath) ;
+    fprintf('Querying image %s\n', imagePath) ;
+    fprintf(log_file, 'Querying image %s\n', imagePath) ;
     im = imread(imagePath) ;
     sz = [size(im,2); size(im,1)] ;
 
@@ -94,7 +86,7 @@ function result = demo_mongo_getobjects(args)
         axis image off ; drawnow ;
     end
     
-%     Now do multiple object matching!
+    %     Now do multiple object matching!
     max_objects = 2;
     max_tries_per_object = 2;
     
@@ -109,11 +101,11 @@ function result = demo_mongo_getobjects(args)
     
     frames = []; descrs = [];
     
+    fprintf('Starting match process...\n');
     fprintf(log_file, 'Starting match process...\n');
     
     while pass_number < max_objects*max_tries_per_object
         
-%         match_class(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
 %         [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
         [best_match frames descrs] = image_query2(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs, 'pass_number', pass_number);
 
@@ -154,7 +146,7 @@ function result = demo_mongo_getobjects(args)
         
         db_size = db_im.get('size');
         match_image.sz = [db_size.get('width') db_size.get('height')];
-        match_image.path = fullfile(db_im.get('directory'), db_im.get('name'));
+        match_image.path = db_im.get('path');
         match_image.image = imread(match_image.path);
         match_image.matches = best_match.match;
         
@@ -176,7 +168,7 @@ function result = demo_mongo_getobjects(args)
             vl_plotframe([match_image.matches.f2]);
             rectangle('Position', rect, 'EdgeColor', 'r');
             figure(figures) ; clf ; figures = figures + 1;
-            visualindex_plot_matches([], match_image.matches, match_image.image, im, match_image.sz, sz) ;
+            visualindex_plot_matches(match_image.matches, match_image.image, im, match_image.sz, sz) ;
         end
 
         match.rectangle.top = ymax; match.rectangle.left = xmin;
@@ -210,9 +202,5 @@ function result = demo_mongo_getobjects(args)
     fclose(log_file);
     
    
-    
-    
-    profile viewer;
-    
-    
+
     

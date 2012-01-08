@@ -17,22 +17,9 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     import com.mongodb.DBCursor;
     import org.bson.types.ObjectId;
     
-    opts.server = '127.0.0.1'; opts.port = [];
-    opts.db = 'imdb'; opts.collection = 'images';
-    opts = vl_argparse(opts, varargin);
-
-
-%     Connect to mongodb 
-    fprintf('Connecting to mongodb...\n');
-    if isempty(opts.port)
-        m = Mongo(opts.server); % connect to local db
-    else
-        m = Mongo(opts.server, opts.port);
-    end
-    db = m.getDB(opts.db); % get db object
-    coll = db.getCollection(opts.collection); % get DBCollection object
+%     get mongodb collection
+    coll = mongo_get_collection();
     
-
     fprintf('Creating image database...\n');
     
 %   Create data dirs
@@ -131,3 +118,4 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
         save(fullfile(conf.modelDataDir, 'class_names.mat'), 'class_names');
     end
     fprintf('Found %d classes\n', length(class_names));
+    save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');

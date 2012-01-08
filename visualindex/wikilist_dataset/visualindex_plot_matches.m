@@ -1,4 +1,4 @@
-function visualindex_plot_matches(model, matches, im1, im2, sz1, sz2, offset)
+function visualindex_plot_matches(matches, im1, im2, sz1, sz2, offset)
 
 
 h1 = size(im1,1) ; w1 = size(im1,2) ;

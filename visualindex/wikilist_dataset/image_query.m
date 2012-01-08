@@ -20,7 +20,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
 %     Get the features from the query image
     if isempty(frames)
         fprintf('Getting features...\n');
-        [frames descrs] = visualindex_get_features([], im);
+        [frames descrs] = visualindex_get_features(im);
     else
         fprintf('Already got features!\n');
     end
@@ -96,9 +96,8 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
             end
         end
         
-        db_model = db_im.get('model');
-        match_words = eval(db_model.get('words'));
-        match_frames = eval(db_model.get('frames'));
+        match_words = load_words(match_id, conf);
+        match_frames = load_frames(match_id, conf);
         [match_score, matches(i)] = verify(match_frames, match_words, ...
                                    frames, words, ...
                                    size(im)) ;
