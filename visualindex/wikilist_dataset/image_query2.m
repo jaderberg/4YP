@@ -9,7 +9,7 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
     opts.exclude = [];  
     opts.pass_number = 1;
     opts.image_depth = 2;
-    opts.class_depth = 3;
+    opts.class_depth = 20;
     opts.frames = []; opts.descrs = [];
     opts.excludeClasses = {};
     opts = vl_argparse(opts, varargin);
@@ -48,12 +48,11 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
     
 %     Get the words
     fprintf('Getting words...\n');
-    fake_model.vocab = vocab;
-    words = visualindex_get_words(fake_model, descrs);
+    words = visualindex_get_words(vocab, descrs);
     
 %     Get the histogram
     fprintf('Getting histogram...\n');
-    histogram = visualindex_get_histogram(fake_model, words);
+    histogram = visualindex_get_histogram(vocab, words);
 %     times by tf-idf weights
     histogram = histogram.*vocab.weights;
     
@@ -62,6 +61,13 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
     class_scores = full(histogram' * class_histograms) ;
     
     [class_scores, perm] = sort(class_scores, 'descend') ;
+    
+    for i=1:20
+        if isnan(class_scores(i))
+            continue
+        end
+        fprintf('%s (%s)\n', classes{perm(i)}, class_scores(i));
+    end
     
 %     for the top classes, spatially verify to confirm class and matched
 %     region
@@ -72,6 +78,9 @@ function [result frames descrs] = image_query2(im, class_histograms, classes, vo
         class_limit = length(class_scores);
     end
     for i=1:class_limit
+        if isnan(class_scores(i))
+            continue
+        end
         class_name = classes{perm(i)};
         
         if find(ismember(opts.excludeClasses, class_name)==1)

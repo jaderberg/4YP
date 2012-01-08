@@ -3,7 +3,7 @@
 function result = demo_wiki_get_objects(args)
 % Returns the matched object and region of matchings. Must run
 % preprocess_solution.m once before this works. Also the mongodb java
-% library must be imported by running javaaddpath(mongo-2.7.2.jar')
+% library must be imported by running javaaddpath('mongo-2.7.2.jar')
 
 %--------------------------------------------------------------------------
 % SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
@@ -65,7 +65,7 @@ function result = demo_wiki_get_objects(args)
         vocab = load(fullfile(conf.modelDataDir, 'vocab.mat'));
         fprintf('Loading super histograms...\n');
         m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
-        class_names = m.m_classes;
+        class_names = m.class_names;
         m = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
         class_hists = m.super_class_histograms;
         m = load(fullfile(conf.modelDataDir, 'classes_useful_hists.mat'));
@@ -106,8 +106,8 @@ function result = demo_wiki_get_objects(args)
     
     while pass_number < max_objects*max_tries_per_object
         
-%         [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
-        [best_match frames descrs] = image_query2(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs, 'pass_number', pass_number);
+        [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
+        %[best_match frames descrs] = image_query2(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs, 'pass_number', pass_number);
 
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);

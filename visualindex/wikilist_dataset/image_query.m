@@ -9,7 +9,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
     import org.bson.types.ObjectId;
 
     opts.exclude = [];  
-    opts.depth = 10;
+    opts.depth = 20;
     opts.frames = []; opts.descrs = [];
     opts.excludeClasses = {};
     opts = vl_argparse(opts, varargin);
@@ -48,12 +48,11 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
     
 %     Get the words
     fprintf('Getting words...\n');
-    fake_model.vocab = vocab;
-    words = visualindex_get_words(fake_model, descrs);
+    words = visualindex_get_words(vocab, descrs);
     
 %     Get the histogram
     fprintf('Getting histogram...\n');
-    histogram = visualindex_get_histogram(fake_model, words);
+    histogram = visualindex_get_histogram(vocab, words);
 %     times by tf-idf weights
     histogram = histogram.*vocab.weights;
     
@@ -98,7 +97,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
         
         match_words = load_words(match_id, conf);
         match_frames = load_frames(match_id, conf);
-        [match_score, matches(i)] = verify(match_frames, match_words, ...
+        [match_score, matches(i)] = spatially_verify(match_frames, match_words, ...
                                    frames, words, ...
                                    size(im)) ;
         fprintf('Found match (%s) with %d inliers - ', db_im.get('name'), match_score);
@@ -106,7 +105,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
         scores(i) = match_score + scores(i);
 %        If there are enough inliers (the score) we have found a spatially
 %        verified match
-        if match_score >= 10
+        if match_score >= 15
 %             this is definitely a match
             fprintf('thats good enough!\n');
             break
@@ -133,55 +132,3 @@ function scores = tf_idf_scores(histogram, histograms)
 %     The histogram scores
     scores = histogram' * histograms ;
 end
-
-% --------------------------------------------------------------------
-function [score, matches] = verify(f1,w1,f2,w2,s2)
-% --------------------------------------------------------------------
-    % The geometric verfication is a simple RANSAC affine matcher. It can
-    % be significantly improved.
-
-    % find the features that are mapped to the same visual words
-    [drop,m1,m2] = intersect(w1,w2) ;
-    numMatches = length(drop) ;
-
-    % get the 2D coordinates of these features in homogeneous notation
-    X1 = f1(1:2, m1) ;
-    X2 = f2(1:2, m2) ;
-    X1(3,:) = 1 ;
-    X2(3,:) = 1 ;
-
-    thresh = max(max(s2)*0.02, 10) ;
-
-    % RANSAC
-    randn('state',0) ;
-    rand('state',0) ;
-    numRansacIterations = 500 ;
-    for t = 1:numRansacIterations
-      %fprintf('RANSAC iteration %d of %d\r', t, numRansacIterations) ;
-      % select a subset of 3 matched features at random
-      subset = vl_colsubset(1:numMatches, 3) ;
-
-      % subtract the first one from the other two and then compute affine
-      % transformation (note the small regularization term).
-      u1 = X1(1:2,subset(3)) ;
-      u2 = X2(1:2,subset(3)) ;
-      A{t} = (X2(1:2,subset(1:2)) - [u2 u2]) / ...
-             (X1(1:2,subset(1:2)) - [u1 u1] + eye(2)*1e-5) ;
-      T{t} = u2 - A{t} * u1 ;
-
-      % the score is the number of inliers
-      X2_ = [A{t} T{t} ; 0 0 1] * X1 ;
-      delta = X2_ - X2 ;
-      ok{t} = sum(delta.*delta,1) < thresh^2 ;
-      score(t) = sum(ok{t}) ;
-    end
-
-    [score, best] = max(score) ;
-    matches.A = A{best} ;
-    matches.T = T{best} ;
-    matches.ok = ok{best} ;
-    matches.f1 = f1(:, m1(matches.ok)) ;
-    matches.f2 = f2(:, m2(matches.ok)) ;
-
-end
-
