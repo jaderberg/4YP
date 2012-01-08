@@ -28,6 +28,9 @@ function useful_histogram = get_useful_histogram(q_im_f, q_im_w, q_im_h, I_f, I_
             continue
         end
         [score matches] = spatially_verify(q_im_f, q_im_w, I_f{i}, I_w{i}, 0);
+        if score == 0
+            continue
+        end
         unique_verified_words = unique(matches.words);
         verified_words(:,i) = sparse(double(unique_verified_words),1,...
                                            ones(length(unique_verified_words),1), ...

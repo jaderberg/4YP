@@ -29,7 +29,8 @@ function preprocess_solution()
     [conf, class_names, coll] = wikilist_db_creator(ROOT_DIR, IMAGE_DIR);
     
 %     build the index
-    [histograms ids vocab] = build_index(coll, conf, 'numWords', NUM_WORDS);
-
+    %[histograms ids vocab] = build_index(coll, conf, 'numWords', NUM_WORDS);
+    
+    vocab = load(fullfile(conf.modelDataDir, 'vocab.mat'));
 %     supercharge images
     [super_class_histograms classes_useful_hists] = supercharge_images(class_names, coll, conf, vocab);

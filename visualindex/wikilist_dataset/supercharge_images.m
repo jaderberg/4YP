@@ -41,7 +41,7 @@ function [super_class_histograms classes_useful_hists] = supercharge_images(clas
                 im = class_ims.next();
                 class_ids{j} = im.get('_id').toString.toCharArray';
                 class_frames{j} = load_frames(class_ids{j}, conf);
-                class_words{j} = load_frames(class_ids{j}, conf);
+                class_words{j} = load_words(class_ids{j}, conf);
                 class_histograms(:,j) = load_histogram(class_ids{j}, conf);
             end
             

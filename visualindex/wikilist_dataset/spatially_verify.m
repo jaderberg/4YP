@@ -7,7 +7,7 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,s2)
     % find the features that are mapped to the same visual words
     [drop,m1,m2] = intersect(w1,w2) ;
     numMatches = length(drop) ;
-    fprintf('RANSAC: %d of the same words appear in each image\n', numMatches); 
+    %fprintf('RANSAC: %d of the same words appear in each image\n', numMatches); 
     if numMatches < 3
         matches.lol = 'jk';
         score = 0;
