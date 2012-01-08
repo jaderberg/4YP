@@ -45,5 +45,9 @@ function useful_histogram = get_useful_histogram(q_im_f, q_im_w, q_im_h, I_f, I_
     end
     
 %     image augmentation
-    useful_histogram = useful_words.*q_im_h + sum(useful_histograms, 2);
+    if isempty(useful_histograms)
+        useful_histogram = useful_words.*q_im_h;
+    else
+        useful_histogram = useful_words.*q_im_h + sum(useful_histograms, 2);
+    end
     
