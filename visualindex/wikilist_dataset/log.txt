@@ -1,9 +1,9 @@
-Querying image /Users/jaderberg/Desktop/thamesbarrier.jpg
+Querying image /Users/jaderberg/Desktop/barbican.jpg
 Starting match process...
-Match has a score of 1.025691e+01. Found new object, Thames_Barrier
+Match has a score of 8.139534e+00. Found new object, St_Pancras_railway_station
 Added to matches! 
 Looking for another object...
-Match has a score of 7.155748e+00. Found new object, Billingsgate_Fish_Market
+Match has a score of 7.166846e+00. Found new object, Royal_Courts_of_Justice
 Added to matches! 
 Search stopped as max_objects hit
 Query complete
