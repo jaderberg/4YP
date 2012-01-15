@@ -1,9 +1,9 @@
-Querying image /Users/jaderberg/Desktop/barbican.jpg
+Querying image /Users/jaderberg/Desktop/bigben.jpg
 Starting match process...
-Match has a score of 8.139534e+00. Found new object, St_Pancras_railway_station
+Match has a score of 9.160705e+00. Found new object, London
 Added to matches! 
 Looking for another object...
-Match has a score of 7.166846e+00. Found new object, Royal_Courts_of_Justice
+Match has a score of 8.187794e+00. Found new object, Peckham_Library
 Added to matches! 
 Search stopped as max_objects hit
 Query complete
