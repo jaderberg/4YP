@@ -4,6 +4,7 @@
 *.pyc
 .DS_Store
 *.db
+*.m~
 IntelligentImage/media/uploads
 IntelligentImage/media/uploads/*
 WikipediaImages/.idea/workspace.xml

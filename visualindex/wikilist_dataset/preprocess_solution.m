@@ -26,7 +26,7 @@ function preprocess_solution()
     run /Users/jaderberg/Sites/4YP/visualindex/vlfeat/toolbox/vl_setup ;
     
 %     setup db
-    [conf, class_names, coll] = wikilist_db_creator(ROOT_DIR, IMAGE_DIR);
+    [conf, class_names, coll] = wikilist_db_creator(ROOT_DIR, IMAGE_DIR, 'copyImages', 1, 'maxResolution', 1000);
     
 %     build the index
     [histograms ids vocab] = build_index(coll, conf, 'numWords', NUM_WORDS);

@@ -9,6 +9,10 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
 
 %     javaaddpath('mongo-2.7.2.jar')
 
+    opts.copyImages = 0;
+    opts.maxResolution = 0;
+    opts = vl_argparse(opts, varargin);
+
     import com.mongodb.Mongo;
     import com.mongodb.DB;
     import com.mongodb.DBCollection;
@@ -24,7 +28,12 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     
 %   Create data dirs
     conf.rootDir = root_dir;
-    conf.imageDir = image_dir;
+    if opts.copyImages || opts.maxResolution
+        conf.imageDir = fullfile(root_dir, 'images');
+        vl_xmkdir(conf.imageDir);
+    else
+        conf.imageDir = image_dir;
+    end
     conf.dataDir = fullfile(root_dir, 'data');
     vl_xmkdir(conf.dataDir);
    
@@ -46,7 +55,7 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     vl_xmkdir(conf.classesDataDir);
     
 %     Get the file names
-    files = dir(fullfile(conf.imageDir, '*.jpg')) ;
+    files = dir(fullfile(image_dir, '*.jpg')) ;
     files = {files(~[files.isdir]).name} ;   
     files = sort(files); % sort alphabetically
     n_images = length(files);
@@ -58,14 +67,29 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     for i=1:n_images
         fprintf('Adding image %d of %d...\n', i, n_images);
         filename = files{i};
+        file_path = fullfile(image_dir, filename);
         
 %         Get image info
         try
-            info = imfinfo(fullfile(conf.imageDir, filename)) ;
+            info = imfinfo(file_path) ;
         catch exc
             fprintf('Could not process image %s - skipping\n', filename);
             failed = failed + 1;
             continue
+        end
+        
+%         copy image to new working directory and resize if required
+        if opts.copyImages || opts.maxResolution
+            im = imread(file_path);
+            if opts.maxResolution
+                [maxRes maxDim] = max(size(im));
+                if maxRes > opts.maxResolution
+                    scale_factor = opts.maxResolution/maxRes;
+                    im = imresize(im, scale_factor);
+                end
+            end
+            imwrite(im, fullfile(conf.imageDir, filename));
+            clear im
         end
         
 %         For each image build a document
