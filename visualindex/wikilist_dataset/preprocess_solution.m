@@ -11,7 +11,7 @@ function preprocess_solution()
 %--------------------------------------------------------------------------
     ROOT_DIR = '/Volumes/4YP/wikilist_visualindex';
     IMAGE_DIR = '/Volumes/4YP/Images/List_of_structures_in_London';
-    NUM_WORDS = 100000;
+    NUM_WORDS = 500000;
 %--------------------------------------------------------------------------    
 % 2. Create ROOT_DIR and ROOT_DIR/mongo_db
 %--------------------------------------------------------------------------
