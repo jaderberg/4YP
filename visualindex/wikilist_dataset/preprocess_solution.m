@@ -28,6 +28,8 @@ function preprocess_solution()
 %     setup db
     [conf, class_names, coll] = wikilist_db_creator(ROOT_DIR, IMAGE_DIR, 'copyImages', 1, 'maxResolution', 1000);
     
+%     Flickr expansion
+    
 %     build the index
     [histograms ids vocab] = build_index(coll, conf, 'numWords', NUM_WORDS);
     
