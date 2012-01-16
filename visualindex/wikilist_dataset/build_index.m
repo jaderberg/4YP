@@ -171,7 +171,7 @@ for t = 1:num_images
         fprintf('Creating histogram for %s\n', image_name)
 %         apply weightingz
         h = histograms(:,t) .*  vocab.weights ;
-        im_histogram = h / norm(h) ;
+        im_histogram = h / max(sum(histograms(:,t)), eps) ;
         clear h;
         save(fullfile(conf.histogramsDataDir, [image_id '-histogram.mat']), 'im_histogram');
     end

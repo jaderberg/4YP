@@ -90,6 +90,8 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
             end
             imwrite(im, fullfile(conf.imageDir, filename));
             clear im
+%             getting info of copied file
+            info = imfinfo(fullfile(conf.imageDir, filename)) ;
         end
         
 %         For each image build a document
