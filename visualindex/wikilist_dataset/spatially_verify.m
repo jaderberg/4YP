@@ -86,10 +86,27 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size)
     end
 
     [score, best] = max(score) ;
-    matches.A = A{best} ;
-    matches.T = T{best} ;
+    % now compute transformation based on ALL inliers from best
+    warning off all % lots of singular warnings in optimization    
+    % initialize at best guess so far    
+    AT = [A{best} T{best}];
+    % optimize geometric error
+    AT = fminsearch(@geometric_error, AT, optimset('Display', 'off', 'TolFun', 1e-8, 'TolX', 1e-8), X1(:,ok{best}), X2(:,ok{best}));
+    warning on all
+    
+    matches.A = AT(:,1:2) ;
+    matches.T = AT(:,3) ;
     matches.ok = ok{best} ;
     matches.f1 = f1(:, matches.ok) ;
     matches.f2 = f2(:, matches.ok) ;
     matches.words = w1(:, matches.ok);
+end
+
+% optimization cost function
+function cost = geometric_error(AT, X1, X2)
+    % the geometric error of the current transformation
+    F = [AT; 0 0 1];
+    X2_ = F * X1;
+    X1_ = F \ X2;
+    cost = sum(sum((X2_-X2).^2).^2) + sum(sum((X1_-X1).^2).^2);
 end
