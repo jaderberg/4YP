@@ -8,13 +8,21 @@ function [f,d] = visualindex_get_features(im)
 
 area = size(im,1) * size(im,2) ;
 firstOctave = max(ceil(.5 * log2(area / 1024^2)), -1) ;
+normThresh = .5;
 try
     [f,d] = vl_sift(im2single(rgb2gray(im)), ...
                     'firstoctave', firstOctave,  ...
+                    'normthresh', normThresh, ...
                     'floatdescriptors') ;
 catch err
 %     probably a grayscale image
     [f,d] = vl_sift(im2single(im), ...
                     'firstoctave', firstOctave,  ...
+                    'normthresh', normThresh, ...
                     'floatdescriptors') ;
 end
+
+% remove the low gradient ones
+s = find(all(d==0)) ;
+f(:,s) = [] ;
+d(:,s) = [] ;
