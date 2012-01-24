@@ -1,13 +1,16 @@
 % Max Jaderberg 16/1/12
 
-function [conf] = flickr_expansion(classes, conf, varargin)
+function [conf] = flickr_expansion(classes, conf, coll, vocab, varargin)
 %     Expands on the images from Wikipedia using publicly available Flickr
 %     images. For Flickr api reference see http://www.flickr.com/services/api/flickr.photos.search.html
 %     Requires the xml_toolbox http://www.mathworks.com/matlabcentral/fileexchange/4278
-    
+    import com.mongodb.BasicDBObject;
+
     addpath('xml_toolbox');
     
     opts.maxResolution = 0;
+    opts.nPhotos = '20';
+    opts.matchThresh = 35;
     opts = vl_argparse(opts, varargin);
 
     api_key = '96b5267887dfe14499dedb947f8f8f72';
@@ -17,7 +20,9 @@ function [conf] = flickr_expansion(classes, conf, varargin)
     vl_xmkdir(conf.flickrDir);
     
     for n=1:length(classes)
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-         
 %         Download images first...
+%-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=
         class_name = classes{n};
         class_dir = fullfile(conf.flickrDir, class_name);
         vl_xmkdir(class_dir);
@@ -31,7 +36,7 @@ function [conf] = flickr_expansion(classes, conf, varargin)
                 '&api_key=' api_key ...
                 '&text=' search_term ...
                 '&sort=relevance'...
-                '&per_page=20'...
+                '&per_page=' opts.nPhotos...
                 '&privacy_filter=1'...
                 '&content_type=1&media=photos']; %photos only 
         fprintf('Searching Flickr for %s...\n', search_term);
@@ -44,7 +49,10 @@ function [conf] = flickr_expansion(classes, conf, varargin)
         n_photos = length(photos);
 
         fprintf('Downloading %d photos to %s...\n', n_photos, conf.imageDir);
-
+        
+        f_filenames = {};
+        f_words = {};
+        f_frames = {};
         for i=1:n_photos
             photo_struct = photos{i}.ATTRIBUTE;
             fprintf('-> %s (%d of %d)\n', photo_struct.title, i, n_photos);
@@ -52,32 +60,70 @@ function [conf] = flickr_expansion(classes, conf, varargin)
 %             check if photo exists
             if exist(fullfile(class_dir, filename), 'file')
                 fprintf('   ...file already exists!\n');
-                continue
-            end
-%             grab it from flickr
-            photo_url = ['http://farm' photo_struct.farm '.static.flickr.com/' photo_struct.server '/' photo_struct.id '_' photo_struct.secret '_b.jpg'];
-            try
-                im = imread(photo_url);
-            catch err
+                im = imread(fullfile(class_dir, filename));
+            else          
+    %             grab it from flickr
+                photo_url = ['http://farm' photo_struct.farm '.static.flickr.com/' photo_struct.server '/' photo_struct.id '_' photo_struct.secret '_b.jpg'];
                 try
-                    photo_url = strrep(photo_url, ['farm' photo_struct.farm '.'], '');
                     im = imread(photo_url);
                 catch err
+                    try
+                        photo_url = strrep(photo_url, ['farm' photo_struct.farm '.'], '');
+                        im = imread(photo_url);
+                    catch err
+                        continue
+                    end
+                end
+    %             resize if too big
+                if opts.maxResolution
+                    [maxRes maxDim] = max(size(im));
+                    if maxRes > opts.maxResolution
+                        scale_factor = opts.maxResolution/maxRes;
+                        im = imresize(im, scale_factor);
+                    end
+                end
+    %             save to flickrDir
+                fprintf('   ...saved as %s!\n', filename);
+                imwrite(im, fullfile(class_dir, filename));
+            end
+%             get features + words
+            [frames, descrs] = visualindex_get_features(im);
+            words = visualindex_get_words(vocab, descrs);
+            f_filenames{i} = filename;
+            f_words{i} = words;
+            f_frames{i} = frames;
+            clear im words frames descrs;
+        end
+        
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=         
+%         Now do the combining with the existing images
+%-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+        fprintf('Augmenting Flickr image words for %s...\n', class_name);
+%         get images of this class
+        class_ims = coll.find(BasicDBObject('class', class_name));
+        for i=1:class_ims.count()
+            class_im = class_ims.next();
+            fprintf('-> %s (%d of %d)\n', class_im.get('name'), i, class_ims.count());
+            c_id = class_im.get('_id').toString.toCharArray';
+            c_frames = load_frames(c_id, conf);
+            c_words = load_words(c_id, conf);
+            c_im = imread(class_im.get('path'));
+            
+            extra_words = [];
+%             for each flickr image for this class try and pull in some
+%             words if it is spatially verified
+            for j=1:length(f_filenames) 
+                if isempty(f_filenames{j})
                     continue
                 end
-            end
-    %         resize if too big
-            if opts.maxResolution
-                [maxRes maxDim] = max(size(im));
-                if maxRes > opts.maxResolution
-                    scale_factor = opts.maxResolution/maxRes;
-                    im = imresize(im, scale_factor);
+                [score matches] = spatially_verify(c_frames,c_words,f_frames{j},f_words{j},size(c_im));
+                if score > opts.matchThresh
+                    fprintf('--> %s from Flickr is similar (score: %d) - adding words\n', f_filenames{j}, score);
+                    f_im = imread(fullfile(class_dir, f_filenames{j}));
+                    figure(1)
+                    visualindex_plot_matches(matches, c_im, f_im) ;
+                    pause()
                 end
             end
-    %         save to flickrDir
-            fprintf('   ...saved as %s!\n', filename);
-            imwrite(im, fullfile(class_dir, filename));
         end
     end
-    
-%     Next pick out corresponding ones etc etc

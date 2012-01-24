@@ -120,9 +120,9 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
         end
 
         image_doc.put('class', image_class);
-        size = BasicDBObject();
-        size.put('width', info.Width); size.put('height', info.Height);
-        image_doc.put('size', size);
+        size_db = BasicDBObject();
+        size_db.put('width', info.Width); size_db.put('height', info.Height);
+        image_doc.put('size', size_db);
         
         doc(1) = image_doc;
         coll.insert(doc);

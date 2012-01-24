@@ -141,7 +141,9 @@ for t = 1:num_images
     im_histogram = sparse(double(im_words),1,...
                          ones(length(im_words),1), ...
                          vocab.size,1) ;
-    
+%     save the raw histogram for later use if needed
+    save(fullfile(conf.histogramsDataDir, [image_id '-rawhistogram.mat']), 'im_histogram');
+                     
     ids{t} = image_id;
     histograms{t} = im_histogram;    
 end

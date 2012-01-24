@@ -93,7 +93,7 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size)
     % optimize geometric error
     AT = fminsearch(@geometric_error, AT, optimset('Display', 'off', 'TolFun', 1e-8, 'TolX', 1e-8), X1(:,ok{best}), X2(:,ok{best}));
     warning on all
-    
+    AT = [A{best} T{best}];
     matches.A = AT(:,1:2) ;
     matches.T = AT(:,3) ;
     matches.ok = ok{best} ;

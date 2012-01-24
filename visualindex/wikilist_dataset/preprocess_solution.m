@@ -27,11 +27,13 @@ function preprocess_solution()
     
 %     setup db
     [conf, class_names, coll] = wikilist_db_creator(ROOT_DIR, IMAGE_DIR, 'copyImages', 1, 'maxResolution', 1000);
-    
-%     Flickr expansion
-    
+        
 %     build the index
     [histograms ids vocab] = build_index(coll, conf, 'numWords', NUM_WORDS);
+        
+    
+%     Flickr expansion
+    [histograms vocab] = flickr_expansion();
     
 %     supercharge images
-    [super_class_histograms classes_useful_hists] = supercharge_images(class_names, coll, conf, vocab);
+    %[super_class_histograms classes_useful_hists] = supercharge_images(class_names, coll, conf, vocab);
