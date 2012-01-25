@@ -1,9 +1,2 @@
-Querying image /Users/jaderberg/Desktop/10downing.jpg
+Querying image /Users/jaderberg/Desktop/bigben2.jpg
 Starting match process...
-Match has a score of 1.534976e+03. Found new object, Royal_Observatory,_Greenwich
-Added to matches! 
-Looking for another object...
-Match has a score of 8.054021e+02. Found new object, Westminster_School
-Added to matches! 
-Search stopped as max_objects hit
-Query complete

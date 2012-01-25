@@ -9,9 +9,9 @@ function preprocess_solution()
 %--------------------------------------------------------------------------
 % 1. Setup these variables
 %--------------------------------------------------------------------------
-    ROOT_DIR = '/Volumes/4YP/wikilist_visualindex';
+    ROOT_DIR = '/Volumes/4YP/wikilist_visualindex2';
     IMAGE_DIR = '/Volumes/4YP/Images/List_of_structures_in_London';
-    NUM_WORDS = 500000;
+    NUM_WORDS = 100000;
 %--------------------------------------------------------------------------    
 % 2. Create ROOT_DIR and ROOT_DIR/mongo_db
 %--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ function preprocess_solution()
         
     
 %     Flickr expansion
-    [histograms vocab] = flickr_expansion();
+    %[histograms vocab] = flickr_expansion();
     
 %     supercharge images
     %[super_class_histograms classes_useful_hists] = supercharge_images(class_names, coll, conf, vocab);

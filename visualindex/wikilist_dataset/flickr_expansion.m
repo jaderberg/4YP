@@ -126,7 +126,7 @@ function [conf] = flickr_expansion(classes, conf, coll, vocab, varargin)
                     f_xmin = min(matches.f2(1,:)); f_ymin = min(matches.f2(2,:));
                     f_xmax = max(matches.f2(1,:)); f_ymax = max(matches.f2(2,:));
                     figure(2); title('Flickr image');
-                    imagesc(f_im); axis off image; hold on;
+                    imshow(f_im); hold on;
                     X_rect = [f_xmin f_xmax f_xmax f_xmin; f_xmax f_xmax f_xmin f_xmin];
                     Y_rect = [f_ymax f_ymax f_ymin f_ymin; f_ymax f_ymin f_ymin f_ymax];
                     line(X_rect, Y_rect, 'color', 'r', 'marker', '.'); hold off;
@@ -139,7 +139,7 @@ function [conf] = flickr_expansion(classes, conf, coll, vocab, varargin)
                     X_rect = [rect_coords_top(1,:); rect_coords_bottom(1,:)];
                     Y_rect = [rect_coords_top(2,:); rect_coords_bottom(2,:)];
                     figure(3); title('Wiki image');
-                    imagesc(c_im); axis off image; hold on;
+                    imshow(c_im); hold on;
                     line(X_rect, Y_rect, 'color', 'r', 'marker', '.'); hold off;
                     pause()
                 end

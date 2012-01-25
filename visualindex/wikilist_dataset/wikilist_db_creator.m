@@ -78,6 +78,17 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
             continue
         end
         
+        %         For each image build a document
+%         But first see if it is already in the database
+        image_doc = BasicDBObject();
+        image_doc.put('name', filename);
+        image_doc.put('path', fullfile(conf.imageDir, filename));
+        if ~isempty(coll.findOne(image_doc))
+%             There is already this image in the collection
+            fprintf('Image already added.\n');
+            continue
+        end
+        
 %         copy image to new working directory and resize if required
         if opts.copyImages || opts.maxResolution
             im = imread(file_path);
@@ -94,16 +105,7 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
             info = imfinfo(fullfile(conf.imageDir, filename)) ;
         end
         
-%         For each image build a document
-%         But first see if it is already in the database
-        image_doc = BasicDBObject();
-        image_doc.put('name', filename);
-        image_doc.put('path', fullfile(conf.imageDir, filename));
-        if ~isempty(coll.findOne(image_doc))
-%             There is already this image in the collection
-            fprintf('Image already added.\n');
-            continue
-        end
+
         
 %         extract class name from filename
         a = regexp(filename, '([^|]*+)|', 'tokens');
