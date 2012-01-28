@@ -66,10 +66,10 @@ function result = demo_wiki_get_objects(args)
         fprintf('Loading super histograms...\n');
         m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
         class_names = m.class_names;
-%         m = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
-%         class_hists = m.super_class_histograms;
-%         m = load(fullfile(conf.modelDataDir, 'classes_useful_hists.mat'));
-%         classes_useful_hists = m.classes_useful_hists;
+        m = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
+        class_hists = m.super_class_histograms;
+        m = load(fullfile(conf.modelDataDir, 'classes_useful_hists.mat'));
+        classes_useful_hists = m.classes_useful_hists;
         clear m;
     end
 

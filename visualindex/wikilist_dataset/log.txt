@@ -1,2 +1,5 @@
-Querying image /Users/jaderberg/Desktop/bigben2.jpg
+Loading histograms from /Volumes/4YP/wikilist_visualindex/data/model
+Loading ids from /Volumes/4YP/wikilist_visualindex/data/model
+Loading vocab from /Volumes/4YP/wikilist_visualindex/data/model
+Querying image /Users/jaderberg/Desktop/bigben.jpg
 Starting match process...

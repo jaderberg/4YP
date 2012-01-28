@@ -39,21 +39,23 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size)
         end
         % combine n1 and n2 in all ways possible
         wsub = w1(i).*uint32(ones(1,nn1*nn2));
+        m = 1;
         for k=1:nn2
             for l=1:nn1
-                f1sub(:,k*l) = f1(:,i-1+l);
-                f2sub(:,k*l) = f2(:,i-1+k);
+                f1sub(:,m) = f1(:,i-1+l);
+                f2sub(:,m) = f2(:,i-1+k);
+                m = m + 1;
             end
-        end
+        end    
         w1 = [w1(1:i-1) wsub w1(i+nn1:end)];
         w2 = [w2(1:i-1) wsub w2(i+nn2:end)];
         f1 = [f1(:,1:i-1) f1sub f1(:,i+nn1:end)];
         f2 = [f2(:,1:i-1) f2sub f2(:,i+nn2:end)];
-        clear f1sub f2sub;
-        
+        clear f1sub f2sub;       
         i = i + length(wsub);        
     end
     
+
     % get the 2D coordinates of these features in homogeneous notation
     X1 = f1(1:2,:) ;
     X2 = f2(1:2,:) ;
