@@ -1,9 +1,12 @@
 % Max Jaderberg 28/12/11
 
-function [score, matches] = spatially_verify(f1,w1,f2,w2,size)
+function [score, matches] = spatially_verify(f1,w1,f2,w2,size,varargin)
     % The geometric verfication is a simple RANSAC affine matcher. It can
     % be significantly improved.
 
+    opts.includeRepeated = 1;
+    opts = vl_argparse(opts, varargin);
+    
     % find the features that are mapped to the same visual words
     [d1, m1] = ismember(w1, w2);
     [d2, m2] = ismember(w2, w1);
@@ -23,36 +26,44 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size)
         return
     end
     
-    % insert all duplicate words in all combinations
-    [w1 p1] = sort(w1);
-    [w2 p2] = sort(w2);
-    f1 = f1(:,p1);
-    f2 = f2(:,p2);    
-    i = 1;
-    while i <= length(w1)
-        % get the run of same values
-        n1 = find(w1==w1(i)); nn1 = length(n1);
-        n2 = find(w2==w1(i)); nn2 = length(n2);
-        if nn1 == 1 && nn2 == 1
-            i = i + 1;
-            continue
-        end
-        % combine n1 and n2 in all ways possible
-        wsub = w1(i).*uint32(ones(1,nn1*nn2));
-        m = 1;
-        for k=1:nn2
-            for l=1:nn1
-                f1sub(:,m) = f1(:,i-1+l);
-                f2sub(:,m) = f2(:,i-1+k);
-                m = m + 1;
+    if opts.includeRepeated
+        % insert all duplicate words in all combinations
+        [w1 p1] = sort(w1);
+        [w2 p2] = sort(w2);
+        f1 = f1(:,p1);
+        f2 = f2(:,p2);    
+        i = 1;
+        while i <= length(w1)
+            % get the run of same values
+            n1 = find(w1==w1(i)); nn1 = length(n1);
+            n2 = find(w2==w1(i)); nn2 = length(n2);
+            if nn1 == 1 && nn2 == 1
+                i = i + 1;
+                continue
             end
-        end    
-        w1 = [w1(1:i-1) wsub w1(i+nn1:end)];
-        w2 = [w2(1:i-1) wsub w2(i+nn2:end)];
-        f1 = [f1(:,1:i-1) f1sub f1(:,i+nn1:end)];
-        f2 = [f2(:,1:i-1) f2sub f2(:,i+nn2:end)];
-        clear f1sub f2sub;       
-        i = i + length(wsub);        
+            % combine n1 and n2 in all ways possible
+            wsub = w1(i).*uint32(ones(1,nn1*nn2));
+            m = 1;
+            for k=1:nn2
+                for l=1:nn1
+                    f1sub(:,m) = f1(:,i-1+l);
+                    f2sub(:,m) = f2(:,i-1+k);
+                    m = m + 1;
+                end
+            end    
+            w1 = [w1(1:i-1) wsub w1(i+nn1:end)];
+            w2 = [w2(1:i-1) wsub w2(i+nn2:end)];
+            f1 = [f1(:,1:i-1) f1sub f1(:,i+nn1:end)];
+            f2 = [f2(:,1:i-1) f2sub f2(:,i+nn2:end)];
+            clear f1sub f2sub;       
+            i = i + length(wsub);        
+        end
+    else
+        % delete repeated words
+        [w1 p1 crap] = unique(w1);
+        [w2 p2 crap] = unique(w2);
+        f1 = f1(:,p1);
+        f2 = f2(:,p2);
     end
     
 
@@ -62,7 +73,7 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size)
     X1(3,:) = 1 ;
     X2(3,:) = 1 ;
 
-    thresh = max(max(size)*0.02, 10)*1; 
+    thresh = max(max(size)*0.01, 10)*1; 
 
     % RANSAC
     randn('state',0) ;

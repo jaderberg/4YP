@@ -10,7 +10,7 @@ function [conf] = flickr_expansion(classes, conf, coll, vocab, varargin)
     
     opts.maxResolution = 0;
     opts.nPhotos = '20';
-    opts.matchThresh = 35;
+    opts.matchThresh = 15;
     opts = vl_argparse(opts, varargin);
 
     api_key = '96b5267887dfe14499dedb947f8f8f72';
@@ -116,9 +116,10 @@ function [conf] = flickr_expansion(classes, conf, coll, vocab, varargin)
                 if isempty(f_filenames{j})
                     continue
                 end
-                [score matches] = spatially_verify(c_frames,c_words,f_frames{j},f_words{j},size(c_im));
+                [score matches] = spatially_verify(c_frames,c_words,f_frames{j},f_words{j},size(c_im), 'includeRepeated', 0);
+                                    fprintf('--> %s from Flickr is similar (score: %d) - adding words\n', f_filenames{j}, score);
+
                 if score > opts.matchThresh
-                    fprintf('--> %s from Flickr is similar (score: %d) - adding words\n', f_filenames{j}, score);
                     f_im = imread(fullfile(class_dir, f_filenames{j}));
                     figure(1)
                     visualindex_plot_matches(matches, c_im, f_im) ;
