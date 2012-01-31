@@ -119,7 +119,11 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size,varargin)
     [u_score, best] = max(score) ;
 
     % now compute best tranformation from all inliers
-    Ha = vgg_Haffine_from_x_MLE(X1(:,ok{best}), X2(:,ok{best}));
+    try
+        Ha = vgg_Haffine_from_x_MLE(X1(:,ok{best}), X2(:,ok{best}));
+    catch
+        Ha = [A{best} T{best}; 0 0 1];
+    end
     
     if opts.repeatedScore
         % final score includes scores from repeated structures

@@ -1,6 +1,6 @@
 % Max Jaderberg 16/1/12
 
-function [conf] = flickr_expansion(classes, conf, coll, vocab, varargin)
+function [conf, vocab, histograms, ids] = flickr_expansion(classes, conf, coll, vocab, varargin)
 %     Expands on the images from Wikipedia using publicly available Flickr
 %     images. For Flickr api reference see http://www.flickr.com/services/api/flickr.photos.search.html
 %     Requires the xml_toolbox http://www.mathworks.com/matlabcentral/fileexchange/4278
@@ -19,6 +19,10 @@ function [conf] = flickr_expansion(classes, conf, coll, vocab, varargin)
     conf.flickrDir = fullfile(conf.rootDir, 'flickr_images');
     vl_xmkdir(conf.flickrDir);
     
+    ids = {};
+    histograms = {};
+    
+    n_image = 1;
     for n=1:length(classes)
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-         
 %         Download images first...
@@ -117,33 +121,68 @@ function [conf] = flickr_expansion(classes, conf, coll, vocab, varargin)
                     continue
                 end
                 [score matches] = spatially_verify(c_frames,c_words,f_frames{j},f_words{j},size(c_im), 'includeRepeated', 0, 'repeatedScore', 0);
-                                    fprintf('--> %s from Flickr is similar (score: %d) - adding words\n', f_filenames{j}, score);
-
                 if score > opts.matchThresh
+                    fprintf('### %s from Flickr is similar (score: %d) - adding words\n', f_filenames{j}, score);
                     f_im = imread(fullfile(class_dir, f_filenames{j}));
                     figure(1)
                     visualindex_plot_matches(matches, c_im, f_im) ;
 %                     rectangle of matched words on flickr image
                     f_xmin = min(matches.f2(1,:)); f_ymin = min(matches.f2(2,:));
                     f_xmax = max(matches.f2(1,:)); f_ymax = max(matches.f2(2,:));
-                    figure(2); title('Flickr image');
-                    imshow(f_im); hold on;
-                    X_rect = [f_xmin f_xmax f_xmax f_xmin; f_xmax f_xmax f_xmin f_xmin];
-                    Y_rect = [f_ymax f_ymax f_ymin f_ymin; f_ymax f_ymin f_ymin f_ymax];
-                    line(X_rect, Y_rect, 'color', 'r', 'marker', '.'); hold off;
-%                     transform rectangle onto wiki image
-                    rect_coords_top = [X_rect(1,:); Y_rect(1,:); 1 1 1 1];
-                    rect_coords_bottom = [X_rect(2,:); Y_rect(2,:); 1 1 1 1];
                     transformation = inv([matches.A matches.T; 0 0 1]);
-                    rect_coords_top = transformation*rect_coords_top;
-                    rect_coords_bottom = transformation*rect_coords_bottom;
-                    X_rect = [rect_coords_top(1,:); rect_coords_bottom(1,:)];
-                    Y_rect = [rect_coords_top(2,:); rect_coords_bottom(2,:)];
-                    figure(3); title('Wiki image');
-                    imshow(c_im); hold on;
-                    line(X_rect, Y_rect, 'color', 'r', 'marker', '.'); hold off;
-                    pause()
+                    % bring in all words in flickr image within the
+                    % rectangle
+                    all_f_frames = f_frames{j};
+                    l = find(f_xmin<=all_f_frames(1,:)); r = find(all_f_frames(1,:)<=f_xmax);
+                    b = find(f_ymin<=all_f_frames(2,:)); t = find(all_f_frames(2,:)<=f_ymax);
+                    extra_i = intersect(t,intersect(b,intersect(r,l)));
+                    extra_frames_f = all_f_frames(:,extra_i);
+                    extra_words = f_words{j}(extra_i);
+                    % transform frames to wiki image coords
+                    Xc = transformation*[extra_frames_f(1:2,:); ones(1,length(extra_words))];
+                    extra_frames_c = [Xc(1:2,:); extra_frames_f(3:end,:)];
+                    c_frames = [c_frames extra_frames_c];
+                    c_words = [c_words extra_words];
                 end
             end
+            
+            fprintf('--- Saving augmented frames and words for image\n');
+            
+            % save the augmented frames and words
+            save(fullfile(conf.framesDataDir, [c_id '-augmentedframes.mat']), 'c_frames');
+            save(fullfile(conf.wordsDataDir, [c_id '-augmentedwords.mat']), 'c_words');
+            
+            % create the new histogram
+            im_histogram = sparse(double(c_words),1,...
+                         ones(length(c_words),1), ...
+                         vocab.size,1) ;
+            histograms{n_image} = im_histogram;
+            ids{n_image} = c_id;
+            
+            n_image = n_image + 1;
         end
     end
+    
+fprintf('Created tf-idf weighted histograms with flickr augmentented words...\n');
+    
+% compute IDF weights
+histograms = cat(2, histograms{:});
+vocab.weights = log((size(histograms,2)+1)./(max(sum(histograms > 0,2),eps))) ;
+save(fullfile(conf.modelDataDir, 'vocab_augmented.mat'), '-STRUCT', 'vocab');
+
+% weight and normalize histograms
+for t = 1:length(ids)
+    image_id = ids{t};
+    
+    fprintf('Creating augmented histogram for %s\n', image_id)
+%         apply weightingz
+    h = histograms(:,t) .*  vocab.weights ;
+    im_histogram = h / max(sum(histograms(:,t)), eps) ;
+    clear h;
+    save(fullfile(conf.histogramsDataDir, [image_id '-augmentedhistogram.mat']), 'im_histogram');
+    
+    histograms(:,t) = im_histogram;
+end
+
+save(fullfile(conf.modelDataDir, 'ids_augmented.mat'), 'ids');
+save(fullfile(conf.modelDataDir, 'histograms_augmented.mat'), 'histograms');

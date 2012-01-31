@@ -155,11 +155,8 @@ vocab.weights = log((size(histograms,2)+1)./(max(sum(histograms > 0,2),eps))) ;
 save(vocab_file, '-STRUCT', 'vocab');
 
 % weight and normalize histograms
-coll_ims = coll.find();
-for t = 1:num_images
-    image = coll_ims.next();
-    image_id = image.get('_id').toString.toCharArray';
-    image_name = image.get('name');
+for t = 1:length(ids)
+    image_id = ids{t};
     if opts.forceWords
         im_histogram = [];
     else
@@ -168,9 +165,9 @@ for t = 1:num_images
     
     if ~isempty(im_histogram)
 %         Histogram is already there
-        fprintf('Already created histogram for %s\n', image_name);
+        fprintf('Already created histogram for %s\n', image_id);
     else
-        fprintf('Creating histogram for %s\n', image_name)
+        fprintf('Creating histogram for %s\n', image_id)
 %         apply weightingz
         h = histograms(:,t) .*  vocab.weights ;
         im_histogram = h / max(sum(histograms(:,t)), eps) ;
