@@ -34,7 +34,7 @@ descrs = [];
 % 30*numWords). If you have around 3000 descrs per image, then to
 % select n = 30*numWords descrs at random from all descrs, sample with
 % a frequency of n/total_descrs
-total_descrs = 3000*num_images;  % approximate
+total_descrs = 2000*num_images;  % approximate
 if 30*opts.numWords > total_descrs
     p = 1;
 else

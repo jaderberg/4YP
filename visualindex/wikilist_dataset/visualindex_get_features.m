@@ -6,10 +6,11 @@ function [f,d] = visualindex_get_features(im)
 
 % Auhtor: Andrea Vedaldi
 
-area = size(im,1) * size(im,2) ;
-firstOctave = max(ceil(.5 * log2(area / 1024^2)), -1) ;
+%area = size(im,1) * size(im,2) ;
+%firstOctave = max(ceil(.5 * log2(area / 1024^2)), -1) ;
+firstOctave = -1;
 normThresh = 0.1;
-peakThresh = 3.5;
+peakThresh = 0.025;
 try
     [f,d] = vl_sift(im2single(rgb2gray(im)), ...
                     'firstoctave', firstOctave,  ...

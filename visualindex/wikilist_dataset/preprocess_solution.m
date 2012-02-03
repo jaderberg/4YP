@@ -9,7 +9,7 @@ function preprocess_solution()
 %--------------------------------------------------------------------------
 % 1. Setup these variables
 %--------------------------------------------------------------------------
-    ROOT_DIR = '/Volumes/4YP/wikilist_visualindex2';
+    ROOT_DIR = '/Volumes/4YP/flickr_expansion';
     IMAGE_DIR = '/Volumes/4YP/Images/List_of_structures_in_London';
     NUM_WORDS = 100000;
 %--------------------------------------------------------------------------    
@@ -33,7 +33,7 @@ function preprocess_solution()
         
     
 %     Flickr expansion
-    %[histograms vocab] = flickr_expansion();
+    [conf vocab_f histograms_f ids_f] = flickr_expansion(class_names,conf,coll,vocab);
     
 %     supercharge images
     %[super_class_histograms classes_useful_hists] = supercharge_images(class_names, coll, conf, vocab);

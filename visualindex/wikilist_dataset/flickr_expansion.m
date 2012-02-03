@@ -24,10 +24,48 @@ function [conf, vocab, histograms, ids] = flickr_expansion(classes, conf, coll, 
     
     n_image = 1;
     for n=1:length(classes)
+        class_name = classes{n};
+        
+        % Check if already done this class fully
+        class_ims = coll.find(BasicDBObject('class', class_name));
+        n_class_ims = class_ims.count();
+        already_done = 0;
+        for i=1:n_class_ims
+            class_im = class_ims.next();
+            c_id = class_im.get('_id').toString.toCharArray';
+            if exist(fullfile(conf.wordsDataDir, [c_id '-augmentedwords.mat']))
+                already_done = already_done + 1;
+            end
+        end
+        
+        if already_done == n_class_ims
+            % already done the flickr expansion for this class so just load
+            % the histograms
+            fprintf('Class %s already expanded - loading data...\n', class_name);
+            class_ims = coll.find(BasicDBObject('class', class_name));
+            for i=1:class_ims.count()
+                class_im = class_ims.next();
+                c_id = class_im.get('_id').toString.toCharArray';
+                m = load(fullfile(conf.wordsDataDir, [c_id '-augmentedwords.mat']));
+                c_words = m.c_words;
+                clear m;
+                % create the new histogram
+                im_histogram = sparse(double(c_words),1,...
+                             ones(length(c_words),1), ...
+                             vocab.size,1) ;
+                histograms{n_image} = im_histogram;
+                ids{n_image} = c_id;
+
+                n_image = n_image + 1;
+            end
+            % now on to next class
+            continue
+        end
+        
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-         
 %         Download images first...
 %-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=
-        class_name = classes{n};
+        
         class_dir = fullfile(conf.flickrDir, class_name);
         vl_xmkdir(class_dir);
         fprintf('Expanding images for class %s...\n', class_name);
@@ -44,12 +82,24 @@ function [conf, vocab, histograms, ids] = flickr_expansion(classes, conf, coll, 
                 '&privacy_filter=1'...
                 '&content_type=1&media=photos']; %photos only 
         fprintf('Searching Flickr for %s...\n', search_term);
-        response = urlread(['http://api.flickr.com/services/rest/?' cmd]);
+        try
+            response = urlread(['http://api.flickr.com/services/rest/?' cmd]);
+        catch
+            try
+                response = urlread(['http://api.flickr.com/services/rest/?' cmd]);
+            catch
+                response = [];
+            end
+        end
         resp_struct = xml_parseany(response);
 
     %     download url:
     %       http://farm{num}.static.flickr.com/{server}/{id}_{secret}_b.jpg
-        photos = resp_struct.photos{1}.photo;
+        try
+            photos = resp_struct.photos{1}.photo;
+        catch 
+            photos = [];
+        end
         n_photos = length(photos);
 
         fprintf('Downloading %d photos to %s...\n', n_photos, conf.imageDir);
@@ -58,7 +108,11 @@ function [conf, vocab, histograms, ids] = flickr_expansion(classes, conf, coll, 
         f_words = {};
         f_frames = {};
         for i=1:n_photos
-            photo_struct = photos{i}.ATTRIBUTE;
+            try
+                photo_struct = photos{i}.ATTRIBUTE;
+            catch
+                continue
+            end
             fprintf('-> %s (%d of %d)\n', photo_struct.title, i, n_photos);
             filename = [class_name '|' photo_struct.id '.jpg'];
 %             check if photo exists
@@ -146,7 +200,7 @@ function [conf, vocab, histograms, ids] = flickr_expansion(classes, conf, coll, 
                 end
             end
             
-            fprintf('--- Saving augmented frames and words for image\n');
+            fprintf('--- Saving augmented frames and words for image %d\n', n_image);
             
             % save the augmented frames and words
             save(fullfile(conf.framesDataDir, [c_id '-augmentedframes.mat']), 'c_frames');
@@ -163,7 +217,7 @@ function [conf, vocab, histograms, ids] = flickr_expansion(classes, conf, coll, 
         end
     end
     
-fprintf('Created tf-idf weighted histograms with flickr augmentented words...\n');
+fprintf('Creating tf-idf weighted histograms with flickr augmentented words...\n');
     
 % compute IDF weights
 histograms = cat(2, histograms{:});

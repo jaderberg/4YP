@@ -7,7 +7,7 @@ function result = demo_wiki_get_objects(args)
 
 %--------------------------------------------------------------------------
 % SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
-    ROOT_DIR = '/Volumes/4YP/wikilist_visualindex2';
+    ROOT_DIR = '/Volumes/4YP/flickr_expansion';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
     import com.mongodb.BasicDBObject;
