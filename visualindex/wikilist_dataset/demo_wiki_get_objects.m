@@ -66,17 +66,23 @@ function result = demo_wiki_get_objects(args)
         fprintf('Loading super histograms...\n');
         m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
         class_names = m.class_names;
-        m = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
-        class_hists = m.super_class_histograms;
-        m = load(fullfile(conf.modelDataDir, 'classes_useful_hists.mat'));
-        classes_useful_hists = m.classes_useful_hists;
+%         m = load(fullfile(conf.modelDataDir, 'class_histograms.mat'));
+%         class_hists = m.super_class_histograms;
+%         m = load(fullfile(conf.modelDataDir, 'classes_useful_hists.mat'));
+%         classes_useful_hists = m.classes_useful_hists;
         clear m;
     end
 
-    %     Read Image
+    %     Read Image and resize if too large
     fprintf('Querying image %s\n', imagePath) ;
     fprintf(log_file, 'Querying image %s\n', imagePath) ;
     im = imread(imagePath) ;
+    [maxRes maxDim] = max(size(im));
+    maxAllowedRes = 1000;
+    if maxRes > maxAllowedRes
+        scale_factor = maxAllowedRes/maxRes;
+        im = imresize(im, scale_factor);
+    end
     sz = [size(im,2); size(im,1)] ;
 
     if display
@@ -87,7 +93,7 @@ function result = demo_wiki_get_objects(args)
     end
     
     %     Now do multiple object matching!
-    max_objects = 2;
+    max_objects = 1;
     max_tries_per_object = 2;
     
     result.query_image.path = imagePath;

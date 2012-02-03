@@ -53,8 +53,6 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
 %     Get the histogram
     fprintf('Getting histogram...\n');
     histogram = visualindex_get_histogram(vocab, words);
-%     times by tf-idf weights
-    histogram = histogram.*vocab.weights;
     
     
     % compute histogram-based score
@@ -97,7 +95,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
         
         match_words = load_words(match_id, conf);
         match_frames = load_frames(match_id, conf);
-        [match_score, matches(i)] = spatially_verify(match_frames, match_words, ...
+        [match_score, matches{i}] = spatially_verify(match_frames, match_words, ...
                                    frames, words, ...
                                    size(im)) ;
         fprintf('Found match (%s) with %d inliers - ', db_im.get('name'), match_score);
@@ -105,7 +103,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
         scores(i) = match_score + scores(i);
 %        If there are enough inliers (the score) we have found a spatially
 %        verified match
-        if match_score >= 1500
+        if match_score >= 8
 %             this is definitely a match
             fprintf('thats good enough!\n');
             break
@@ -121,7 +119,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
     match_perm = perm(ind);
     result.id = ids{match_perm};
     result.score = full(best_score);
-    result.match = matches(ind);
+    result.match = matches{ind};
     
     %profile viewer;
     

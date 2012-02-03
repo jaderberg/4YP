@@ -5,7 +5,7 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size,varargin)
     % be significantly improved.
 
     opts.includeRepeated = 0;
-    opts.repeatedScore = 1;
+    opts.repeatedScore = 0;
     opts = vl_argparse(opts, varargin);
     
     % find the features that are mapped to the same visual words
@@ -127,7 +127,7 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size,varargin)
     
     if opts.repeatedScore
         % final score includes scores from repeated structures
-        X2_ = [AT; 0 0 1] * [f1r(1:2,:); ones(1, length(w1r))];
+        X2_ = Ha * [f1r(1:2,:); ones(1, length(w1r))];
         delta = X2_ - [f2r(1:2,:); ones(1, length(w2r))];
         ok = sum(delta.*delta,1) < thresh^2;
         score = sum(ok);
