@@ -1,6 +1,6 @@
-Querying image /Users/jaderberg/Desktop/thameshouse.jpg
+Querying image /Users/jaderberg/Desktop/10downing.jpg
 Starting match process...
-Match has a score of 6.012065e+00. Found new object, Baden-Powell_House
+Match has a score of 9.016558e+00. Found new object, 10_Downing_Street
 Added to matches! 
 Search stopped as max_objects hit
 Query complete

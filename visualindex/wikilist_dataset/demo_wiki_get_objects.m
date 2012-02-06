@@ -54,15 +54,15 @@ function result = demo_wiki_get_objects(args)
     if isempty(histograms) || isempty(ids) || isempty(vocab)
         fprintf('Loading histograms from %s\n', conf.modelDataDir);
         fprintf(log_file, 'Loading histograms from %s\n', conf.modelDataDir);
-        m = load(fullfile(conf.modelDataDir, 'histograms.mat'));
+        m = load(fullfile(conf.modelDataDir, 'histograms_augmented.mat'));
         histograms = m.histograms;
         fprintf('Loading ids from %s\n', conf.modelDataDir);
         fprintf(log_file, 'Loading ids from %s\n', conf.modelDataDir);
-        m = load(fullfile(conf.modelDataDir, 'ids.mat'));
+        m = load(fullfile(conf.modelDataDir, 'ids_augmented.mat'));
         ids = m.ids;
         fprintf('Loading vocab from %s\n', conf.modelDataDir);
         fprintf(log_file, 'Loading vocab from %s\n', conf.modelDataDir);
-        vocab = load(fullfile(conf.modelDataDir, 'vocab.mat'));
+        vocab = load(fullfile(conf.modelDataDir, 'vocab_augmented.mat'));
         fprintf('Loading super histograms...\n');
         m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
         class_names = m.class_names;
@@ -117,7 +117,7 @@ function result = demo_wiki_get_objects(args)
 
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
-        if best_match.score < 5
+        if best_match.score < 7
             fprintf('Score not large enough to be certain - no match\n');
             fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break
