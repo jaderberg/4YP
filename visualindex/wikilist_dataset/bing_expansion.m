@@ -120,20 +120,14 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
             else          
     %             grab it from bing
                 photo_url = photo_struct.MediaUrl;
-                try
-                    test = urlread(photo_url);
-                catch
-                    fprintf('   ...ERROR: COULD NOT ACCESS PHOTO URL\n');
-                    continue
-                end
-                clear test
                 fprintf('   ...downloading %s\n', photo_url);
                 try
-                    im = imread(photo_url);
+                    im = imreadurl(photo_url,30000);
                 catch err
                     try
-                        im = imread(photo_url);
+                        im = imread(photo_url,60000);
                     catch err
+                        fprintf('   ...ERROR: TIMEOUT\n');
                         continue
                     end
                 end
