@@ -9,7 +9,7 @@ function preprocess_solution()
 %--------------------------------------------------------------------------
 % 1. Setup these variables
 %--------------------------------------------------------------------------
-    ROOT_DIR = '/Volumes/4YP/flickr_expansion';
+    ROOT_DIR = '/Volumes/4YP/bing_expansion';
     IMAGE_DIR = '/Volumes/4YP/Images/List_of_structures_in_London';
     NUM_WORDS = 100000;
 %--------------------------------------------------------------------------    
