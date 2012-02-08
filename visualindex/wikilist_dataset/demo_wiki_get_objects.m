@@ -7,7 +7,7 @@ function result = demo_wiki_get_objects(args)
 
 %--------------------------------------------------------------------------
 % SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
-    ROOT_DIR = '/Volumes/4YP/flickr_expansion';
+    ROOT_DIR = '/Volumes/4YP/bing_expansion';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
     import com.mongodb.BasicDBObject;
@@ -34,6 +34,11 @@ function result = demo_wiki_get_objects(args)
 %     load config file
     try
         conf = load(fullfile(ROOT_DIR, 'conf.mat'));
+        try
+            conf = conf.conf;
+        catch
+            conf = conf;
+        end
     catch err
         fprintf('ERROR: could not find conf.mat. Make sure preprocess_solution.m has been run.\n');
         result = 0;
@@ -117,7 +122,7 @@ function result = demo_wiki_get_objects(args)
 
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
-        if best_match.score < 7
+        if best_match.score < 6
             fprintf('Score not large enough to be certain - no match\n');
             fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break

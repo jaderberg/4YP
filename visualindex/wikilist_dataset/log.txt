@@ -1,6 +1,9 @@
-Querying image /Users/jaderberg/Desktop/10downing.jpg
+Loading histograms from /Volumes/4YP/bing_expansion/data/model
+Loading ids from /Volumes/4YP/bing_expansion/data/model
+Loading vocab from /Volumes/4YP/bing_expansion/data/model
+Querying image /Users/jaderberg/Desktop/sherlock.jpeg
 Starting match process...
-Match has a score of 9.016558e+00. Found new object, 10_Downing_Street
+Match has a score of 1.800547e+01. Found new object, 221B_Baker_Street
 Added to matches! 
 Search stopped as max_objects hit
 Query complete
