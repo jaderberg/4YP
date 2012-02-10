@@ -1,4 +1,5 @@
 % Validate model
+% NB: ps -e|grep -v TTY|awk {'print "echo -n \"Process: "$4"\tPID: "$1"\tNumber of FH: \"; lsof -p "$1"|wc -l"'} > out; . ./out
 
 % library must be imported by running javaaddpath('mongo-2.7.2.jar')
 
