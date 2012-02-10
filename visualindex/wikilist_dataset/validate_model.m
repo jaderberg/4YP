@@ -58,7 +58,6 @@ for n=3:length(folders)
         n_image = n_image + 1;
     end
     save(fullfile(conf.rootDir, 'validation_results.mat'), 'validation_results');
-    fclose('all');
 end
 
 num_images = length(validation_results.ground_truth);

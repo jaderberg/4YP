@@ -11,5 +11,3 @@ function words = load_words(image_id, conf)
     t = load(word_file);
     words = t.c_words;
     clear t;
-    fclose('all');
-    clear load;

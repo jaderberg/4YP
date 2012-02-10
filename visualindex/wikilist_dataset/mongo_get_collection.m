@@ -1,6 +1,7 @@
 % Max Jaderberg 8/1/12
 
-function coll = mongo_get_collection(varargin)
+function [m db coll] = mongo_get_collection(varargin)
+% REMEMBER TO CALL m.close() AFTER FINISHED TO DISPOSE OF RESOURCES
 
     import com.mongodb.Mongo;
     import com.mongodb.DB;

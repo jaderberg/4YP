@@ -1,2 +1,6 @@
-Querying image /Volumes/4YP/bing_expansion/validation_images/Apollo_Victoria_Theatre/ANd9GcTY8KCoQ2NhGOsh9hcHNQE4flLrWJUSAbCS6uH6bdQ60EXaxGqokONVA5LS.jpg
+Querying image /Users/jaderberg/Desktop/bigben.jpg
 Starting match process...
+Match has a score of 1.200512e+01. Found new object, Palace_of_Westminster
+Added to matches! 
+Search stopped as max_objects hit
+Query complete

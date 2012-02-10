@@ -24,7 +24,7 @@ function result = demo_wiki_get_objects(args)
     if ~isfield(args, 'log_file')
         args.log_file = 'log.txt';
     end
-    %log_file = fopen(args.log_file, 'w');
+    log_file = fopen(args.log_file, 'w');
     
     figures = 1;
 
@@ -46,7 +46,7 @@ function result = demo_wiki_get_objects(args)
     end
     
 %     load mongo collection
-    coll = mongo_get_collection();
+    [mongo mongo_db coll] = mongo_get_collection();
     
 %     define global variables to avoid reloading from disk
     global histograms
@@ -58,15 +58,15 @@ function result = demo_wiki_get_objects(args)
     
     if isempty(histograms) || isempty(ids) || isempty(vocab)
         fprintf('Loading histograms from %s\n', conf.modelDataDir);
-        %fprintf(log_file, 'Loading histograms from %s\n', conf.modelDataDir);
+        fprintf(log_file, 'Loading histograms from %s\n', conf.modelDataDir);
         m = load(fullfile(conf.modelDataDir, 'histograms_augmented.mat'));
         histograms = m.histograms;
         fprintf('Loading ids from %s\n', conf.modelDataDir);
-        %fprintf(log_file, 'Loading ids from %s\n', conf.modelDataDir);
+        fprintf(log_file, 'Loading ids from %s\n', conf.modelDataDir);
         m = load(fullfile(conf.modelDataDir, 'ids_augmented.mat'));
         ids = m.ids;
         fprintf('Loading vocab from %s\n', conf.modelDataDir);
-        %fprintf(log_file, 'Loading vocab from %s\n', conf.modelDataDir);
+        fprintf(log_file, 'Loading vocab from %s\n', conf.modelDataDir);
         vocab = load(fullfile(conf.modelDataDir, 'vocab_augmented.mat'));
         fprintf('Loading super histograms...\n');
         m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
@@ -80,7 +80,7 @@ function result = demo_wiki_get_objects(args)
 
     %     Read Image and resize if too large
     fprintf('Querying image %s\n', imagePath) ;
-    %fprintf(log_file, 'Querying image %s\n', imagePath) ;
+    fprintf(log_file, 'Querying image %s\n', imagePath) ;
     im = imread(imagePath) ;
     [maxRes maxDim] = max(size(im));
     maxAllowedRes = 1000;
@@ -113,7 +113,7 @@ function result = demo_wiki_get_objects(args)
     frames = []; descrs = [];
     
     fprintf('Starting match process...\n');
-    %fprintf(log_file, 'Starting match process...\n');
+    fprintf(log_file, 'Starting match process...\n');
     
     while pass_number < max_objects*max_tries_per_object
         
@@ -121,10 +121,10 @@ function result = demo_wiki_get_objects(args)
         %[best_match frames descrs] = image_query2(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs, 'pass_number', pass_number);
 
         fprintf('Match has a score of %d. ', best_match.score);
-        %fprintf(log_file, 'Match has a score of %d. ', best_match.score);
+        fprintf(log_file, 'Match has a score of %d. ', best_match.score);
         if best_match.score < 6
             fprintf('Score not large enough to be certain - no match\n');
-            %fprintf(log_file, 'Score not large enough to be certain - no match\n');
+            fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break
         end
         
@@ -133,7 +133,7 @@ function result = demo_wiki_get_objects(args)
         
         if isempty(match_image.class)
             fprintf('Matched image has no class - no match\n');
-            %fprintf(log_file, 'Matched image has no class - no match\n');
+            fprintf(log_file, 'Matched image has no class - no match\n');
             break
         end
         
@@ -144,14 +144,14 @@ function result = demo_wiki_get_objects(args)
             current_tries = current_tries + 1;
             if current_tries >= max_tries_per_object
                 fprintf('Search stopped as no new object found\n');
-                %fprintf(log_file, 'Search stopped as no new object found\n');
+                fprintf(log_file, 'Search stopped as no new object found\n');
                 break
             else
                 continue
             end
         else
             fprintf('Found new object, %s\n', match_image.class);
-            %fprintf(log_file, 'Found new object, %s\n', match_image.class);
+            fprintf(log_file, 'Found new object, %s\n', match_image.class);
             result.classes{end+1} = match_image.class;
         end
         
@@ -191,14 +191,14 @@ function result = demo_wiki_get_objects(args)
         result.matches{end+1} = match;
         
         fprintf('Added to matches! \n');
-        %fprintf(log_file, 'Added to matches! \n');
+        fprintf(log_file, 'Added to matches! \n');
         
 %         add rectangle of match to exclusion region
         exclusion_matrix(end+1,:) = rect;
         
         if length(result.matches) >= max_objects
             fprintf('Search stopped as max_objects hit\n');
-            %fprintf(log_file, 'Search stopped as max_objects hit\n');
+            fprintf(log_file, 'Search stopped as max_objects hit\n');
             break            
         end
         
@@ -208,10 +208,11 @@ function result = demo_wiki_get_objects(args)
     end
     
     fprintf('Query complete\n');
-    %fprintf(log_file, 'Query complete\n');
+    fprintf(log_file, 'Query complete\n');
     
-    %fclose(log_file);
-    fclose('all');
+    fclose(log_file);
+
+    mongo.close();
     
    
 
