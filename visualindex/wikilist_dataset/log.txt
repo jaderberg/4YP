@@ -1,9 +1,2 @@
-Loading histograms from /Volumes/4YP/bing_expansion/data/model
-Loading ids from /Volumes/4YP/bing_expansion/data/model
-Loading vocab from /Volumes/4YP/bing_expansion/data/model
-Querying image /Users/jaderberg/Desktop/sherlock.jpeg
+Querying image /Volumes/4YP/bing_expansion/validation_images/Apollo_Victoria_Theatre/ANd9GcTY8KCoQ2NhGOsh9hcHNQE4flLrWJUSAbCS6uH6bdQ60EXaxGqokONVA5LS.jpg
 Starting match process...
-Match has a score of 1.800547e+01. Found new object, 221B_Baker_Street
-Added to matches! 
-Search stopped as max_objects hit
-Query complete

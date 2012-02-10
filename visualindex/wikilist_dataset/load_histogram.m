@@ -11,3 +11,5 @@ function histogram = load_histogram(image_id, conf)
     t = load(histogram_file);
     histogram = t.c_histogram;
     clear t;
+    fclose('all');
+    clear load;

@@ -11,3 +11,5 @@ function frames = load_frames(image_id, conf)
     t = load(frames_file);
     frames = t.c_frames;
     clear t;
+    fclose('all');
+    clear load;

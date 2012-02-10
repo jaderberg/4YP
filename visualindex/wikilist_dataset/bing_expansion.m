@@ -112,7 +112,7 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
                 continue
             end
             fprintf('-> %s (%d of %d)\n', photo_struct.Title, i, n_photos);
-            filename = [class_name '|' strrep(photo_struct.Title, '.', '') int2str(i) '.jpg'];
+            filename = [class_name '|' strrep(strrep(photo_struct.Title, '.', ''), '/', '') int2str(i) '.jpg'];
 %             check if photo exists
             if exist(fullfile(class_dir, filename), 'file')
                 fprintf('   ...file already exists!\n');
