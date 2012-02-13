@@ -24,6 +24,15 @@ catch err
     return
 end
 
+validation_results_dir = fullfile(conf.rootDir, 'validation_results');
+vl_xmkdir(validation_results_dir);
+true_pos_dir = fullfile(validation_results_dir, 'true_positives');
+vl_xmkdir(true_pos_dir);
+false_pos_dir = fullfile(validation_results_dir, 'false_positives');
+vl_xmkdir(false_pos_dir);
+unmatched_dir = fullfile(validation_results_dir, 'unmatched');
+vl_xmkdir(unmatched_dir);
+
 conf.validationDir = fullfile(conf.rootDir, 'validation_images');
 
 % find all the folders in that directory
@@ -41,24 +50,36 @@ for n=3:length(folders)
     for i=1:length(files)
         % run a query with the image
         image = files{i};
-        args.display = 0; args.image_path = fullfile(class_dir, image);
+        args.display = 1; args.image_path = fullfile(class_dir, image);
         res = demo_wiki_get_objects(args);
         validation_results.ground_truth{n_image} = class_name;
-        if ~isempty(res.classes)
-            validation_results.model_classification{n_image} = res.classes{1};
-            if strcmp(res.classes{1}, class_name)
-                validation_results.classification_result(n_image) = 1; % true positive
+        try
+            if ~isempty(res.classes)
+                validation_results.model_classification{n_image} = res.classes{1};
+                if strcmp(res.classes{1}, class_name)
+                    validation_results.classification_result(n_image) = 1; % true positive
+                    % save the figure with the matches
+                    vl_printsize(3,1);
+                    print(3,'-dpdf',fullfile(true_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1} '.pdf']));
+                else
+                    validation_results.classification_result(n_image) = 2; % false positive
+                    vl_printsize(3,1);
+                    print(3,'-dpdf',fullfile(false_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1} '.pdf']));
+                end
             else
-                validation_results.classification_result(n_image) = 2; % false positive
-            end
-        else
-            validation_results.model_classification{n_image} = 'NA';
-            validation_results.classification_result(n_image) = 0; % no match
-        end 
+                validation_results.model_classification{n_image} = 'NA';
+                validation_results.classification_result(n_image) = 0; % no match
+                vl_printsize(1,1);
+                print(1,'-dpdf',fullfile(unmatched_dir, [strrep(image,'.','') '|' class_name '|unmatched.pdf']));
+            end 
+        catch
+            fprintf('Error saving figure...\n');
+        end
         n_image = n_image + 1;
     end
-    save(fullfile(conf.rootDir, 'validation_results.mat'), 'validation_results');
+    save(fullfile(validation_results_dir, 'validation_results.mat'), 'validation_results');
 end
+
 
 num_images = length(validation_results.ground_truth);
 statuses = validation_results.classification_result;
@@ -66,7 +87,7 @@ true_pos = length(statuses(statuses==1))*100/num_images;
 false_pos = length(statuses(statuses==2))*100/num_images;
 unmatched = length(statuses(statuses==0))*100/num_images;
 
-validation_txt = fopen(fullfile(conf.rootDir, 'validation.txt'), 'w');
+validation_txt = fopen(fullfile(validation_results_dir, 'validation.txt'), 'w');
 
 fprintf(validation_txt, '-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n');
 fprintf(validation_txt, 'REPORT\n');
