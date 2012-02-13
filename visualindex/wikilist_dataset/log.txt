@@ -1,6 +1,4 @@
-Querying image /Users/jaderberg/Desktop/bigben.jpg
+Querying image /Volumes/4YP/bing_expansion/validation_images/10_Upper_Bank_Street/9510UpperBankStreet_pic4.jpeg
 Starting match process...
-Match has a score of 1.200512e+01. Found new object, Palace_of_Westminster
-Added to matches! 
-Search stopped as max_objects hit
+Match has a score of 7.009729e+00. Score not large enough to be certain - no match
 Query complete

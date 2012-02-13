@@ -15,6 +15,12 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
     conf.bingDir = fullfile(conf.rootDir, 'bing_images');
     vl_xmkdir(conf.bingDir);
     
+    % Create a report on expansion
+    conf.expansionResultsDir = fullfile(conf.rootDir, 'expansion_results');
+    vl_xmkdir(conf.expansionResultsDir);
+    total_expanded = 0;
+    class_total_expanded = 0;
+    
     ids = {};
     histograms = {};
     
@@ -165,6 +171,10 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
 %         Now do the combining with the existing images
 %-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
         fprintf('Augmenting bing image words for %s...\n', class_name);
+        % Create report folder
+        class_report_dir = fullfile(conf.expansionResultsDir, class_name);
+        vl_xmkdir(class_report_dir);
+        class_total_expanded = 0;
 %         get images of this class
         class_ims = coll.find(BasicDBObject('class', class_name));
         for i=1:class_ims.count()
@@ -186,8 +196,20 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
                 if score > opts.matchThresh
                     fprintf('### %s from bing is similar (score: %d) - adding words\n', f_filenames{j}, score);
                     f_im = imread(fullfile(class_dir, f_filenames{j}));
-                    figure(1)
+                    figure(1); clf;
+                    set(1, 'units','normalized','outerposition',[0 0 1 1])
+                    subplot_tight(2,2,1,[0.02 0.01]);
+                    imagesc(c_im) ; title('Class image') ;
+                    axis image off ; drawnow ;
+                    subplot_tight(2,2,2,[0.02 0.01]);
+                    imagesc(f_im) ; title('Expanded image') ;
+                    axis image off ; drawnow ;
+                    subplot_tight(2,2,3,[0.02 0.01]);
                     visualindex_plot_matches(matches, c_im, f_im) ;
+                    vl_printsize(1,1);
+                    print(1,'-dpdf',fullfile(class_report_dir, [c_id '|' f_filenames{j} '.pdf']));
+                    total_expanded = total_expanded + 1;
+                    class_total_expanded = class_total_expanded + 1;
 %                     rectangle of matched words on bing image
                     f_xmin = min(matches.f2(1,:)); f_ymin = min(matches.f2(2,:));
                     f_xmax = max(matches.f2(1,:)); f_ymax = max(matches.f2(2,:));
@@ -223,28 +245,36 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
             
             n_image = n_image + 1;
         end
+        
+        class_report_txt = fopen(fullfile(class_report_dir, 'report.txt'), 'w');
+        fprintf(class_report_txt, 'Expanded %d of %d (%f percent)\n', class_total_expanded, class_ims.count(), class_total_expanded*100/class_ims.count());
+        fclose(class_report_txt);
     end
     
-fprintf('Creating tf-idf weighted histograms with bing augmentented words...\n');
-    
-% compute IDF weights
-histograms = cat(2, histograms{:});
-vocab.weights = log((size(histograms,2)+1)./(max(sum(histograms > 0,2),eps))) ;
-save(fullfile(conf.modelDataDir, 'vocab_augmented.mat'), '-STRUCT', 'vocab');
+    fprintf('Creating tf-idf weighted histograms with bing augmentented words...\n');
 
-% weight and normalize histograms
-for t = 1:length(ids)
-    image_id = ids{t};
-    
-    fprintf('Creating augmented histogram for %s\n', image_id)
-%         apply weightingz
-    h = histograms(:,t) .*  vocab.weights ;
-    im_histogram = h / max(sum(histograms(:,t)), eps) ;
-    clear h;
-    save(fullfile(conf.histogramsDataDir, [image_id '-augmentedhistogram.mat']), 'im_histogram');
-    
-    histograms(:,t) = im_histogram;
-end
+    % compute IDF weights
+    histograms = cat(2, histograms{:});
+    vocab.weights = log((size(histograms,2)+1)./(max(sum(histograms > 0,2),eps))) ;
+    save(fullfile(conf.modelDataDir, 'vocab_augmented.mat'), '-STRUCT', 'vocab');
 
-save(fullfile(conf.modelDataDir, 'ids_augmented.mat'), 'ids');
-save(fullfile(conf.modelDataDir, 'histograms_augmented.mat'), 'histograms');
+    % weight and normalize histograms
+    for t = 1:length(ids)
+        image_id = ids{t};
+
+        fprintf('Creating augmented histogram for %s\n', image_id)
+    %         apply weightingz
+        h = histograms(:,t) .*  vocab.weights ;
+        im_histogram = h / max(sum(histograms(:,t)), eps) ;
+        clear h;
+        save(fullfile(conf.histogramsDataDir, [image_id '-augmentedhistogram.mat']), 'im_histogram');
+
+        histograms(:,t) = im_histogram;
+    end
+
+    save(fullfile(conf.modelDataDir, 'ids_augmented.mat'), 'ids');
+    save(fullfile(conf.modelDataDir, 'histograms_augmented.mat'), 'histograms');
+    
+    expansion_report_txt = fopen(fullfile(conf.expansionResultsDir, 'report.txt'), 'w');
+    fprintf(expansion_report_txt, 'Expanded %d of %d (%f percent)\n', total_expanded, n_image, total_expanded*100/n_image);
+    fclose(expansion_report_txt);

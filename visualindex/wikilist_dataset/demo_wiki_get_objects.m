@@ -91,9 +91,9 @@ function result = demo_wiki_get_objects(args)
     sz = [size(im,2); size(im,1)] ;
 
     if display
-        figure('units','normalized','outerposition',[0 0 1 1])
     %     Plot image
         figure(1) ; clf ;
+        set(1, 'units','normalized','outerposition',[0 0 1 1])
         subplot_tight(2,2,1,[0.02 0.01]);
         imagesc(im) ; title(sprintf('Query: %s', imagePath)) ;
         axis image off ; drawnow ;
