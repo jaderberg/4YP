@@ -1,4 +1,5 @@
 function webserver(port,config)
+% RUN javaaddpath('mongo-2.7.2.jar')
 % This function WEBSERVER, is a HTTP webserver for HTML code and images
 % and also allows execution of Matlab code through the web.
 %

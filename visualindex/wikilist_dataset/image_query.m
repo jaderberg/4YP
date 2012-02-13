@@ -70,6 +70,11 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
 %         Get the words and frames for potential match
         db_im = coll.findOne(BasicDBObject('_id', ObjectId(match_id)));
         
+        if isempty(db_im)
+            fprintf('ERROR: ID not found in database\n');
+            continue
+        end
+        
 %         if the potential match is in the excluded classes set, continue
         match_class = db_im.get('class');
         if ~isempty(match_class)

@@ -188,6 +188,7 @@ function result = demo_wiki_get_objects(args)
         end
 
         match.rectangle.top = ymax; match.rectangle.left = xmin;
+        match.rectangle.bottom = ymin; match.rectangle.right = xmax;
         match.rectangle.width = width; match.rectangle.height = height;
         match.path = match_image.path;
         match.class = match_image.class;

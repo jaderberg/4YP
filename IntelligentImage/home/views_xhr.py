@@ -109,7 +109,7 @@ def tag_image(request, image_id):
 #       Matlab is already processing something, wait
         time.sleep(2)
     
-    resp = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/demo_mongo_getobjects.m', {'image_path': query_image_path, 'display': 1, 'log_file': '%slogs/%s-log.txt' % (settings.MEDIA_ROOT, request.POST.get('key'))}, maxtime=999999)
+    resp = matlab.run('/Users/jaderberg/Sites/4YP/visualindex/wikilist_dataset/demo_wiki_get_objects.m', {'image_path': query_image_path, 'display': 1, 'log_file': '%slogs/%s-log.txt' % (settings.MEDIA_ROOT, request.POST.get('key'))}, maxtime=999999)
 
     if resp['success'] == 'false':
         response['error'] = 'Something went wrong...'
@@ -122,13 +122,15 @@ def tag_image(request, image_id):
     for match in matches:
         object_name = re.findall(r'(?P<name>\w+)_\d+\.\w+', basename(match['path']))
         rectangle = match['rectangle']
+        print rectangle
     #    Transform the rectangle to web displayed size
-        original_width = uploaded_image.image.width
-        original_height = uploaded_image.image.height
+        original_sz = query_image['sz']
+        original_width = original_sz[0]
+        original_height = original_sz[1]
         scale_factor = float(IMAGE_WIDTH)/float(original_width)
 
         left = int(scale_factor*rectangle['left'])
-        top = int(scale_factor*(original_height-rectangle['top']))
+        top = int(scale_factor*(original_height-rectangle['top'])) - 9
         width = int(scale_factor*rectangle['width'])
         height = int(scale_factor*rectangle['height'])
 
@@ -141,7 +143,7 @@ def tag_image(request, image_id):
 
         objects.append({
             'label': object_class.replace('_', ' ').title(),
-            'url': 'http://en.wikipedia.org/wiki/%s' % slugify(object_class).title(),
+            'url': 'http://en.wikipedia.org/wiki/%s' % object_class,
             'left': left,
             'top': top,
             'width': width,
