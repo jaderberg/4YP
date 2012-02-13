@@ -1,0 +1,5 @@
+Loading histograms in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading ids in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Loading vocab in /Volumes/4YP/visualindex/data/oxbuild_images-index/model
+Query image /Users/jaderberg/Sites/4YP/IntelligentImage/media/uploads/bod-keble_26.jpg
+Starting match process...
