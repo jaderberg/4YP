@@ -103,7 +103,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
         scores(i) = match_score + scores(i);
 %        If there are enough inliers (the score) we have found a spatially
 %        verified match
-        if match_score >= 8
+        if match_score >= 9
 %             this is definitely a match
             %fprintf('thats good enough!\n');
             break

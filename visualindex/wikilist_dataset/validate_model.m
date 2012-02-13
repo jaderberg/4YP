@@ -59,12 +59,12 @@ for n=3:length(folders)
                 if strcmp(res.classes{1}, class_name)
                     validation_results.classification_result(n_image) = 1; % true positive
                     % save the figure with the matches
-                    vl_printsize(3,1);
-                    print(3,'-dpdf',fullfile(true_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1} '.pdf']));
+                    vl_printsize(1,1);
+                    print(1,'-dpdf',fullfile(true_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1} '.pdf']));
                 else
                     validation_results.classification_result(n_image) = 2; % false positive
                     vl_printsize(3,1);
-                    print(3,'-dpdf',fullfile(false_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1} '.pdf']));
+                    print(1,'-dpdf',fullfile(false_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1} '.pdf']));
                 end
             else
                 validation_results.model_classification{n_image} = 'NA';

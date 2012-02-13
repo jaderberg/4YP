@@ -91,8 +91,10 @@ function result = demo_wiki_get_objects(args)
     sz = [size(im,2); size(im,1)] ;
 
     if display
+        figure('units','normalized','outerposition',[0 0 1 1])
     %     Plot image
-        figure(figures) ; clf ; figures = figures + 1;
+        figure(1) ; clf ;
+        subplot_tight(2,2,1,[0.02 0.01]);
         imagesc(im) ; title(sprintf('Query: %s', imagePath)) ;
         axis image off ; drawnow ;
     end
@@ -122,7 +124,7 @@ function result = demo_wiki_get_objects(args)
 
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
-        if best_match.score < 6 || isnan(best_match.score)
+        if best_match.score < 9 || isnan(best_match.score)
             fprintf('Score not large enough to be certain - no match\n');
             fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break
@@ -163,7 +165,8 @@ function result = demo_wiki_get_objects(args)
         
         if display
     %             Plot matched image
-            figure(figures); clf; figures = figures + 1;
+            figure(1);
+            subplot_tight(2,2,3,[0.02 0.01]);
             imagesc(match_image.image) ; title(sprintf('Best match: %s', match_image.path)) ;
             axis image off ; drawnow ;
         end
@@ -176,9 +179,11 @@ function result = demo_wiki_get_objects(args)
         rect = [xmin ymin width height];
         if display
             figure(1);
+            subplot_tight(2,2,1,[0.02 0.01]);
             vl_plotframe([match_image.matches.f2]);
             rectangle('Position', rect, 'EdgeColor', 'r');
-            figure(figures) ; clf ; figures = figures + 1;
+            figure(1) ;
+            subplot_tight(2,2,2,[0.02 0.01]);
             visualindex_plot_matches(match_image.matches, match_image.image, im, match_image.sz, sz) ;
         end
 

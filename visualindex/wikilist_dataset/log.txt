@@ -1,6 +1,6 @@
-Querying image /Volumes/4YP/bing_expansion/validation_images/York_House,_Twickenham/ANd9GcT_63tBvOI4mytaOwpFJWMgCfaa5I85Gl9s1goU08kNYh8y7q9stTGC-Q5A.jpg
+Querying image /Users/jaderberg/Desktop/bigben.jpg
 Starting match process...
-Match has a score of 6.004602e+00. Found new object, Bedford_Square
+Match has a score of 1.200512e+01. Found new object, Palace_of_Westminster
 Added to matches! 
 Search stopped as max_objects hit
 Query complete

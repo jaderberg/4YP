@@ -54,83 +54,84 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     vl_xmkdir(conf.classhistsDataDir);
     vl_xmkdir(conf.classesDataDir);
     
-%     Get the file names
-    files = dir(fullfile(image_dir, '*.jpg')) ;
-    files = {files(~[files.isdir]).name} ;   
-    files = sort(files); % sort alphabetically
-    n_images = length(files);
-    
-    fprintf('Found %d jpgs\n', n_images);
-    
+    % get class folders in dir
+    folders = dir(fullfile(image_dir, '*')) ;
+    folders = {folders([folders.isdir]).name} ; 
+
     classes = {};
     failed = 0;
-    for i=1:n_images
-        fprintf('Adding image %d of %d...\n', i, n_images);
-        filename = files{i};
-        file_path = fullfile(image_dir, filename);
+    
+    n_image = 1;
+    for n=3:length(folders)
+        class_name = folders{n};
+        class_dir = fullfile(image_dir, class_name);
+        fprintf('Adding images from class %s...', class_name);
         
-%         Get image info
-        try
-            info = imfinfo(file_path) ;
-        catch exc
-            fprintf('Could not process image %s - skipping\n', filename);
-            failed = failed + 1;
-            continue
-        end
-        
-        %         For each image build a document
-%         But first see if it is already in the database
-        image_doc = BasicDBObject();
-        image_doc.put('name', filename);
-        image_doc.put('path', fullfile(conf.imageDir, filename));
-        if ~isempty(coll.findOne(image_doc))
-%             There is already this image in the collection
-            fprintf('Image already added.\n');
-            continue
-        end
-        
-%         copy image to new working directory and resize if required
-        if opts.copyImages || opts.maxResolution
-            im = imread(file_path);
-            if opts.maxResolution
-                [maxRes maxDim] = max(size(im));
-                if maxRes > opts.maxResolution
-                    scale_factor = opts.maxResolution/maxRes;
-                    im = imresize(im, scale_factor);
+        % get image files
+        files = dir(fullfile(class_dir, '*.jpg')) ;
+        files = [files; dir(fullfile(class_dir, '*.jpeg'))];
+        files = {files(~[files.isdir]).name} ;   
+        n_images = length(files);
+        fprintf('found %d images\n', n_images);
+        for i=1:n_images
+            filename = files{i};
+        	file_path = fullfile(class_dir, filename);
+            % Get image info
+            try
+                info = imfinfo(file_path) ;
+            catch exc
+                fprintf('Could not process image %s - skipping\n', filename);
+                failed = failed + 1;
+                continue
+            end
+
+            % For each image build a document
+            % But first see if it is already in the database
+            image_doc = BasicDBObject();
+            image_doc.put('name', filename);
+            image_doc.put('path', fullfile(conf.imageDir, filename));
+            if ~isempty(coll.findOne(image_doc))
+                % There is already this image in the collection
+                fprintf('Image already added.\n');
+                continue
+            end
+
+            % copy image to new working directory and resize if required
+            if opts.copyImages || opts.maxResolution
+                im = imread(file_path);
+                if opts.maxResolution
+                    [maxRes maxDim] = max(size(im));
+                    if maxRes > opts.maxResolution
+                        scale_factor = opts.maxResolution/maxRes;
+                        im = imresize(im, scale_factor);
+                    end
+                end
+                vl_xmkdir(fullfile(conf.imageDir, class_name));
+                imwrite(im, fullfile(conf.imageDir, class_name, filename));
+                clear im
+                % getting info of copied file
+                info = imfinfo(fullfile(conf.imageDir, filename)) ;
+            end
+
+            if isempty(classes)
+                classes{1} = class_name;
+            else
+                if ~strcmp(classes{end}, class_name)
+                    classes{end+1} = class_name;
                 end
             end
-            imwrite(im, fullfile(conf.imageDir, filename));
-            clear im
-%             getting info of copied file
-            info = imfinfo(fullfile(conf.imageDir, filename)) ;
-        end
-        
 
-        
-%         extract class name from filename
-        a = regexp(filename, '([^|]*+)|', 'tokens');
-        if isempty(a)
-            fprintf('Invalid file name for db (%s)\n', filename);
-        end
-        image_class = char(a{1});
-        if isempty(classes)
-            classes{1} = image_class;
-        else
-            if ~strcmp(classes{end}, image_class)
-                classes{end+1} = image_class;
-            end
-        end
+            image_doc.put('class', class_name);
+            size_db = BasicDBObject();
+            size_db.put('width', info.Width); size_db.put('height', info.Height);
+            image_doc.put('size', size_db);
 
-        image_doc.put('class', image_class);
-        size_db = BasicDBObject();
-        size_db.put('width', info.Width); size_db.put('height', info.Height);
-        image_doc.put('size', size_db);
-        
-        doc(1) = image_doc;
-        coll.insert(doc);
-
+            doc(1) = image_doc;
+            coll.insert(doc);
+        end
+        n_image = n_image + 1;
     end
-    clear filename image_class a;
+    
     
     fprintf('%d added, %d failed to add\n', n_images - failed, failed);
     
