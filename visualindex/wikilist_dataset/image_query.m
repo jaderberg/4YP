@@ -9,7 +9,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
     import org.bson.types.ObjectId;
 
     opts.exclude = [];  
-    opts.depth = 100;
+    opts.depth = 10;
     opts.frames = []; opts.descrs = [];
     opts.excludeClasses = {};
     opts = vl_argparse(opts, varargin);

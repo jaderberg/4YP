@@ -100,7 +100,7 @@ function result = demo_wiki_get_objects(args)
     end
     
     %     Now do multiple object matching!
-    max_objects = 1;
+    max_objects = 2;
     max_tries_per_object = 2;
     
     result.query_image.path = imagePath;
