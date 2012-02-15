@@ -103,17 +103,17 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
         [match_score, matches{i}] = spatially_verify(match_frames, match_words, ...
                                    frames, words, ...
                                    size(im)) ;
-        %fprintf('Found match (%s) with %d inliers - ', db_im.get('name'), match_score);
+        fprintf('Found match (%s) with %d inliers - ', db_im.get('name'), match_score);
 %         Add tf-idf to spatial score to avoid ties
         scores(i) = match_score + scores(i);
 %        If there are enough inliers (the score) we have found a spatially
 %        verified match
         if match_score >= 9
 %             this is definitely a match
-            %fprintf('thats good enough!\n');
+            fprintf('thats good enough!\n');
             break
         else
-            %fprintf('not good enough, looking for another...\n');
+            fprintf('not good enough, looking for another...\n');
             clear db_im db_model match_words match_frames match_score match perm_ind match_id;
         end
         
