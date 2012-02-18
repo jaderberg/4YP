@@ -1,9 +1,7 @@
-Loading histograms from /Volumes/4YP/bing_expansion/data/model
-Loading ids from /Volumes/4YP/bing_expansion/data/model
-Loading vocab from /Volumes/4YP/bing_expansion/data/model
 Querying image /Users/jaderberg/Desktop/bigben.jpg
 Starting match process...
 Match has a score of 1.200512e+01. Found new object, Palace_of_Westminster
 Added to matches! 
-Search stopped as max_objects hit
+Looking for another object...
+Match has a score of 6.004054e+00. Score not large enough to be certain - no match
 Query complete
