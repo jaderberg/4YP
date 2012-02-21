@@ -58,31 +58,24 @@ for n=3:length(folders)
         args.display = 1; args.image_path = fullfile(class_dir, image);
         res = demo_wiki_get_objects(args);
         validation_results.ground_truth{n_image} = class_name;
-        try
-            if ~isempty(res.classes)
-                validation_results.model_classification{n_image} = res.classes{1};
-                if strcmp(res.classes{1}, class_name)
-                    validation_results.classification_result(n_image) = 1; % true positive
-                    num_true = num_true + 1;
-                    % save the figure with the matches
-                    vl_printsize(1,1);
-                    print(1,'-dpdf',fullfile(true_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1} '.pdf']));
-                else
-                    validation_results.classification_result(n_image) = 2; % false positive
-                    num_false = num_false + 1;
-                    vl_printsize(3,1);
-                    print(1,'-dpdf',fullfile(false_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1} '.pdf']));
-                end
+        if ~isempty(res.classes)
+            validation_results.model_classification{n_image} = res.classes{1};
+            if strcmp(res.classes{1}, class_name)
+                validation_results.classification_result(n_image) = 1; % true positive
+                num_true = num_true + 1;
+                % save the figure with the matches
+                save_figure(1, fullfile(true_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1}]));
             else
-                validation_results.model_classification{n_image} = 'NA';
-                validation_results.classification_result(n_image) = 0; % no match
-                num_unmatched = num_unmatched + 1;
-                vl_printsize(1,1);
-                print(1,'-dpdf',fullfile(unmatched_dir, [strrep(image,'.','') '|' class_name '|unmatched.pdf']));
-            end 
-        catch
-            fprintf('Error saving figure...\n');
-        end
+                validation_results.classification_result(n_image) = 2; % false positive
+                num_false = num_false + 1;
+                save_figure(1, fullfile(false_pos_dir, [strrep(image,'.','') '|' class_name '|' res.classes{1}]));
+            end
+        else
+            validation_results.model_classification{n_image} = 'NA';
+            validation_results.classification_result(n_image) = 0; % no match
+            num_unmatched = num_unmatched + 1;
+            save_figure(1, fullfile(unmatched_dir, [strrep(image,'.','') '|' class_name '|unmatched']));
+        end 
         n_image = n_image + 1;
         num_total = num_total + 1;
     end

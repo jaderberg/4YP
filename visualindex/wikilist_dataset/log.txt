@@ -1,9 +1,6 @@
-Loading histograms from /Volumes/4YP/bing_expansion/data/model
-Loading ids from /Volumes/4YP/bing_expansion/data/model
-Loading vocab from /Volumes/4YP/bing_expansion/data/model
-Querying image /Users/jaderberg/Desktop/bigben.jpg
+Querying image /Volumes/4YP/flickr_expansion/validation_images/York_House,_Twickenham/ANd9GcRfz9me8ITly_gmlrR3nMjxLusugjwDbuYMWvoSvdJq2_lPyRpkkPD23RSw.jpg
 Starting match process...
-Match has a score of 1.200512e+01. Found new object, Palace_of_Westminster
+Match has a score of 1.500836e+01. Found new object, York_House,_Twickenham
 Added to matches! 
 Search stopped as max_objects hit
 Query complete

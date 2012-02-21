@@ -206,8 +206,7 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
                     axis image off ; drawnow ;
                     subplot_tight(2,2,3,[0.02 0.01]);
                     visualindex_plot_matches(matches, c_im, f_im) ;
-                    vl_printsize(1,1);
-                    print(1,'-dpdf',fullfile(class_report_dir, [c_id '|' f_filenames{j} '.pdf']));
+                    save_figure(1, fullfile(class_report_dir, [c_id '|' f_filenames{j}]));
                     total_expanded = total_expanded + 1;
                     class_total_expanded = class_total_expanded + 1;
 %                     rectangle of matched words on bing image
