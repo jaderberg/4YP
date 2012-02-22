@@ -26,7 +26,7 @@
       <file leaf-file-name="wiki_list_crawler.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wiki_list_crawler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="120" column="29" selection-start="4217" selection-end="4217" vertical-scroll-proportion="0.5508772">
+            <state line="185" column="24" selection-start="7477" selection-end="7477" vertical-scroll-proportion="0.847981">
               <folding />
             </state>
           </provider>
@@ -246,7 +246,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.67081445" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.6776018" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3223982" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -381,7 +381,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wiki_list_crawler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="29" selection-start="4217" selection-end="4217" vertical-scroll-proportion="0.5508772">
+        <state line="185" column="24" selection-start="7477" selection-end="7477" vertical-scroll-proportion="0.847981">
           <folding />
         </state>
       </provider>
