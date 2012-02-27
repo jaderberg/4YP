@@ -94,36 +94,7 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size,varargin)
     thresh = max(max(size)*0.007, 7)*1; 
 
     % RANSAC
-    randn('state',0) ;
-    rand('state',0) ;
-    numRansacIterations = 500 ;
-    for t = 1:numRansacIterations
-      % select a subset of 3 matched features at random
-      subset = vl_colsubset(1:length(w1), 3) ;
-      
-      % subtract the first one from the other two and then compute affine
-      % transformation (note the small regularization term).
-      u1 = X1(1:2,subset(3)) ;
-      u2 = X2(1:2,subset(3)) ;
-      A{t} = (X2(1:2,subset(1:2)) - [u2 u2]) / ...
-             (X1(1:2,subset(1:2)) - [u1 u1] + eye(2)*1e-5) ;
-      T{t} = u2 - A{t} * u1 ;
-
-      % the score is the number of inliers
-      X2_ = [A{t} T{t} ; 0 0 1] * X1 ;
-      delta = X2_ - X2 ;
-      ok{t} = sum(delta.*delta,1) < thresh^2 ;
-      score(t) = sum(ok{t}) ;
-    end
-
-    [u_score, best] = max(score) ;
-
-    % now compute best tranformation from all inliers
-    try
-        Ha = vgg_Haffine_from_x_MLE(X1(:,ok{best}), X2(:,ok{best}));
-    catch
-        Ha = [A{best} T{best}; 0 0 1];
-    end
+    [u_score best Ha score ok A T] = normal_RANSAC(X1, X2, thresh);
     
     if opts.repeatedScore
         % final score includes scores from repeated structures
