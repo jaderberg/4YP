@@ -85,16 +85,11 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size,varargin)
         return
     end
     
-    % get the 2D coordinates of these features in homogeneous notation
-    X1 = f1(1:2,:) ;
-    X2 = f2(1:2,:) ;
-    X1(3,:) = 1 ;
-    X2(3,:) = 1 ;
-
-    thresh = max(max(size)*0.007, 7)*1; 
+    % inlier threshold
+    thresh = max(max(size)*0.007, 7)*1;
 
     % RANSAC
-    [u_score best Ha score ok A T] = normal_RANSAC(X1, X2, thresh);
+    [score Ha ok] = no_RANSAC(f1, f2, thresh);
     
     if opts.repeatedScore
         % final score includes scores from repeated structures
@@ -103,9 +98,6 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size,varargin)
         ok = sum(delta.*delta,1) < thresh^2;
         score = sum(ok);
         f1 = f1r; f2 = f2r; w1 = w1r; w2 = w2r;
-    else
-        score = u_score;
-        ok = ok{best};
     end
     
     matches.A = Ha(1:2,1:2) ;

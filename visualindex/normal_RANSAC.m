@@ -1,7 +1,12 @@
 % Normal RANSAC (it's damn slow though)
 % Max Jaderberg 21/2/12
 
-function [u_score best Ha score ok A T] = normal_RANSAC(X1, X2, thresh)
+function [u_score Ha ok_best] = normal_RANSAC(f1, f2, thresh)
+
+    X1 = f1(1:2,:) ;
+    X2 = f2(1:2,:) ;
+    X1(3,:) = 1 ;
+    X2(3,:) = 1 ;
 
     % RANSAC
     randn('state',0) ;
@@ -34,3 +39,5 @@ function [u_score best Ha score ok A T] = normal_RANSAC(X1, X2, thresh)
     catch
         Ha = [A{best} T{best}; 0 0 1];
     end
+
+    ok_best = ok{best};
