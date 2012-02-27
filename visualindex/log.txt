@@ -1,9 +1,6 @@
-Querying image /Users/jaderberg/Desktop/2objects.jpg
+Querying image /Users/jaderberg/Desktop/Tourist Pics/Westminsterabbey.jpeg
 Starting match process...
-Match has a score of 3.620123e+02. Found new object, Tower_Bridge
-Added to matches! 
-Looking for another object...
-Match has a score of 1.200526e+01. Found new object, City_Hall_(London)
+Match has a score of 1.560083e+02. Found new object, Westminster_Abbey
 Added to matches! 
 Search stopped as max_objects hit
 Query complete
