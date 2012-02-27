@@ -29,7 +29,7 @@ function result = demo_wiki_get_objects(args)
     figures = 1;
 
     % setup VLFeat
-    run /Users/jaderberg/Sites/4YP/visualindex/vlfeat/toolbox/vl_setup ;
+    run ./vlfeat/toolbox/vl_setup ;
     
 %     load config file
     try
