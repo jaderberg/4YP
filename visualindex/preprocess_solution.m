@@ -31,6 +31,8 @@ function preprocess_solution()
 %     build the index
     [histograms ids vocab] = build_index(coll, conf, 'numWords', NUM_WORDS);
         
+%     Bing expansion
+    [conf vocab_b histograms_b ids_b] = bing_expansion(class_names,conf,coll,vocab);
     
 %     Flickr expansion
     [conf vocab_f histograms_f ids_f] = flickr_expansion(class_names,conf,coll,vocab);

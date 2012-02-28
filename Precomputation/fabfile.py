@@ -3,6 +3,7 @@ from fabric.api import env, cd, run, local, put, get, prompt
 from fabric.network import disconnect_all
 from multiprocessing import Process
 from fabric.contrib.console import confirm
+import time
 
 host_template = 'engs-station%s.eng.ox.ac.uk'
 env.host_string = 'kebl3465@engs-station40.eng.ox.ac.uk'
@@ -49,10 +50,12 @@ def run_on_each_host():
     N = len(good_hosts)
     for i, host in enumerate(good_hosts):
         use_host(i)
-        ps.append(run_matlab_function(env.matlab_func, i, N))
+        ps.append(run_matlab_function(env.matlab_func, i+1, N))
 
+    # Thou shalt not pass till all processes be exited
     processes_done = False
     while not processes_done:
+        time.sleep(5)
         processes_done = True
         for p in ps:
             processes_done = processes_done and (not p.is_alive())
