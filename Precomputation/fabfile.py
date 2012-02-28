@@ -19,6 +19,7 @@ env.timeout = 10
 env.start_machine = '39'
 env.stop_machine = '70'
 env.matlab_func = 'test_server'
+env.suppress_errors = True
 
 
 good_hosts = []
@@ -28,7 +29,8 @@ def precompute():
     upload_matlab = confirm('Upload new matlab?', default=False)
     start_machine_num = prompt('Starting machine #: ', key='start_machine', default='39')
     stop_machine_num = prompt('Stop machine #: ', key='stop_machine', default='70')
-    matlab_func = prompt('Matlab function to run:', key='matlab_func', default='test_server')
+    matlab_func = prompt('Matlab function to run:', key='matlab_func', default='dist_wikilist_db_creator')
+    env.suppress_errors = confirm('Suppress Matlab errors?', default=True)
 
     tasks = []
 
@@ -48,7 +50,11 @@ def run_on_each_host():
     disconnect_all()
     ps = []
     N = len(good_hosts)
+    with cd(env.visualindex_path):
+        run('rm -f matlab_log*.txt nohup*.out error*.txt')
+    disconnect_all()
     for i, host in enumerate(good_hosts):
+        #time.sleep(1)
         use_host(i)
         ps.append(run_matlab_function(env.matlab_func, i+1, N))
 
@@ -95,7 +101,9 @@ def upload_current_matlab():
         # upload
         put('/Users/jaderberg/Sites/4YP/Precomputation/visualindex.zip','%(root_path)s/visualindex.zip' % env)
         # remove existing
+        env.warn_only = True
         run('rm -rf visualindex')
+        env.warn_only = False
         # unzip
         env.warn_only = True
         run('unzip visualindex.zip')
@@ -104,6 +112,8 @@ def upload_current_matlab():
         run('rm -f visualindex.zip')
     # local cleanup
     local('rm -f visualindex.zip')
+    put('dist_matlab_suppress.sh', '%(root_path)s/visualindex/dist_matlab_suppress.sh' % env)
+    put('dist_matlab.sh', '%(root_path)s/visualindex/dist_matlab.sh' % env)
     print_message('Uploaded current code to %s' % env.visualindex_path)
 
 def run_matlab_function(m_function, n, N):
@@ -115,7 +125,11 @@ def run_matlab_function(m_function, n, N):
 
 def _remote_matlab_run(m_function, n, N):
     with cd(env.visualindex_path):
-        run("nohup nice matlab -nodesktop -nosplash -r '%s(%s,%s)' -logfile matlab_log%s.txt" % (m_function, n, N, n))
+        #run('rm -f matlab_log*.txt nohup*.out error*.txt')
+        if env.suppress_errors:
+            run("sh dist_matlab_suppress_old.sh %s %s %s" % (m_function, n, N))
+        else:
+            run("sh dist_matlab.sh %s %s %s" % (m_function, n, N))
 
 def use_host(i):
     env.host = good_hosts[i]

@@ -22,7 +22,7 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     import org.bson.types.ObjectId;
     
 %     get mongodb collection
-    coll = mongo_get_collection();
+    [m db coll] = mongo_get_collection();
     
     fprintf('Creating image database...\n');
     

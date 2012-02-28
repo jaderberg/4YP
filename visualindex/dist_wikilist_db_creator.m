@@ -1,10 +1,10 @@
 % Max Jaderberg 28/2/12
 
-function [conf, class_names, coll] = dist_wikilist_db_creator(n, N)
+function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split)
 % This creates the database + filestructure for the wiki list dataset
 % distributed over N machines (assuming N << length(folders))
 
-    [root_dir image_dir] = dist_setup();
+    [root_dir image_dir] = dist_setup(n_split, N_split);
 
     opts.copyImages = 1;
     opts.maxResolution = 1000;
@@ -18,7 +18,7 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n, N)
     import org.bson.types.ObjectId;
     
 %     get mongodb collection
-    coll = mongo_get_collection();
+    [m db coll] = mongo_get_collection();
     
     fprintf('Creating image database...\n');
     
@@ -59,13 +59,14 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n, N)
         i = i + 1;
     end
     clear folders_raw;
-    
+    class_names = folders;
     
     % split folders into N parts
-    split = ceil(length(folders)/N);
-    start_folder = (n-1)*split + 1;
-    end_folder = start_foler + split - 1;
-    if n == N
+    split = ceil(length(folders)/N_split);
+    start_folder = (n_split-1)*split + 1;
+    end_folder = start_folder + split - 1;
+    fprintf('Split %d of %d\n', n_split, N_split);
+    if n_split == N_split
         folders = folders(start_folder:end);
     else
         folders = folders(start_folder:end_folder);
@@ -121,7 +122,7 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n, N)
                 imwrite(im, fullfile(conf.imageDir, class_name, filename));
                 clear im
                 % getting info of copied file
-                info = imfinfo(fullfile(conf.imageDir, filename)) ;
+                info = imfinfo(fullfile(conf.imageDir, class_name, filename)) ;
             end
 
             image_doc.put('class', class_name);
@@ -136,11 +137,11 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n, N)
     end
     
     
-    fprintf('%d added, %d failed to add\n', n_images - failed, failed);
+    fprintf('%d added, %d failed to add\n', n_image - failed, failed);
     
     % save classes (ie folder names)
-    class_names = folders;
     save(fullfile(conf.modelDataDir, 'class_names.mat'), 'class_names');
     
     fprintf('Found %d classes\n', length(class_names));
     save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
+    
