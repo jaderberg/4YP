@@ -15,13 +15,5 @@ function [ROOT_DIR IMAGE_DIR] = dist_setup(n, N)
     vl_xmkdir(MONGODB_DIR);
     vl_xmkdir(MONGO_LOGS_DIR);
     
-    % start mongodb in forked process
-    fprintf('Deleting mongo logs...\n');
-    system(['rm -f ' MONGO_LOGS_DIR '/*']);
-    fprintf('Running mongodb...\n');
-    system(['~/4YP/mongodb/bin/mongod --dbpath ' MONGODB_DIR ' > ' MONGO_LOGS_DIR '/mongo' int2str(n) '.txt &']);
-    pause(10); % pause to allow mongod to boot up
-    fprintf('Mongodb running!\n');
-    
     % number of visual words in vocab
     NUM_WORDS = 100000;

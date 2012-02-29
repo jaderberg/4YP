@@ -13,7 +13,7 @@ function [m db coll] = mongo_get_collection(varargin)
 
 
 %     Connect to mongodb 
-    fprintf('Connecting to mongodb...');
+    fprintf('Connecting to mongodb on %s...', opts.server);
     if isempty(opts.port)
         m = Mongo(opts.server); % connect to local db
     else

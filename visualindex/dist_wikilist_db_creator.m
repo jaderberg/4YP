@@ -1,6 +1,6 @@
 % Max Jaderberg 28/2/12
 
-function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split)
+function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, first_host, this_host)
 % This creates the database + filestructure for the wiki list dataset
 % distributed over N machines (assuming N << length(folders))
 
@@ -18,7 +18,7 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split)
     import org.bson.types.ObjectId;
     
 %     get mongodb collection
-    [m db coll] = mongo_get_collection();
+    [m db coll] = mongo_get_collection('server',first_host);
     
     fprintf('Creating image database...\n');
     
