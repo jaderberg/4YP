@@ -132,8 +132,8 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
 
             doc(1) = image_doc;
             coll.insert(doc);
+            n_image = n_image + 1;
         end
-        n_image = n_image + 1;
     end
     
     

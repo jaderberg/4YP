@@ -7,8 +7,8 @@ import time
 import paramiko
 
 host_template = 'engs-station%s.eng.ox.ac.uk'
-env.host_string = 'kebl3465@engs-station40.eng.ox.ac.uk'
-env.host = 'engs-station40.eng.ox.ac.uk'
+env.host_string = 'kebl3465@engs-station52.eng.ox.ac.uk'
+env.host = 'engs-station52.eng.ox.ac.uk'
 env.port = '22'
 env.user = 'kebl3465'
 env.password = 'multipack'
@@ -92,9 +92,20 @@ def run_mongodb():
         run('rm -f *.txt')
         env.warn_only = False
 
-    mongo_p = Process(target=run_mongod)
-    mongo_p.start()
-    print_message('Mongo process started...')
+    disconnect_all()
+    
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(env.host, username=env.user, password=env.password)
+    stdin, stdout, stderr = ssh.exec_command('killall mongod')
+    print stdout.readlines()
+    print stderr.readlines()
+    cmd = 'cd %s && sh run_mongo.sh %s %s/mongolog.txt' % (env.root_path, env.mongo_data, env.mongo_logs)
+    print 'running %s' % cmd
+    stdin, stdout, stderr = ssh.exec_command(cmd)
+    print stdout.readlines()
+    print stderr.readlines()
+    print_message('Mongo process started on %s...' % env.host)
     
 
 def run_mongod():
@@ -119,17 +130,9 @@ def run_on_each_host():
         run('rm -f matlab_log*.txt nohup*.out error*.txt')
     disconnect_all()
     for i, host in enumerate(good_hosts):
-        time.sleep(0.1)
         use_host(i)
-        ps.append(run_matlab_function(env.matlab_func, i+1, N))
+        ps.append(ssh_matlab_run(env.matlab_func, i+1, N))
 
-    # Thou shalt not pass till all processes be exited
-    processes_done = False
-    while not processes_done:
-        time.sleep(5)
-        processes_done = True
-        for p in ps:
-            processes_done = processes_done and (not p.is_alive())
 
 def test_server():
     with cd(env.root_path):
@@ -179,19 +182,7 @@ def upload_current_matlab():
     local('rm -f visualindex.zip')
     print_message('Uploaded current code to %s' % env.visualindex_path)
 
-def run_matlab_function(m_function, n, N):
-    # runs in a new process to allow parallel execution
-    p = Process(target=ssh_matlab_run, args=(m_function,n,N))
-    p.start()
-    print_message('%s is running (%s of %s)...' % (m_function, n, N))
-    return p
 
-def _remote_matlab_run(m_function, n, N):
-    with cd(env.visualindex_path):
-        if env.suppress_errors:
-            run("sh dist_matlab_suppress.sh %s %s %s %s %s" % (m_function, n, N, good_hosts[0], env.host))
-        else:
-            run("sh dist_matlab.sh %s %s %s %s %s" % (m_function, n, N, good_hosts[0], env.host))
 
 def ssh_matlab_run(m_function, n, N):
     ssh = paramiko.SSHClient()
@@ -203,8 +194,11 @@ def ssh_matlab_run(m_function, n, N):
         matlab_run = "sh dist_matlab.sh %s %s %s %s %s" % (m_function, n, N, good_hosts[0] if good_hosts else env.host, env.host)
     cmd = 'cd %s && %s' % (env.visualindex_path, matlab_run)
     print 'running %s' % cmd
-    ssh.exec_command(cmd)
-    print_message('%s run!' % cmd)
+    stdin, stdout, stderr = ssh.exec_command(cmd)
+    print stdout.readlines()
+    print stderr.readlines()
+    print_message('%s running...' % cmd)
+    return ssh
 
     
 
