@@ -145,3 +145,7 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
     fprintf('Found %d classes\n', length(class_names));
     save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
     
+    % save file to signal good ending
+    a = 1;
+    save(fullfile('finished_flags',[int2str(n_split) '-' mfilename '-finished.mat']), 'a');
+    

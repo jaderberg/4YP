@@ -1,7 +1,6 @@
 # Fabric script for precomputation
 from fabric.api import env, cd, run, local, put, get, prompt
-from fabric.network import disconnect_all
-from multiprocessing import Process
+from fabric.contrib.files import exists
 from fabric.contrib.console import confirm
 import time
 import paramiko
@@ -26,7 +25,6 @@ env.mongo_logs = None
 
 
 good_hosts = []
-mongo_p = None
 
 def precompute():
     # The main process
@@ -57,29 +55,51 @@ def precompute():
         subtask()
 
     if not confirm('Continue with Matlab?', default=True):
-        if mongo_p:
-            mongo_p.terminate()
         print_message('CANCELLED!')
         return False
 
     run_on_each_host()
 
-    if mongo_p:
-        mongo_p.terminate()
+    while not all_jobs_finished(env.matlab_func):
+        time.sleep(20)
 
     print_message('PRECOMPUTE DONE')
 
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
+
+def all_jobs_finished(m_func):
+    # checks that all the completed flags are there i.e. that matlab has all run and finished on each host
+    if good_hosts:
+        use_host(0)
+    all_exist = True
+    errors = False
+    with cd(env.visualindex_path):
+        for i, host in enumerate(good_hosts):
+            finished = exists('finished_flags/%s-%s-finished.mat' % (i+1, m_func))
+            print '%s finished? %s' % (host, finished)
+            all_exist = all_exist and finished
+            error = exists('error_logs/%s-%s-error.txt' % (i+1, m_func))
+            errors = errors or error
+    if all_exist:
+        print_message('All hosts finished computing %s' % m_func)
+    else:
+        print 'Not finished %s yet...' % m_func
+
+    if errors:
+        print_message('ERRORS!!!!!')
+        all_exist = True
+    return all_exist
+
 def upload_scripts():
-    disconnect_all()
     if good_hosts:
         use_host(0)
     put('dist_matlab_suppress.sh', '%(root_path)s/visualindex/dist_matlab_suppress.sh' % env)
     put('dist_matlab.sh', '%(root_path)s/visualindex/dist_matlab.sh' % env)
+    put('matlab_logs_cleanup.sh', '%(root_path)s/visualindex/matlab_logs_cleanup.sh' % env)
     put('run_mongo.sh', '%(root_path)s/run_mongo.sh' % env)
 
 def run_mongodb():
     # run mongodb on the first good host
-    disconnect_all()
     if good_hosts:
         use_host(0)
     # delete mongo logs
@@ -92,8 +112,6 @@ def run_mongodb():
         run('rm -f *.txt')
         env.warn_only = False
 
-    disconnect_all()
-    
     ssh = paramiko.SSHClient()
     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     ssh.connect(env.host, username=env.user, password=env.password)
@@ -108,27 +126,16 @@ def run_mongodb():
     print_message('Mongo process started on %s...' % env.host)
     
 
-def run_mongod():
-    # run the daemon
-    disconnect_all()
-    with cd(env.root_path):
-        env.warn_only = True
-        run('killall mongod')
-        time.sleep(5)
-        env.warn_only = False
-        run('sh run_mongo.sh %s %s/mongolog.txt' % (env.mongo_data, env.mongo_logs))
-        time.sleep(5)
-    print_message('Mongodb running on %s' % good_hosts[0])
 
 def run_on_each_host():
     # run matlab on each good host
-    disconnect_all()
     ps = []
     N = len(good_hosts)
     # delete logs
+    if good_hosts:
+        use_host(0)
     with cd(env.visualindex_path):
-        run('rm -f matlab_log*.txt nohup*.out error*.txt')
-    disconnect_all()
+        run('sh matlab_logs_cleanup.sh')
     for i, host in enumerate(good_hosts):
         use_host(i)
         ps.append(ssh_matlab_run(env.matlab_func, i+1, N))
