@@ -4,7 +4,7 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
 % This creates the database + filestructure for the wiki list dataset
 % distributed over N machines (assuming N << length(folders))
 
-    [root_dir image_dir] = dist_setup(n_split, N_split);
+    [root_dir image_dir num_words] = dist_setup(n_split, N_split);
 
     opts.copyImages = 1;
     opts.maxResolution = 1000;
@@ -101,7 +101,6 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
             % But first see if it is already in the database
             image_doc = BasicDBObject();
             image_doc.put('name', filename);
-            image_doc.put('path', fullfile(conf.imageDir, filename));
             if ~isempty(coll.findOne(image_doc))
                 % There is already this image in the collection
                 fprintf('Image already added.\n');
@@ -119,11 +118,15 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
                     end
                 end
                 vl_xmkdir(fullfile(conf.imageDir, class_name));
-                imwrite(im, fullfile(conf.imageDir, class_name, filename));
+                new_filepath = fullfile(conf.imageDir, class_name, filename);
+                imwrite(im, new_filepath);
                 clear im
                 % getting info of copied file
-                info = imfinfo(fullfile(conf.imageDir, class_name, filename)) ;
+                info = imfinfo(new_filepath) ;
+                file_path = new_filepath;
             end
+            
+            image_doc.put('path', file_path);
 
             image_doc.put('class', class_name);
             size_db = BasicDBObject();

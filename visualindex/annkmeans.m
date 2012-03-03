@@ -102,13 +102,13 @@ for t = 1:opts.maxNumIterations
   centers(:, rei) = vl_colsubset(X, length(rei)) ;
 
   if opts.verbose
-    figure(1) ; clf ;
-    plot(E,'linewidth', 2) ;
-    xlim([1 opts.maxNumIterations]) ;
-    title(sprintf('%s: iteration %d', mfilename, t)) ;
-    xlabel('iterations') ;
-    ylabel('energy') ;
-    grid on ; drawnow ;
+%     figure(1) ; clf ;
+%     plot(E,'linewidth', 2) ;
+%     xlim([1 opts.maxNumIterations]) ;
+%     title(sprintf('%s: iteration %d', mfilename, t)) ;
+%     xlabel('iterations') ;
+%     ylabel('energy') ;
+%     grid on ; drawnow ;
     fprintf('%s: %d: energy = %g, reinitialized = %d\n', mfilename,t,E(t),length(rei)) ;
   end
 

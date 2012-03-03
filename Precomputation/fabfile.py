@@ -6,8 +6,8 @@ import time
 import paramiko
 
 host_template = 'engs-station%s.eng.ox.ac.uk'
-env.host_string = 'kebl3465@engs-station52.eng.ox.ac.uk'
-env.host = 'engs-station52.eng.ox.ac.uk'
+env.host_string = 'kebl3465@engs-station49.eng.ox.ac.uk'
+env.host = 'engs-station49.eng.ox.ac.uk'
 env.port = '22'
 env.user = 'kebl3465'
 env.password = 'multipack'
@@ -29,7 +29,10 @@ good_hosts = []
 def precompute():
     # The main process
     upload_matlab = confirm('Upload new matlab?', default=False)
-    upload_scripts_flab = confirm('Upload new scripts', default=False)
+    if not upload_matlab:
+        upload_scripts_flab = confirm('Upload new scripts', default=False)
+    else:
+        upload_scripts_flab = True
     start_machine_num = prompt('Starting machine #: ', key='start_machine', default='39')
     stop_machine_num = prompt('Stop machine #: ', key='stop_machine', default='70')
     matlab_func = prompt('Matlab function to run: ', key='matlab_func', default='dist_wikilist_db_creator')
@@ -66,6 +69,10 @@ def precompute():
     print_message('PRECOMPUTE DONE')
 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
+
+def get_file(file_path):
+    # gets a file from the server
+    print_message('Downloaded %s' % get(file_path))
 
 def all_jobs_finished(m_func):
     # checks that all the completed flags are there i.e. that matlab has all run and finished on each host

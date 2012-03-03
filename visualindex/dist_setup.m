@@ -1,7 +1,7 @@
 % Distributed precompute
 % Max Jaderberg 28/2/12
 
-function [ROOT_DIR IMAGE_DIR] = dist_setup(n, N)
+function [ROOT_DIR IMAGE_DIR NUM_WORDS] = dist_setup(n, N)
 
     % setup vlfeat
     run vlfeat/toolbox/vl_setup ;
