@@ -63,12 +63,105 @@ def precompute():
 
     run_on_each_host()
 
-    while not all_jobs_finished(env.matlab_func):
-        time.sleep(20)
+    wait_for_all_finish()
+
+    print_message('PRECOMPUTE DONE')
+
+def full_precompute():
+    # The main process
+    upload_matlab = confirm('Upload new matlab?', default=False)
+    if not upload_matlab:
+        upload_scripts_flab = confirm('Upload new scripts', default=False)
+    else:
+        upload_scripts_flab = True
+    start_machine_num = prompt('Starting machine #: ', key='start_machine', default='39')
+    stop_machine_num = prompt('Stop machine #: ', key='stop_machine', default='70')
+    env.suppress_errors = confirm('Suppress Matlab errors?', default=True)
+
+    prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/bing_expansion/mongodb')
+    prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/bing_expansion/mongo_logs')
+
+    tasks = []
+
+    tasks.append(get_good_hosts)
+    if upload_matlab:
+        tasks.append(upload_current_matlab)
+
+    if upload_scripts_flab:
+        tasks.append(upload_scripts)
+
+    tasks.append(run_mongodb)
+
+    for subtask in tasks:
+        subtask()
+
+    if not confirm('Continue with Matlab?', default=True):
+        print_message('CANCELLED!')
+        return False
+
+    # build db
+    env.matlab_func = 'dist_wikilist_db_creator'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # extract features
+    env.matlab_func = 'dist_compute_features'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # create vocab
+    env.matlab_func = 'dist_vocab_creation'
+    run_single(0)
+    wait_for_single_finish(0)
+
+    # create words
+    env.matlab_func = 'dist_compute_words'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # compute weights
+    env.matlab_func = 'dist_compute_weights'
+    run_single(0)
+    wait_for_single_finish(0)
 
     print_message('PRECOMPUTE DONE')
 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
+
+def run_single(i):
+    if good_hosts:
+        use_host(i)
+    with cd(env.visualindex_path):
+        run('sh matlab_logs_cleanup.sh')
+    ssh_matlab_run(env.matlab_func, 1, 1)
+
+
+def wait_for_single_finish(i):
+    if good_hosts:
+        use_host(i)
+    m_func = env.matlab_func
+    finished = False
+    while not finished:
+        with cd(env.visualindex_path):
+            finished = exists('finished_flags/%s-%s-finished.mat' % (i+1, m_func))
+            print '%s finished? %s' % (env.host, finished)
+            error = exists('error_logs/%s-%s-error.txt' % (i+1, m_func))
+            if finished:
+                print_message('Finished computing %s' % m_func)
+                break
+            elif error:
+                print_message('ERRORS!!!!!')
+                break
+            else:
+                print 'Not finished %s yet...' % m_func
+            time.sleep(20)
+    return finished
+
+
+
+def wait_for_all_finish():
+    while not all_jobs_finished(env.matlab_func):
+        time.sleep(20)
 
 def get_file(file_path):
     # gets a file from the server

@@ -18,17 +18,24 @@ catch err
     return
 end
 
+fprintf('Gettings descrs...\n');
+
 % get sampled descrs
 files = dir(fullfile(conf.modelDataDir, '*sampledescrs.mat')) ;
 files = {files(~[files.isdir]).name} ;   
 
+fprintf('Found %d descr fragments\n', length(files));
+
 descrs = [];
 
 for i=1:length(files)
-    filepath = files{i};
+    filepath = fullfile(conf.modelDataDir, files{i});
     s = load(filepath);
     descrs = [descrs s.descrs];
 end
+
+fprintf('Saving concatenated descrs...\n');
+save(fullfile(conf.modelDataDir, 'sampledescrs-all.mat'), 'descrs');
 
 clear s;
 
@@ -36,7 +43,7 @@ vocab.size = num_words;
 
 vocab_file = fullfile(conf.modelDataDir, 'vocab.mat');
 fprintf('Creating vocabulary with %d words\n', vocab.size);
-[vocab.centers, vocab.tree] = annkmeans(descrs, vocab.size, 'verbose', true) ;
+[vocab.centers, vocab.tree] = annkmeans(descrs, vocab.size, 'verbose', true, 'parallel', false) ;
 save(vocab_file, '-STRUCT', 'vocab');
 fprintf('Vocab created and saved!\n');
 
