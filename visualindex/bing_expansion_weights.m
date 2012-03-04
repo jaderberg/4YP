@@ -1,6 +1,7 @@
-% Max Jaderberg 3/3/12
+% Max Jaderberg 4/3/12
 
-function dist_compute_weights( n_split, N_split, first_host, this_host )
+function bing_expansion_weights( n_split, N_split, first_host, this_host )
+
 
 [root_dir image_dir num_words] = dist_setup(n_split, N_split);
 
@@ -19,7 +20,7 @@ catch err
 end
 
 % get raw histograms
-files = dir(fullfile(conf.modelDataDir, '*histogramsraw.mat')) ;
+files = dir(fullfile(conf.modelDataDir, '*binghistogramsraw.mat')) ;
 files = {files(~[files.isdir]).name} ;   
 
 histograms = [];
@@ -31,7 +32,7 @@ for i=1:length(files)
 end
 
 % get ids
-files = dir(fullfile(conf.modelDataDir, '*ids.mat')) ;
+files = dir(fullfile(conf.modelDataDir, '*bingids.mat')) ;
 files = {files(~[files.isdir]).name} ;   
 
 ids = {};

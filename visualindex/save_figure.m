@@ -4,7 +4,7 @@ function save_figure(fig, filepath)
 
     try
         vl_printsize(fig,1);
-        print(fig,'-dpdf', [filepath '.pdf']);
+        print(fig,'-dpdf', '-r600', [filepath '.pdf']);
     catch
         print(fig,'-djpeg90', [filepath '.jpeg']);
     end

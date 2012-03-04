@@ -81,6 +81,11 @@ def full_precompute():
     prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/bing_expansion/mongodb')
     prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/bing_expansion/mongo_logs')
 
+    skip_vocab = confirm('Use existing vocab?', default=True)
+    if skip_vocab:
+        vocab_file = prompt('Existing vocab.mat file to use: ', default='/Users/jaderberg/Sites/4YP/Precomputation/kebl3465@engs-station49.eng.ox.ac.uk/vocab.mat')
+        root_dir = prompt('Project root dir: ', default='~/4YP/data/bing_expansion')
+
     tasks = []
 
     tasks.append(get_good_hosts)
@@ -110,9 +115,15 @@ def full_precompute():
     wait_for_all_finish()
 
     # create vocab
-    env.matlab_func = 'dist_vocab_creation'
-    run_single(0)
-    wait_for_single_finish(0)
+    if not skip_vocab:
+        env.matlab_func = 'dist_vocab_creation'
+        run_single(0)
+        wait_for_single_finish(0)
+    else:
+        if good_hosts:
+            use_host(0)
+        put(vocab_file, '%s/data/model/vocab.mat' % root_dir)
+        print_message('Uploaded vocab file')
 
     # create words
     env.matlab_func = 'dist_compute_words'
@@ -132,7 +143,7 @@ def full_precompute():
     # concatenate histogram fragments
     env.matlab_func = 'dist_cat_histograms'
     run_single(0)
-    wait_for_single_finish()
+    wait_for_single_finish(0)
 
     print_message('PRECOMPUTE DONE')
 

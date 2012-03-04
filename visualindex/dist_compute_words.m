@@ -69,7 +69,7 @@ end
 clear im_words image im_histogram image_id;
 
 fprintf('Saving ids and histograms...\n');
-save(fullfile(conf.modelDataDir, [int2str(n_split) 'rawhistograms.mat']), 'histograms');
+save(fullfile(conf.modelDataDir, [int2str(n_split) 'histogramsraw.mat']), 'histograms');
 save(fullfile(conf.modelDataDir, [int2str(n_split) 'ids.mat']), 'ids');
 fprintf('SAVED!\n');
 
