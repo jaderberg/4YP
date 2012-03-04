@@ -27,7 +27,7 @@ histograms = [];
 for i=1:length(files)
     filepath = fullfile(conf.modelDataDir, files{i});
     s = load(filepath);
-    histograms = cat(2, histograms, s.histograms);
+    histograms = sparse(cat(2, histograms, s.histograms));
 end
 
 % save histograms

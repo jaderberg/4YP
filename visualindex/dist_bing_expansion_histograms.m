@@ -1,7 +1,7 @@
-% Max Jaderberg 3/3/12
+% Max Jaderberg 4/3/12
 
-function dist_compute_histograms( n_split, N_split, first_host, this_host )
-    
+function dist_bing_expansion_histograms( n_split, N_split, first_host, this_host )
+
 [root_dir image_dir num_words] = dist_setup(n_split, N_split);
 
 %     load config file
@@ -22,11 +22,11 @@ end
 [m db coll] = mongo_get_collection('server',first_host);
 
 % get vocab
-vocab_file = fullfile(conf.modelDataDir, 'vocab.mat');
+vocab_file = fullfile(conf.modelDataDir, 'vocab_bingaugmented.mat');
 vocab = load(vocab_file);
 
 % get ids
-s = load(fullfile(conf.modelDataDir, 'ids-all.mat'));
+s = load(fullfile(conf.modelDataDir, 'bingids-all.mat'));
 ids = s.ids;
 
 % split ids up
@@ -48,7 +48,7 @@ for t=length(ids)
     
     fprintf('Creating histogram for %s\n', image_id)
     % load raw histogram
-    s = load(fullfile(conf.histogramsDataDir, [image_id '-rawhistogram.mat']));
+    s = load(fullfile(conf.histogramsDataDir, [image_id '-bingaugmentedrawhistogram.mat']));
     raw_h = s.im_histogram;
     clear s;
     % apply weightingz
@@ -56,7 +56,7 @@ for t=length(ids)
     im_histogram = h / max(sum(raw_h), eps) ;
     im_histogram = sparse(im_histogram);
     clear h;
-    save(fullfile(conf.histogramsDataDir, [image_id '-histogram.mat']), 'im_histogram');
+    save(fullfile(conf.histogramsDataDir, [image_id '-bingaugmentedhistogram.mat']), 'im_histogram');
 
     histograms(:,t) = im_histogram;
     
@@ -64,8 +64,10 @@ end
 
 histograms = sparse(histograms);
 
-save(fullfile(conf.modelDataDir, [int2str(n_split) 'histograms.mat']), 'histograms');
+save(fullfile(conf.modelDataDir, [int2str(n_split) 'binghistograms.mat']), 'histograms');
 fprintf('Saved histograms\n');
+
+fprintf('BING EXPANSION COMPLETE\n');
 
 % save file to signal good ending
 a = 1;

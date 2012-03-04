@@ -48,15 +48,15 @@ total_expanded = 0;
 class_total_expanded = 0;
 
 % split classes up
-    split = ceil(length(class_names)/N_split);
-    start_class = (n_split-1)*split + 1;
-    end_folder = start_folder + split - 1;
-    fprintf('Split %d of %d\n', n_split, N_split);
-    if n_split == N_split
-        class_names = class_names(start_folder:end);
-    else
-        class_names = class_names(start_folder:end_folder);
-    end
+split = ceil(length(class_names)/N_split);
+start_class = (n_split-1)*split + 1;
+end_class = start_class + split - 1;
+fprintf('Split %d of %d\n', n_split, N_split);
+if n_split == N_split
+    class_names = class_names(start_class:end);
+else
+    class_names = class_names(start_class:end_class);
+end
 
 ids = {};
 histograms = {};
@@ -277,7 +277,7 @@ for n=1:length(class_names)
         im_histogram = sparse(double(c_words),1,...
                      ones(length(c_words),1), ...
                      vocab.size,1) ;
-        save(fullfile
+        save(fullfile(conf.histogramsDataDir, [c_id 'bingaugmentedrawhistogram.mat']), 'im_histogram');
         histograms{n_image} = im_histogram;
         ids{n_image} = c_id;
 
