@@ -43,7 +43,7 @@ end
 histograms = [];
 
 % weights + normalize histograms
-for t=length(ids)
+for t=1:length(ids)
     image_id = ids{t};
     
     fprintf('Creating histogram for %s\n', image_id)
