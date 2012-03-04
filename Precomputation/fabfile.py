@@ -124,6 +124,16 @@ def full_precompute():
     run_single(0)
     wait_for_single_finish(0)
 
+    # compute histograms
+    env.matlab_func = 'dist_compute_histograms'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # concatenate histogram fragments
+    env.matlab_func = 'dist_cat_histograms'
+    run_single(0)
+    wait_for_single_finish()
+
     print_message('PRECOMPUTE DONE')
 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#

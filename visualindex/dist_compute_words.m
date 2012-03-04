@@ -21,6 +21,10 @@ end
 %     get mongodb collection
 [m db coll] = mongo_get_collection('server',first_host);
 
+% get vocab
+vocab_file = fullfile(conf.modelDataDir, 'vocab.mat');
+vocab = load(vocab_file);
+
 import com.mongodb.BasicDBObject;
 
 % split images into N parts
@@ -34,7 +38,7 @@ else
     coll_ims = coll.find().sort(BasicDBObject('name',1)).skip(start_image).limit(split);
 end
 
-histograms = cell(1, num_images) ;
+histograms = {} ;
 t = 1;
 while coll_ims.hasNext()
     image = coll_ims.next();

@@ -43,7 +43,10 @@ end
 clear s;
 
 fprintf('Saving full ids...\n');
-save(fullfile(conf.modelDataDir, 'ids.mat'), 'ids');
+save(fullfile(conf.modelDataDir, 'ids-all.mat'), 'ids');
+
+fprintf('Saving full rawhistograms...\n');
+save(fullfile(conf.modelDataDir, 'rawhistograms-all.mat'), 'histograms');
 
 vocab_file = fullfile(conf.modelDataDir, 'vocab.mat');
 vocab = load(vocab_file);
