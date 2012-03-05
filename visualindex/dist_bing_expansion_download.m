@@ -34,7 +34,7 @@ class_names = m.class_names;
 opts.maxResolution = 1000;
 opts.nPhotos = '25';
 opts.matchThresh = 9;
-opts.force = 0;
+opts.force = 1;
 
 app_id = '243C9AAF515AE3EE49D775D19F5F8F3F0F0A3D84';
     
@@ -264,6 +264,8 @@ for n=1:length(class_names)
                 extra_frames_c = [Xc(1:2,:); extra_frames_f(3:end,:)];
                 c_frames = [c_frames extra_frames_c];
                 c_words = [c_words extra_words];
+            else
+                fprintf('--- %s from bing is not similar (score: %d) - ignoring\n', f_filenames{j}, score);
             end
         end
 
@@ -277,7 +279,7 @@ for n=1:length(class_names)
         im_histogram = sparse(double(c_words),1,...
                      ones(length(c_words),1), ...
                      vocab.size,1) ;
-        save(fullfile(conf.histogramsDataDir, [c_id 'bingaugmentedrawhistogram.mat']), 'im_histogram');
+        save(fullfile(conf.histogramsDataDir, [c_id '-bingaugmentedrawhistogram.mat']), 'im_histogram');
         histograms{n_image} = im_histogram;
         ids{n_image} = c_id;
 

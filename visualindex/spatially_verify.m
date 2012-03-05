@@ -87,7 +87,7 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size,varargin)
     
     % inlier threshold
     thresh = max(max(size)*0.007, 7)*1;
-
+    
     % RANSAC
     [score Ha ok] = no_RANSAC(f1, f2, thresh);
     

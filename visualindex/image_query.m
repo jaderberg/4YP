@@ -3,6 +3,7 @@
 function [result frames descrs] = image_query( im, histograms, ids, vocab, conf, coll, varargin )
 %IMAGE_QUERY returns the matched images from the query
 
+    global file_prefix;
     %profile on;
 
     import com.mongodb.BasicDBObject;
@@ -98,8 +99,9 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
             end
         end
         
-        match_words = load_words(match_id, conf);
-        match_frames = load_frames(match_id, conf);
+        
+        match_words = load_words(match_id, conf, 'prefix', file_prefix);
+        match_frames = load_frames(match_id, conf, 'prefix', file_prefix);
         [match_score, matches{i}] = spatially_verify(match_frames, match_words, ...
                                    frames, words, ...
                                    size(im)) ;

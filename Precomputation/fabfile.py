@@ -149,6 +149,16 @@ def full_precompute():
 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
+
+def kill_all_matlab():
+    start_machine_num = prompt('Starting machine #: ', key='start_machine', default='39')
+    stop_machine_num = prompt('Stop machine #: ', key='stop_machine', default='70')
+    get_good_hosts()
+    for i, host in enumerate(good_hosts):
+        use_host(i)
+        run('killall MATLAB')
+
+
 def run_single(i):
     if good_hosts:
         use_host(i)

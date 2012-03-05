@@ -1,6 +1,7 @@
-% Max Jaderberg 8/1/12
+% Max Jaderberg 5/3/12
 
-function result = demo_wiki_get_objects(args)
+function dist_get_objects(args, coll)
+
 % Returns the matched object and region of matchings. Must run
 % preprocess_solution.m once before this works. Also the mongodb java
 % library must be imported by running javaaddpath('mongo-2.7.2.jar')
@@ -28,12 +29,7 @@ function result = demo_wiki_get_objects(args)
         args.log_file = 'log.txt';
     end
     log_file = fopen(args.log_file, 'w');
-    
-    figures = 1;
-
-    % setup VLFeat
-    run ./vlfeat/toolbox/vl_setup ;
-    
+        
 %     load config file
     try
         conf = load(fullfile(ROOT_DIR, 'conf.mat'));
@@ -48,8 +44,6 @@ function result = demo_wiki_get_objects(args)
         return
     end
     
-%     load mongo collection
-    [mongo mongo_db coll] = mongo_get_collection();
     
 %     define global variables to avoid reloading from disk
     global histograms
@@ -220,9 +214,3 @@ function result = demo_wiki_get_objects(args)
     fprintf(log_file, 'Query complete\n');
     
     fclose(log_file);
-
-    mongo.close();
-    
-   
-
-    

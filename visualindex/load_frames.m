@@ -1,7 +1,9 @@
 % Max Jaderberg 7/1/12
 
-function frames = load_frames(image_id, conf)
-    frames_file = fullfile(conf.framesDataDir, [image_id '-augmentedframes.mat']);
+function frames = load_frames(image_id, conf, varargin)
+    opts.prefix = '';
+    opts = vl_argparse(opts, varargin);
+    frames_file = fullfile(conf.framesDataDir, [image_id '-' opts.prefix 'frames.mat']);
     
     if ~exist(frames_file, 'file')
         frames = [];
@@ -9,5 +11,10 @@ function frames = load_frames(image_id, conf)
     end
     
     t = load(frames_file);
-    frames = t.c_frames;
+    fields = fieldnames(t);
+    if isempty(fields);
+        frames = [];
+    else
+        frames = t.(fields{1});
+    end
     clear t;

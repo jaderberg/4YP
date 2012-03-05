@@ -1,7 +1,9 @@
 % Max Jaderberg 7/1/12
 
-function descrs = load_descrs(image_id, conf)
-    descrs_file = fullfile(conf.descrsDataDir, [image_id '-descrs.mat']);
+function descrs = load_descrs(image_id, conf, varargin)
+    opts.prefix = '';
+    opts = vl_argparse(opts, varargin);
+    descrs_file = fullfile(conf.descrsDataDir, [image_id '-' opts.prefix 'descrs.mat']);
     
     if ~exist(descrs_file, 'file')
         descrs = [];
@@ -9,5 +11,10 @@ function descrs = load_descrs(image_id, conf)
     end
     
     t = load(descrs_file);
-    descrs = t.im_descrs;
+    fields = fieldnames(t);
+    if isempty(fields);
+        descrs = [];
+    else
+        descrs = t.(fields{1});
+    end
     clear t;
