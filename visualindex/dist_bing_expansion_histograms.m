@@ -58,11 +58,9 @@ for t=1:length(ids)
     clear h;
     save(fullfile(conf.histogramsDataDir, [image_id '-bingaugmentedhistogram.mat']), 'im_histogram');
 
-    histograms(:,t) = im_histogram;
+    histograms{t} = im_histogram;
     
 end
-
-histograms = sparse(histograms);
 
 save(fullfile(conf.modelDataDir, [int2str(n_split) 'histograms-bing.mat']), 'histograms');
 fprintf('Saved histograms\n');

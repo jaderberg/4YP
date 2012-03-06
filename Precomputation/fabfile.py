@@ -167,7 +167,7 @@ def full_precompute():
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
 
-def kill_all_matlab():
+def kill_all_matlab_mongo():
     start_machine_num = prompt('Starting machine #: ', key='start_machine', default='39')
     stop_machine_num = prompt('Stop machine #: ', key='stop_machine', default='70')
     get_good_hosts()
@@ -175,6 +175,7 @@ def kill_all_matlab():
         use_host(i)
         env.warn_only = True
         run('killall MATLAB')
+        run('killall mongod')
         env.warn_only = False
 
 
