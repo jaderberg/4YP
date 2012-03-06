@@ -19,7 +19,7 @@ catch err
 end
 
 % get histograms
-files = dir(fullfile(conf.modelDataDir, '*binghistograms.mat')) ;
+files = dir(fullfile(conf.modelDataDir, '*histograms-bing.mat')) ;
 files = {files(~[files.isdir]).name} ;   
 
 histograms = [];
@@ -31,7 +31,7 @@ for i=1:length(files)
 end
 
 % save histograms
-save(fullfile(conf.modelDataDir, 'binghistograms-all.mat'), 'histograms');
+save(fullfile(conf.modelDataDir, 'histograms-bing-all.mat'), 'histograms');
 fprintf('Saved all histograms!\n');
 
 % save file to signal good ending

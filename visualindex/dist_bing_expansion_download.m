@@ -292,8 +292,8 @@ for n=1:length(class_names)
 end
 
 fprintf('Saving raw histograms and ids...\n');
-save(fullfile(conf.modelDataDir, [int2str(n_split) 'binghistogramsraw.mat']), 'histograms');
-save(fullfile(conf.modelDataDir, [int2str(n_split) 'bingids.mat']), 'ids');
+save(fullfile(conf.modelDataDir, [int2str(n_split) 'histograms-raw-bing.mat']), 'histograms');
+save(fullfile(conf.modelDataDir, [int2str(n_split) 'ids-bing.mat']), 'ids');
 fprintf('All done!\n');
 
 % save file to signal good ending

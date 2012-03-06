@@ -19,7 +19,7 @@ catch err
 end
 
 % get raw histograms
-files = dir(fullfile(conf.modelDataDir, '*binghistogramsraw.mat')) ;
+files = dir(fullfile(conf.modelDataDir, '*histograms-raw-bing.mat')) ;
 files = {files(~[files.isdir]).name} ;   
 
 histograms = [];
@@ -31,7 +31,7 @@ for i=1:length(files)
 end
 
 % get ids
-files = dir(fullfile(conf.modelDataDir, '*bingids.mat')) ;
+files = dir(fullfile(conf.modelDataDir, '*ids-bing.mat')) ;
 files = {files(~[files.isdir]).name} ;   
 
 ids = {};
@@ -43,10 +43,10 @@ end
 clear s;
 
 fprintf('Saving full ids...\n');
-save(fullfile(conf.modelDataDir, 'bingids-all.mat'), 'ids');
+save(fullfile(conf.modelDataDir, 'ids-bing-all.mat'), 'ids');
 
 fprintf('Saving full rawhistograms...\n');
-save(fullfile(conf.modelDataDir, 'bingrawhistograms-all.mat'), 'histograms');
+save(fullfile(conf.modelDataDir, 'histograms-raw-bing-all.mat'), 'histograms');
 
 vocab_file = fullfile(conf.modelDataDir, 'vocab.mat');
 vocab = load(vocab_file);
@@ -54,7 +54,7 @@ vocab = load(vocab_file);
 % compute IDF weights
 fprintf('Computing IDF weights...\n');
 vocab.weights = log((size(histograms,2)+1)./(max(sum(histograms > 0,2),eps))) ;
-save(fullfile(conf.modelDataDir, 'vocab_bingaugmented.mat'), '-STRUCT', 'vocab');
+save(fullfile(conf.modelDataDir, 'vocab-bing.mat'), '-STRUCT', 'vocab');
 fprintf('Vocab file saved\n');
 
 % save file to signal good ending

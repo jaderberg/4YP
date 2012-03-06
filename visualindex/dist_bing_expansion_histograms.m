@@ -22,11 +22,11 @@ end
 [m db coll] = mongo_get_collection('server',first_host);
 
 % get vocab
-vocab_file = fullfile(conf.modelDataDir, 'vocab_bingaugmented.mat');
+vocab_file = fullfile(conf.modelDataDir, 'vocab-bing.mat');
 vocab = load(vocab_file);
 
 % get ids
-s = load(fullfile(conf.modelDataDir, 'bingids-all.mat'));
+s = load(fullfile(conf.modelDataDir, 'ids-bing-all.mat'));
 ids = s.ids;
 
 % split ids up
@@ -64,7 +64,7 @@ end
 
 histograms = sparse(histograms);
 
-save(fullfile(conf.modelDataDir, [int2str(n_split) 'binghistograms.mat']), 'histograms');
+save(fullfile(conf.modelDataDir, [int2str(n_split) 'histograms-bing.mat']), 'histograms');
 fprintf('Saved histograms\n');
 
 fprintf('BING EXPANSION COMPLETE\n');
