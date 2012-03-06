@@ -173,7 +173,9 @@ def kill_all_matlab():
     get_good_hosts()
     for i, host in enumerate(good_hosts):
         use_host(i)
+        env.warn_only = True
         run('killall MATLAB')
+        env.warn_only = False
 
 
 def run_single(i):

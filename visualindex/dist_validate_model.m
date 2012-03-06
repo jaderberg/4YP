@@ -30,8 +30,10 @@ vl_xmkdir(false_pos_dir);
 unmatched_dir = fullfile(validation_results_dir, 'unmatched');
 vl_xmkdir(unmatched_dir);
 
+conf.validationResultsDir = validation_results_dir;
 conf.validationDir = fullfile(conf.rootDir, 'validation_images');
-
+% save conf
+save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
 
 % find all the folders in that directory
 folders = dir(fullfile(conf.validationDir, '*')) ;
