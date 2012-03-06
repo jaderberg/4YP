@@ -22,7 +22,8 @@ fprintf('Gettings descrs...\n');
 
 % get sampled descrs
 files = dir(fullfile(conf.modelDataDir, '*sampledescrs.mat')) ;
-files = {files(~[files.isdir]).name} ;   
+files = {files(~[files.isdir]).name} ; 
+files = sort(files);
 
 fprintf('Found %d descr fragments\n', length(files));
 

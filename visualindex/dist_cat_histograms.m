@@ -20,7 +20,8 @@ end
 
 % get histograms
 files = dir(fullfile(conf.modelDataDir, '*histograms.mat')) ;
-files = {files(~[files.isdir]).name} ;   
+files = {files(~[files.isdir]).name} ; 
+files = sort(files);
 
 histograms = [];
 

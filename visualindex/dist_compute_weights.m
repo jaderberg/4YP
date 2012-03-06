@@ -20,7 +20,8 @@ end
 
 % get raw histograms
 files = dir(fullfile(conf.modelDataDir, '*histograms-raw.mat')) ;
-files = {files(~[files.isdir]).name} ;   
+files = {files(~[files.isdir]).name} ; 
+files = sort(files);
 
 histograms = [];
 
@@ -33,6 +34,7 @@ end
 % get ids
 files = dir(fullfile(conf.modelDataDir, '*ids.mat')) ;
 files = {files(~[files.isdir]).name} ;   
+files = sort(files);
 
 ids = {};
 for i=1:length(files)
