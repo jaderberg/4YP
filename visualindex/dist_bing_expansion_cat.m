@@ -21,7 +21,7 @@ end
 % get histograms
 files = dir(fullfile(conf.modelDataDir, '*histograms-bing.mat')) ;
 files = {files(~[files.isdir]).name} ;   
-files = sort(files);
+files = sort_nat(files);
 
 histograms = [];
 
