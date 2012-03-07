@@ -18,6 +18,11 @@ catch err
     return
 end
 
+% find all the folders in that directory
+folders = dir(fullfile(conf.validationDir, '*')) ;
+folders = {folders([folders.isdir]).name} ; 
+folders = folders(3:end);
+
 % get partial results
 files = dir(fullfile(conf.validationResultsDir, '*validation_results.mat')) ;
 files = {files(~[files.isdir]).name} ;   
@@ -73,8 +78,14 @@ fprintf(validation_txt, 'Unmatched: %f percent\n', unmatched);
 fprintf(validation_txt, '\n\n');
 fprintf(validation_txt, 'CLASS PERFORMANCE:\n\n');
 [s p] = sort(class_reports.true_pos);
-for n=3:length(p)
+for n=1:length(p)
     fprintf(validation_txt, '%f percent true, %f percent false, %f percent unmatched for %s (%d total)\n', class_reports.true_pos(p(n)), class_reports.false_pos(p(n)), class_reports.unmatched(p(n)), folders{p(n)}, class_reports.total(p(n)));
 end
 
 fclose(validation_txt);
+
+fprintf('All done!\n');
+
+% save file to signal good ending
+a = 1;
+save(fullfile('finished_flags',[int2str(n_split) '-' mfilename '-finished.mat']), 'a');

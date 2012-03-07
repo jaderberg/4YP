@@ -62,7 +62,7 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
     class_names = folders;
     
     % split folders into N parts
-    split = ceil(length(folders)/N_split);
+    split = floor(length(folders)/N_split);
     start_folder = (n_split-1)*split + 1;
     end_folder = start_folder + split - 1;
     fprintf('Split %d of %d\n', n_split, N_split);

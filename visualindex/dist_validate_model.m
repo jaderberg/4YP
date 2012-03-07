@@ -31,7 +31,7 @@ unmatched_dir = fullfile(validation_results_dir, 'unmatched');
 vl_xmkdir(unmatched_dir);
 
 conf.validationResultsDir = validation_results_dir;
-conf.validationDir = fullfile(conf.rootDir, 'validation_images');
+conf.validationDir = '~/4YP/data/validation_images';
 % save conf
 save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
 
@@ -41,7 +41,7 @@ folders = {folders([folders.isdir]).name} ;
 folders = folders(3:end);
 
 % split folders into N parts
-split = ceil(length(folders)/N_split);
+split = floor(length(folders)/N_split);
 start_folder = (n_split-1)*split + 1;
 end_folder = start_folder + split - 1;
 fprintf('Split %d of %d\n', n_split, N_split);

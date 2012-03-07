@@ -1,6 +1,6 @@
 % Max Jaderberg 5/3/12
 
-function dist_get_objects(args, coll)
+function result = dist_get_objects(args, coll)
 
 % Returns the matched object and region of matchings. Must run
 % preprocess_solution.m once before this works. Also the mongodb java
@@ -8,7 +8,7 @@ function dist_get_objects(args, coll)
 
 %--------------------------------------------------------------------------
 % SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
-    ROOT_DIR = '/Volumes/4YP/bing_expansion';
+    ROOT_DIR = '~/4YP/data/bing_expansion';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
     global file_prefix;
@@ -56,11 +56,11 @@ function dist_get_objects(args, coll)
     if isempty(histograms) || isempty(ids) || isempty(vocab)
         fprintf('Loading histograms from %s\n', conf.modelDataDir);
         fprintf(log_file, 'Loading histograms from %s\n', conf.modelDataDir);
-        m = load(fullfile(conf.modelDataDir, 'histograms.mat'));
+        m = load(fullfile(conf.modelDataDir, 'histograms-all.mat'));
         histograms = m.histograms;
         fprintf('Loading ids from %s\n', conf.modelDataDir);
         fprintf(log_file, 'Loading ids from %s\n', conf.modelDataDir);
-        m = load(fullfile(conf.modelDataDir, 'ids.mat'));
+        m = load(fullfile(conf.modelDataDir, 'ids-all.mat'));
         ids = m.ids;
         fprintf('Loading vocab from %s\n', conf.modelDataDir);
         fprintf(log_file, 'Loading vocab from %s\n', conf.modelDataDir);

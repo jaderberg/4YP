@@ -48,7 +48,7 @@ total_expanded = 0;
 class_total_expanded = 0;
 
 % split classes up
-split = ceil(length(class_names)/N_split);
+split = floor(length(class_names)/N_split);
 start_class = (n_split-1)*split + 1;
 end_class = start_class + split - 1;
 fprintf('Split %d of %d\n', n_split, N_split);

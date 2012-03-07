@@ -44,7 +44,7 @@ rand('state',0) ;
 
 % split images into N parts
 total_ims = coll.find().count();
-split = ceil(total_ims/N_split);
+split = floor(total_ims/N_split);
 start_image = (n_split-1)*split;
 fprintf('Split %d of %d\n', n_split, N_split);
 if n_split == N_split

@@ -30,7 +30,7 @@ s = load(fullfile(conf.modelDataDir, 'ids-all.mat'));
 ids = s.ids;
 
 % split ids up
-split = ceil(length(ids)/N_split);
+split = floor(length(ids)/N_split);
 start_id = (n_split-1)*split + 1;
 end_id = start_id + split - 1;
 fprintf('Split %d of %d\n', n_split, N_split);
