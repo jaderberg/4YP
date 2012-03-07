@@ -93,8 +93,8 @@ for n=1:length(folders)
 end
 
 fprintf('Saving results...\n');
-save(fullfile(validation_results_dir, [int2str(n_split) 'validation_results.mat']), 'validation_results');
-save(fullfile(validation_results_dir, [int2str(n_split) 'class_reports.mat']), 'class_reports');
+save(fullfile(validation_results_dir, [int2str(n_split) 'validation_results.mat']),'-STRUCT', 'validation_results');
+save(fullfile(validation_results_dir, [int2str(n_split) 'class_reports.mat']),'-STRUCT', 'class_reports');
 
 m.close();
 
