@@ -2,8 +2,8 @@
 
 function affine_sift_mosaic()
 
-im1 = imresize(imread('~/Desktop/nc.jpeg'), 1.0);
-im2 = imresize(imread('~/Desktop/nc3.jpeg'), 1.0);
+im1 = imresize(imread('~/Desktop/Tourist Pics/buckinghampalace.jpeg'), 0.4);
+im2 = imresize(imread('~/Desktop/Tourist Pics/changingguard2.jpeg'), 0.4);
 
 
 [f1 d1] = visualindex_get_features(im1, 'affine', true);

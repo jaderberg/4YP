@@ -36,6 +36,9 @@ if ~opts.affine
     f(:,s) = [] ;
     d(:,s) = [] ;
 else
+    %--=-=--==---
+    % TODO: Need to explore -sift vs -gloh (extended sift) 
+    %--=-=--==---
     % get hessian-affine features
     imwrite(im, 'temp.jpg');
     system('affine_detector/mac_bin/detect_points -i temp.jpg -hesaff -o det.txt > det_log.txt');
