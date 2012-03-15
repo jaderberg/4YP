@@ -164,6 +164,18 @@ def full_precompute():
 
     print_message('PRECOMPUTE DONE')
 
+    # NOW VALIDATION
+
+    env.matlab_func = 'dist_validate_model'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    env.matlab_func = 'dist_validate_model_report'
+    run_single(0)
+    wait_for_single_finish(0)
+
+    print_message('VALIDATION COMPLETE')
+
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
 
