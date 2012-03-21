@@ -11,12 +11,11 @@ function [score H ok] = affine_RANSAC(f1, f2, thresh)
     
     % for each correspondence
     for i=1:n_correspondences
-        % compute transformation
-        S1 = inv([f1(4,i) f1(5,i); f1(5,i) f1(6,i)]); 
-        S2 = inv([f2(4,i) f2(5,i); f2(5,i) f2(6,i)]);
-        A = S2/S1;
-        T = f2(1:2,i) - A*f1(1:2,i);
-        H{i} = [A T; 0 0 1]; 
+        % compute transformation - these are the ellipse centres:
+%         C1 = [f1(4,i) f1(5,i); f1(5,i) f1(6,i)]; 
+%         C2 = [f2(4,i) f2(5,i); f2(5,i) f2(6,i)];
+        H{i} = ellipse_hom(f1(1,i), f1(2,i), f1(4,i), f1(5,i), f1(6,i), ...
+            f2(1,i), f2(2,i), f2(4,i), f2(5,i), f2(6,i));
         % score all the other points from transformation
         X2_ = H{i} * X1;
         delta = X2_ - X2;
