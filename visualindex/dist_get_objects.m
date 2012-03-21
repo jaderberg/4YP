@@ -1,6 +1,6 @@
 % Max Jaderberg 5/3/12
 
-function result = dist_get_objects(args, coll)
+function result = dist_get_objects(args, conf, coll)
 
 % Returns the matched object and region of matchings. Must run
 % preprocess_solution.m once before this works. Also the mongodb java
@@ -29,20 +29,6 @@ function result = dist_get_objects(args, coll)
         args.log_file = 'log.txt';
     end
     log_file = fopen(args.log_file, 'w');
-        
-%     load config file
-    try
-        conf = load(fullfile(ROOT_DIR, 'conf.mat'));
-        try
-            conf = conf.conf;
-        catch
-            conf = conf;
-        end
-    catch err
-        fprintf('ERROR: could not find conf.mat. Make sure preprocess_solution.m has been run.\n');
-        result = 0;
-        return
-    end
     
     
 %     define global variables to avoid reloading from disk

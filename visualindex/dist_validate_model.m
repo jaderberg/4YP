@@ -6,6 +6,7 @@ function dist_validate_model( n_split, N_split, first_host, this_host )
 
 %     load config file
 try
+    fprintf('Loading conf from %s...\n', fullfile(root_dir, 'conf.mat'));
     conf = load(fullfile(root_dir, 'conf.mat'));
     try
         conf = conf.conf;
@@ -63,7 +64,7 @@ for n=1:length(folders)
         % run a query with the image
         image = files{i};
         args.display = 1; args.image_path = fullfile(class_dir, image);
-        res = dist_get_objects(args, coll);
+        res = dist_get_objects(args, conf, coll);
         validation_results.ground_truth{n_image} = class_name;
         if ~isempty(res.classes)
             validation_results.model_classification{n_image} = res.classes{1};
