@@ -6,8 +6,18 @@ function dist_validate_model( n_split, N_split, first_host, this_host )
 
 %     load config file
 try
-    fprintf('Loading conf from %s...\n', fullfile(root_dir, 'conf.mat'));
-    conf = load(fullfile(root_dir, 'conf.mat'));
+    try
+        fprintf('Loading conf from %s...\n', fullfile(root_dir, 'conf.mat'));
+        conf = load(fullfile(root_dir, 'conf.mat'));
+    catch
+        try
+            fprintf('Loading conf from %s...\n', fullfile(root_dir, 'conf.mat'));
+            conf = load(fullfile(root_dir, 'conf.mat'));
+        catch
+            fprintf('Loading conf from %s...\n', fullfile(root_dir, 'conf.mat'));
+            conf = load(fullfile(root_dir, 'conf.mat'));
+        end
+    end
     try
         conf = conf.conf;
     catch
