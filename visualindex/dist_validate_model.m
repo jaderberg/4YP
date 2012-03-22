@@ -5,29 +5,17 @@ function dist_validate_model( n_split, N_split, first_host, this_host )
 [root_dir image_dir num_words] = dist_setup(n_split, N_split);
 
 %     load config file
-try
+conf = [];
+while isempty(conf)
+    pause(3*rand);
     try
         fprintf('Loading conf from %s...\n', fullfile(root_dir, 'conf.mat'));
         conf = load(fullfile(root_dir, 'conf.mat'));
     catch
-        try
-            fprintf('Loading conf from %s...\n', fullfile(root_dir, 'conf.mat'));
-            conf = load(fullfile(root_dir, 'conf.mat'));
-        catch
-            fprintf('Loading conf from %s...\n', fullfile(root_dir, 'conf.mat'));
-            conf = load(fullfile(root_dir, 'conf.mat'));
-        end
+        fprintf('ERROR: could not find conf.mat. Make sure preprocess_solution.m has been run.\n');
     end
-    try
-        conf = conf.conf;
-    catch
-        conf = conf;
-    end
-catch err
-    fprintf('ERROR: could not find conf.mat. Make sure preprocess_solution.m has been run.\n');
-    result = 0;
-    return
 end
+
 
 %     get mongodb collection
 [m db coll] = mongo_get_collection('server',first_host);
