@@ -4,6 +4,7 @@ function [result frames descrs] = image_query( im, histograms, ids, vocab, conf,
 %IMAGE_QUERY returns the matched images from the query
 
     global file_prefix;
+    fprintf('Fileprefix is %s\n', file_prefix);
     %profile on;
 
     import com.mongodb.BasicDBObject;
