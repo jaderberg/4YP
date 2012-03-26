@@ -6,7 +6,7 @@ function [f,d] = visualindex_get_features(im,varargin)
 
 % Auhtor: Andrea Vedaldi
 
-opts.affine = false;
+opts.affine = true;
 opts = vl_argparse(opts,varargin);
 
 

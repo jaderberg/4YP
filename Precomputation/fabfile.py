@@ -39,8 +39,8 @@ def precompute():
     env.suppress_errors = confirm('Suppress Matlab errors?', default=True)
     run_mongodb_flag = confirm('Run mongodb?', default=True)
     if run_mongodb:
-        prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_nosac_turbo/mongodb')
-        prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_nosac_turbo/mongo_logs')
+        prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_affine/mongodb')
+        prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_affine/mongo_logs')
 
     tasks = []
 
@@ -78,13 +78,13 @@ def full_precompute():
     stop_machine_num = prompt('Stop machine #: ', key='stop_machine', default='70')
     env.suppress_errors = confirm('Suppress Matlab errors?', default=True)
 
-    prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_nosac_turbo/mongodb')
-    prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_nosac_turbo/mongo_logs')
+    prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_affine/mongodb')
+    prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_affine/mongo_logs')
 
-    skip_vocab = confirm('Use existing vocab?', default=True)
+    skip_vocab = confirm('Use existing vocab?', default=False)
     if skip_vocab:
         vocab_file = prompt('Existing vocab.mat file to use: ', default='/Users/jaderberg/Sites/4YP/Precomputation/kebl3465@engs-station49.eng.ox.ac.uk/vocab.mat')
-        root_dir = prompt('Project root dir: ', default='~/4YP/data/d_nosac_turbo')
+        root_dir = prompt('Project root dir: ', default='~/4YP/data/d_affine')
 
     tasks = []
 
@@ -145,22 +145,22 @@ def full_precompute():
     run_single(0)
     wait_for_single_finish(0)
 
-    # NOW FOR BING EXPANSION!
-    env.matlab_func = 'dist_bing_expansion_download'
-    run_on_each_host()
-    wait_for_all_finish()
-
-    env.matlab_func = 'dist_bing_expansion_weights'
-    run_single(0)
-    wait_for_single_finish(0)
-
-    env.matlab_func = 'dist_bing_expansion_histograms'
-    run_on_each_host()
-    wait_for_all_finish()
-
-    env.matlab_func = 'dist_bing_expansion_cat'
-    run_single(0)
-    wait_for_single_finish(0)
+#    # NOW FOR BING EXPANSION!
+#    env.matlab_func = 'dist_bing_expansion_download'
+#    run_on_each_host()
+#    wait_for_all_finish()
+#
+#    env.matlab_func = 'dist_bing_expansion_weights'
+#    run_single(0)
+#    wait_for_single_finish(0)
+#
+#    env.matlab_func = 'dist_bing_expansion_histograms'
+#    run_on_each_host()
+#    wait_for_all_finish()
+#
+#    env.matlab_func = 'dist_bing_expansion_cat'
+#    run_single(0)
+#    wait_for_single_finish(0)
 
     print_message('PRECOMPUTE DONE')
 
