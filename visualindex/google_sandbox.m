@@ -1,6 +1,6 @@
 % Google image api sandbox
 
-query = '10%20downing';
+query = 'Tower%20Bridge';
 
 request_url = ['https://ajax.googleapis.com/ajax/services/search/images?v=1.0' ...
     '&q=' query ...

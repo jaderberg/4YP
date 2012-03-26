@@ -1,7 +1,7 @@
 % Bing sandbox
 
 app_id = '243C9AAF515AE3EE49D775D19F5F8F3F0F0A3D84';
-query = '10%20downing';
+query = 'Tower%20Bridge';
 num = '25';
 
 request_url = ['http://api.bing.net/json.aspx?' ...
