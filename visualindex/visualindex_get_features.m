@@ -41,8 +41,8 @@ else
     %--=-=--==---
     % get hessian-affine features
     imwrite(im, 'temp.jpg');
-    system('affine_detector/mac_bin/detect_points -i temp.jpg -hesaff -o det.txt > det_log.txt');
-    system('affine_detector/mac_bin/compute_descriptors -i temp.jpg -p1 det.txt -sift -o3 desc.txt -scale-mult 1.732 > desc_log.txt');
+    system('affine_detector/linux_bin2/detect_points -i temp.jpg -hesaff -o det.txt > det_log.txt');
+    system('affine_detector/linux_bin2/compute_descriptors -i temp.jpg -p1 det.txt -sift -o3 desc.txt -scale-mult 1.732 > desc_log.txt');
     % load detected points with corresponding descriptors
     featData = importdata('desc.txt', ' ', 2);    
     % descriptors
