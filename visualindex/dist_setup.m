@@ -17,3 +17,9 @@ function [ROOT_DIR IMAGE_DIR NUM_WORDS] = dist_setup(n, N)
     
     % number of visual words in vocab
     NUM_WORDS = 100000;
+    
+    global g_n;
+    global g_N;
+    
+    g_n = n;
+    g_N = N;
