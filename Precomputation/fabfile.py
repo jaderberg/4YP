@@ -39,8 +39,8 @@ def precompute():
     env.suppress_errors = confirm('Suppress Matlab errors?', default=True)
     run_mongodb_flag = confirm('Run mongodb?', default=True)
     if run_mongodb:
-        prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_nosac/mongodb')
-        prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_nosac/mongo_logs')
+        prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_ransac/mongodb')
+        prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_ransac/mongo_logs')
 
     tasks = []
 
@@ -78,13 +78,13 @@ def full_precompute():
     stop_machine_num = prompt('Stop machine #: ', key='stop_machine', default='70')
     env.suppress_errors = confirm('Suppress Matlab errors?', default=True)
 
-    prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_nosac/mongodb')
-    prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_nosac/mongo_logs')
+    prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_ransac/mongodb')
+    prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_ransac/mongo_logs')
 
     skip_vocab = confirm('Use existing vocab?', default=True)
     if skip_vocab:
         vocab_file = prompt('Existing vocab.mat file to use: ', default='/Users/jaderberg/Sites/4YP/Precomputation/kebl3465@engs-station49.eng.ox.ac.uk/vocab.mat')
-        root_dir = prompt('Project root dir: ', default='~/4YP/data/d_nosac')
+        root_dir = prompt('Project root dir: ', default='~/4YP/data/d_ransac')
 
     tasks = []
 
