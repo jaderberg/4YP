@@ -60,5 +60,5 @@ else
     d = single(featData.data(:, 7:end))';
     % descriptor measurement regions in the format [x; y; theta; a; b; c]
     f = double(featData.data(:, 1:6))';
-    system(['rm -f ' desc det desc_log det_log temp_im]);
+    system(['rm -f ' desc ' ' det ' ' desc_log ' ' det_log ' ' temp_im]);
 end
