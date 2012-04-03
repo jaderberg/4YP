@@ -7,6 +7,7 @@ function [f,d] = visualindex_get_features(im,varargin)
 % Auhtor: Andrea Vedaldi
 
 opts.affine = true;
+opts.root = true;
 opts = vl_argparse(opts,varargin);
 
 
@@ -61,4 +62,11 @@ else
     % descriptor measurement regions in the format [x; y; theta; a; b; c]
     f = double(featData.data(:, 1:6))';
     system(['rm -f ' desc ' ' det ' ' desc_log ' ' det_log ' ' temp_im]);
+end
+
+if opts.root
+    for i=1:size(d,2)
+        d_i = d(:,i);
+        d(:,i) = sqrt(d_i/sum(d_i));
+    end
 end
