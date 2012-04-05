@@ -33,7 +33,7 @@ class_names = m.class_names;
 
 opts.maxResolution = 1000;
 opts.nPhotos = '25';
-opts.matchThresh = 9;
+opts.matchThresh = 7;
 opts.force = 1;
 
 app_id = '243C9AAF515AE3EE49D775D19F5F8F3F0F0A3D84';
@@ -248,8 +248,8 @@ for n=1:length(class_names)
                 total_expanded = total_expanded + 1;
                 class_total_expanded = class_total_expanded + 1;
 %                     rectangle of matched words on bing image
-                f_xmin = min(matches.f2(1,:)); f_ymin = min(matches.f2(2,:));
-                f_xmax = max(matches.f2(1,:)); f_ymax = max(matches.f2(2,:));
+                f_xmin = min(matches.f2(1,:))-10; f_ymin = min(matches.f2(2,:))-10;
+                f_xmax = max(matches.f2(1,:))+10; f_ymax = max(matches.f2(2,:))+10;
                 transformation = inv([matches.A matches.T; 0 0 1]);
                 % bring in all words in bing image within the
                 % rectangle
