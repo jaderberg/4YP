@@ -183,7 +183,7 @@ for n=1:length(class_names)
                 end
             end
 %             save to bingDir
-            fprintf('   ...saved as %s!\n', filename);
+            fprintf('   ...saving as %s...', filename);
             try
                 imwrite(im, fullfile(class_dir, filename));
             catch
@@ -194,10 +194,19 @@ for n=1:length(class_names)
                     continue
                 end
             end
+            fprintf('saved!\n');
         end
 %             get features + words
         [frames, descrs] = visualindex_get_features(im);
+        
+        if isempty(frames)
+            fprintf('   ...no features computed, skipping\n');
+            continue;
+        else
+            fprintf('   ...computed features\n');
+        end
         words = visualindex_get_words(vocab, descrs);
+        fprintf('   ...computed words\n');
         f_filenames{i} = filename;
         f_words{i} = words;
         f_frames{i} = frames;
