@@ -7,7 +7,7 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
     opts.maxResolution = 1000;
     opts.nPhotos = '25';
     opts.matchThresh = 9;
-    opts.force = 0;
+    opts.force = 1;
     opts = vl_argparse(opts, varargin);
 
     app_id = '243C9AAF515AE3EE49D775D19F5F8F3F0F0A3D84';

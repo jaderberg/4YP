@@ -35,7 +35,7 @@ function preprocess_solution()
     [conf vocab_b histograms_b ids_b] = bing_expansion(class_names,conf,coll,vocab);
     
 %     Flickr expansion
-    [conf vocab_f histograms_f ids_f] = flickr_expansion(class_names,conf,coll,vocab);
+    %[conf vocab_f histograms_f ids_f] = flickr_expansion(class_names,conf,coll,vocab);
     
 %     supercharge images
     %[super_class_histograms classes_useful_hists] = supercharge_images(class_names, coll, conf, vocab);
