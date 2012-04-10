@@ -27,6 +27,10 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
     n_image = 1;
     for n=1:length(classes)
         class_name = classes{n};
+        if ~strcmp(class_name,'Tower_Bridge')
+            fprintf(class_name);
+            continue
+        end
         
         % Check if already done this class fully
         class_ims = coll.find(BasicDBObject('class', class_name));
