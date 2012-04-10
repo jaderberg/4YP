@@ -32,7 +32,7 @@ m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
 class_names = m.class_names;
 
 opts.maxResolution = 1000;
-opts.nPhotos = '25';
+opts.nPhotos = '50';
 opts.matchThresh = 7;
 opts.force = 1;
 
