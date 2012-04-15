@@ -228,7 +228,7 @@ a.button {
 
 
         .tag-border {
-            border: white 2px dashed;
+            border: #11f411 2px dashed;
             margin: 0;
             padding: 0;
         }
@@ -258,7 +258,7 @@ a.button {
         }
 
         &:hover .tag-border {
-            border: white 2px solid;
+            border: #11f411 2px solid;
         }
     }
 }
