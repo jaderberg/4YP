@@ -228,7 +228,7 @@ a.button {
 
 
         .tag-border {
-            border: #11f411 2px dashed;
+            border: #11f411 3px dashed;
             margin: 0;
             padding: 0;
         }
@@ -243,7 +243,7 @@ a.button {
             border: #111;
             background-color: #333;
             color: #fff;
-            font-size: 10px;
+            font-size: 14px;
             opacity: 0;
         }
 
@@ -258,7 +258,7 @@ a.button {
         }
 
         &:hover .tag-border {
-            border: #11f411 2px solid;
+            border: #11f411 3px solid;
         }
     }
 }
