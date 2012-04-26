@@ -235,7 +235,52 @@ for n=1:length(class_names)
         extra_words = [];
 %             for each bing image for this class try and pull in some
 %             words if it is spatially verified
+        unmatched_turbo_images = [];
         for j=1:length(f_filenames) 
+            if isempty(f_filenames{j})
+                continue
+            end
+            [score matches] = spatially_verify(c_frames,c_words,f_frames{j},f_words{j},size(c_im), 'includeRepeated', 0, 'repeatedScore', 0);
+            if score > opts.matchThresh
+                fprintf('### %s from bing is similar (score: %d) - adding words\n', f_filenames{j}, score);
+                f_im = imread(fullfile(class_dir, f_filenames{j}));
+                figure(1); clf;
+                set(1, 'units','normalized','outerposition',[0 0 1 1])
+                subplot_tight(2,2,1,[0.02 0.01]);
+                imagesc(c_im) ; title('Class image') ;
+                axis image off ; drawnow ;
+                subplot_tight(2,2,2,[0.02 0.01]);
+                imagesc(f_im) ; title('Expanded image') ;
+                axis image off ; drawnow ;
+                subplot_tight(2,2,3,[0.02 0.01]);
+                visualindex_plot_matches(matches, c_im, f_im) ;
+                save_figure(1, fullfile(class_report_dir, [c_id '|' f_filenames{j}]));
+                total_expanded = total_expanded + 1;
+                class_total_expanded = class_total_expanded + 1;
+%                     rectangle of matched words on bing image
+                f_xmin = min(matches.f2(1,:))-10; f_ymin = min(matches.f2(2,:))-10;
+                f_xmax = max(matches.f2(1,:))+10; f_ymax = max(matches.f2(2,:))+10;
+                transformation = inv([matches.A matches.T; 0 0 1]);
+                % bring in all words in bing image within the
+                % rectangle
+                all_f_frames = f_frames{j};
+                l = find(f_xmin<=all_f_frames(1,:)); r = find(all_f_frames(1,:)<=f_xmax);
+                b = find(f_ymin<=all_f_frames(2,:)); t = find(all_f_frames(2,:)<=f_ymax);
+                extra_i = intersect(t,intersect(b,intersect(r,l)));
+                extra_frames_f = all_f_frames(:,extra_i);
+                extra_words = f_words{j}(extra_i);
+                % transform frames to wiki image coords
+                Xc = transformation*[extra_frames_f(1:2,:); ones(1,length(extra_words))];
+                extra_frames_c = [Xc(1:2,:); extra_frames_f(3:end,:)];
+                c_frames = [c_frames extra_frames_c];
+                c_words = [c_words extra_words];
+            else
+                unmatched_turbo_images = [unmatched_turbo_images j];
+                fprintf('--- %s from bing is not similar (score: %d) - ignoring\n', f_filenames{j}, score);
+            end
+        end
+        fprintf('--- SECOND PASS!\n');
+        for j=unmatched_turbo_images 
             if isempty(f_filenames{j})
                 continue
             end
@@ -277,6 +322,7 @@ for n=1:length(class_names)
                 fprintf('--- %s from bing is not similar (score: %d) - ignoring\n', f_filenames{j}, score);
             end
         end
+        
 
         fprintf('--- Saving augmented frames and words for image %d\n', n_image);
 

@@ -39,8 +39,8 @@ def precompute():
     env.suppress_errors = confirm('Suppress Matlab errors?', default=True)
     run_mongodb_flag = confirm('Run mongodb?', default=True)
     if run_mongodb:
-        prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_rootaffine_turbo/mongodb')
-        prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_rootaffine_turbo/mongo_logs')
+        prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_rootaffine_turbo2/mongodb')
+        prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_rootaffine_turbo2/mongo_logs')
 
     tasks = []
 
@@ -78,8 +78,8 @@ def full_precompute():
     stop_machine_num = prompt('Stop machine #: ', key='stop_machine', default='70')
     env.suppress_errors = confirm('Suppress Matlab errors?', default=True)
 
-    prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_rootaffine_turbo/mongodb')
-    prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_rootaffine_turbo/mongo_logs')
+    prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/d_rootaffine_turbo2/mongodb')
+    prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/d_rootaffine_turbo2/mongo_logs')
 
     skip_vocab = confirm('Use existing vocab?', default=True)
     if skip_vocab:
@@ -88,7 +88,7 @@ def full_precompute():
             vocab_file = prompt('Existing vocab.mat file to use: ', default='/Users/jaderberg/Sites/4YP/Precomputation/kebl3465@engs-station49.eng.ox.ac.uk/vocab_rootaffine.mat')
         else:
             vocab_file = prompt('Existing vocab.mat file to use: ', default='~/4YP/data/vocab_rootaffine.mat')
-        root_dir = prompt('Project root dir: ', default='~/4YP/data/d_rootaffine_turbo')
+        root_dir = prompt('Project root dir: ', default='~/4YP/data/d_rootaffine_turbo2')
         
     tasks = []
 
