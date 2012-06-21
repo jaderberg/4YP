@@ -33,6 +33,7 @@ function webserver(port,config)
 % Function is written by D.Kroon University of Twente (November 2010)
 
 % Config of the HTTP server
+%/usr/local/Cellar/mongodb/2.0.1-x86_64/bin/mongod --dbpath /Volumes/4YP/bing_expansion/mongo_db/
 close all;
 
 defaultoptions=struct('www_folder','www','temp_folder','www/temp','verbose',true,'defaultfile','/index.html','mtime1',0.8,'mtime2',3);

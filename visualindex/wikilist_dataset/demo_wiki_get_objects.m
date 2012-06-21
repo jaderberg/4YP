@@ -93,14 +93,14 @@ function result = demo_wiki_get_objects(args)
     if display
     %     Plot image
         figure(1) ; clf ;
-        set(1, 'units','normalized','outerposition',[0 0 1 1])
+        %set(1, 'units','normalized','outerposition',[0 0 1 1])
         subplot_tight(2,2,1,[0.02 0.01]);
         imagesc(im) ; title(sprintf('Query: %s', imagePath)) ;
         axis image off ; drawnow ;
     end
     
     %     Now do multiple object matching!
-    max_objects = 2;
+    max_objects = 1;
     max_tries_per_object = 2;
     
     result.query_image.path = imagePath;

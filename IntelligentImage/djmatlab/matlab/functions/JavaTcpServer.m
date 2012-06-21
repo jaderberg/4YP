@@ -68,7 +68,7 @@ switch(action)
 end
 
 function handle_figure=stopwindow()
-handle_figure=figure;
+handle_figure=figure(99);
 set(handle_figure,'Units','Pixels');
 w=get(handle_figure,'Position'); 
 set(handle_figure,'Position',[w(1) w(2) 200 100]);
