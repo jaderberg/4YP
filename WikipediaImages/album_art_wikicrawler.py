@@ -86,7 +86,10 @@ class Crawler(object):
                     if not i:
                         continue
                     # select the album column
-                    album_td = tr.findAll('td')[album_col - 1]
+                    tds = tr.findAll('td')
+                    if not tds:
+                        continue
+                    album_td = tds[album_col - 1]
                     link = album_td.find('a')
                     if not link:
                         continue
@@ -103,7 +106,7 @@ class Crawler(object):
             print 'Scraping %s' % full_url
             try:
                 soup = BeautifulSoup(url_reader.read(full_url))
-            except TypeError:
+            except Exception:
                 continue
             soup = self._get_content_body(soup)
             if soup is None:
@@ -225,7 +228,13 @@ class WikipediaImageExtractor(object):
         print '-------------------------------------'
 
 album_list_pages = [
+    'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_1950s_(UK)',
+    'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_1960s_(UK)',
+    'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_1970s_(UK)',
+    'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_1980s_(UK)',
     'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_1990s_(UK)',
+    'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_2000s_(UK)',
+    'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_2010s_(UK)',
 ]
 
 crawler = Crawler()
