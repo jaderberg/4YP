@@ -112,11 +112,11 @@ class Crawler(object):
             if soup is None:
                 continue
             # Save the image links to the csv
-            page_title =self._get_page_class(page)
+            page_title =self._get_page_class(full_url)
             image_links = self._get_image_links(soup)
             for link in image_links:
                 if 'href' in dict(link.attrs):
-                    self.image_file_urls_csv.writerow([page_title, urljoin(page, link['href'])])
+                    self.image_file_urls_csv.writerow([page_title, urljoin(full_url, link['href'])])
                     self.num_images += 1
 
         print '%d images crawled!' % self.num_images
@@ -134,7 +134,7 @@ class Crawler(object):
         return soup.findAll('a', {'class': 'image'})
 
     def _get_page_class(self, page):
-        return urllib2.unquote(page.split('/')[-1])
+        return urllib2.unquote(page.split('/')[-1].replace('%E2%80%93', '-').replace('%C3%A9', 'e'))
 
 class WikipediaImageExtractor(object):
 
@@ -237,7 +237,7 @@ album_list_pages = [
     'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_2010s_(UK)',
 ]
 
-#crawler = Crawler()
-#crawler.crawl(album_list_pages, csv_filename='/Users/jaderberg/Desktop/albums.csv')
+crawler = Crawler()
+crawler.crawl(album_list_pages, csv_filename='/Volumes/4YP/Images/ukno1albums.csv')
 extractor = WikipediaImageExtractor('/Volumes/4YP/Images/ukno1albums.csv', '/Volumes/4YP/Images/ukno1albums', ['jpeg','jpg','JPG','JPEG'], 1000)
 extractor.download_images()
