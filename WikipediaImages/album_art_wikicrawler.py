@@ -237,7 +237,7 @@ album_list_pages = [
     'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_2010s_(UK)',
 ]
 
-crawler = Crawler()
-crawler.crawl(album_list_pages, csv_filename='/Users/jaderberg/Desktop/albums.csv')
-#extractor = WikipediaImageExtractor('/Volumes/4YP/Images/List_of_structures_in_London2.csv', '/Volumes/4YP/Images/List_of_structures_in_London2', ['jpeg','jpg','JPG','JPEG'], 1000)
-#extractor.download_images()
+#crawler = Crawler()
+#crawler.crawl(album_list_pages, csv_filename='/Users/jaderberg/Desktop/albums.csv')
+extractor = WikipediaImageExtractor('/Volumes/4YP/Images/ukno1albums.csv', '/Volumes/4YP/Images/ukno1albums', ['jpeg','jpg','JPG','JPEG'], 1000)
+extractor.download_images()
