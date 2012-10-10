@@ -56,6 +56,8 @@ class Crawler(object):
         self.image_file_urls_csv = csv.writer(open(csv_filename, "wb"))
         url_reader = WikiUrlReader()
         album_urls = []
+        album_names = []
+        album_artists = []
         for page in pages:
             print 'Looking for albums on %s' % page
             try:
@@ -70,11 +72,14 @@ class Crawler(object):
             for table in tables:
                 # see if there is an Album column
                 album_col = -1
+                artist_col = -1
                 trs = table.findAll('tr')
                 if not trs:
                     continue
                 header_tr = trs[0]
                 for i, th in enumerate(header_tr.findAll('th')):
+                    if 'Artist' in th.text:
+                        artist_col = i
                     if 'Album' in th.text and ('Albums' not in th.text):
                         album_col = i
                         break
@@ -98,10 +103,22 @@ class Crawler(object):
                         try:
                             album_urls.index(href)
                         except ValueError:
+                            # add a new album in
                             album_urls.append(href)
+                            album_names.append(link.text.strip('\r\n'))
+                            # add the artist name if there
+                            if artist_col != -1:
+                                artist_td = tds[artist_col - 1]
+                                link = artist_td.find('a')
+                                if link:
+                                    album_artists.append(link.text.replace('&amp;', '&').strip('\r\n'))
+                                else:
+                                    album_artists.append(None)
+                            else:
+                                album_artists.append(None)
         print "%d album pages found" % len(album_urls)
         # Now go through all the album pages and get the pics
-        for album_url in album_urls:
+        for k, album_url in enumerate(album_urls):
             full_url = urljoin(page, album_url)
             print 'Scraping %s' % full_url
             try:
@@ -112,11 +129,11 @@ class Crawler(object):
             if soup is None:
                 continue
             # Save the image links to the csv
-            page_title =self._get_page_class(full_url)
+            page_title = "%s - %s" % (album_artists[k], album_names[k]) if album_artists[k] else self._get_page_class(full_url)
             image_links = self._get_image_links(soup)
             for link in image_links:
                 if 'href' in dict(link.attrs):
-                    self.image_file_urls_csv.writerow([page_title, urljoin(full_url, link['href'])])
+                    self.image_file_urls_csv.writerow([page_title.replace('\u2013', '-').encode('utf8'), urljoin(full_url, link['href'])])
                     self.num_images += 1
 
         print '%d images crawled!' % self.num_images
@@ -134,7 +151,7 @@ class Crawler(object):
         return soup.findAll('a', {'class': 'image'})
 
     def _get_page_class(self, page):
-        return urllib2.unquote(page.split('/')[-1].replace('%E2%80%93', '-').replace('%C3%A9', 'e'))
+        return urllib2.unquote(page.split('/')[-1].replace('%E2%80%93', '-').replace('%C3%A9', 'e').replace('#', ' ')).replace('_', ' ')
 
 class WikipediaImageExtractor(object):
 
@@ -151,7 +168,7 @@ class WikipediaImageExtractor(object):
             os.makedirs(self.out_dir)
             print 'Created %s' % self.out_dir
         url_reader = WikiUrlReader()
-        c = csv.reader(open(self.csv_filename, 'rb'))
+        c = csv.reader(open(self.csv_filename, 'rb'), lineterminator='\n')
         for i, row in enumerate(c):
             print 'Extracting image %d...' % i
             if len(row) != 2:
@@ -237,7 +254,7 @@ album_list_pages = [
     'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_2010s_(UK)',
 ]
 
-crawler = Crawler()
-crawler.crawl(album_list_pages, csv_filename='/Volumes/4YP/Images/ukno1albums.csv')
+#crawler = Crawler()
+#crawler.crawl(album_list_pages, csv_filename='/Volumes/4YP/Images/ukno1albums.csv')
 extractor = WikipediaImageExtractor('/Volumes/4YP/Images/ukno1albums.csv', '/Volumes/4YP/Images/ukno1albums', ['jpeg','jpg','JPG','JPEG'], 1000)
 extractor.download_images()
