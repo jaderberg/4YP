@@ -256,5 +256,5 @@ album_list_pages = [
 
 #crawler = Crawler()
 #crawler.crawl(album_list_pages, csv_filename='/Volumes/4YP/Images/ukno1albums.csv')
-extractor = WikipediaImageExtractor('/Volumes/4YP/Images/ukno1albums.csv', '/Volumes/4YP/Images/ukno1albums', ['jpeg','jpg','JPG','JPEG'], 1000)
+extractor = WikipediaImageExtractor('/Volumes/4YP/Images/ukno1albums.csv', '/Volumes/4YP/Images/ukno1albums_wiki', ['jpeg','jpg','JPG','JPEG'], 1000)
 extractor.download_images()
