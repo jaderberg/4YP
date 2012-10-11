@@ -67,7 +67,7 @@ if not os.path.exists(OUT_DIR):
     print 'Created %s' % OUT_DIR
 
 # Get class names
-classes = [name for name in os.listdir(IN_DIR) if os.path.isdir(os.path.join(IN_DIR, name))]
+dir_names = [name for name in os.listdir(IN_DIR) if os.path.isdir(os.path.join(IN_DIR, name))]
 
 opts = ImageOptions()
 opts.image_type = ImageType.PHOTO
@@ -75,17 +75,19 @@ opts.image_type = ImageType.PHOTO
 num_downloaded = 0
 
 # Download images for each class
-for c in classes:
+for dir_name in dir_names:
+    wiki_class = dir_name.split('|')[0]
+    readable_name = dir_name.split('|')[-1]
     num_class_downloaded = 0
     # search google
-    search_string = '%s album' % c
+    search_string = '%s album' % readable_name
     if SITE:
         search_string += ' site:%s' % SITE
     elif EXCLUDE_DOMAIN:
         search_string += ' -%s' % EXCLUDE_DOMAIN
     res = Google.search_images(search_string, opts)
     # class directory
-    class_dir = os.path.join(OUT_DIR, c)
+    class_dir = os.path.join(OUT_DIR, dir_name)
     if not os.path.exists(class_dir):
         os.makedirs(class_dir)
         print 'Created %s' % class_dir
@@ -93,7 +95,7 @@ for c in classes:
         if num_class_downloaded == IMS_PER_CLASS:
             break
         # download image
-        out_filename = os.path.join(class_dir, "%d|%s.jpg" % (i, c))
+        out_filename = os.path.join(class_dir, "%d|%s.jpg" % (i, wiki_class))
         try:
             print 'Downloading %s to %s' % (image_result.link, out_filename)
         except UnicodeDecodeError:

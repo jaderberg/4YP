@@ -129,7 +129,10 @@ class Crawler(object):
             if soup is None:
                 continue
             # Save the image links to the csv
-            page_title = "%s - %s" % (album_artists[k], album_names[k]) if album_artists[k] else self._get_page_class(full_url)
+            # two parts to title: {{wikipedia_url}}|{{readable name}}
+            wikipedia_class = self._get_wiki_class(full_url)
+            readable_class = ("%s - %s" % (album_artists[k], album_names[k])) if album_artists[k] else self._get_readable_class(full_url)
+            page_title = "%s|%s" % (wikipedia_class, readable_class)
             image_links = self._get_image_links(soup)
             for link in image_links:
                 if 'href' in dict(link.attrs):
@@ -150,8 +153,11 @@ class Crawler(object):
     def _get_image_links(self, soup):
         return soup.findAll('a', {'class': 'image'})
 
-    def _get_page_class(self, page):
-        return urllib2.unquote(page.split('/')[-1].replace('%E2%80%93', '-').replace('%C3%A9', 'e').replace('#', ' ')).replace('_', ' ')
+    def _get_readable_class(self, page):
+        return urllib2.unquote(self._get_wiki_class(page).replace('%E2%80%93', '-').replace('%C3%A9', 'e').replace('#', ' ')).replace('_', ' ')
+
+    def _get_wiki_class(self, page):
+        return page.split('/')[-1]
 
 class WikipediaImageExtractor(object):
 
@@ -174,7 +180,8 @@ class WikipediaImageExtractor(object):
             if len(row) != 2:
                 print 'Invalid row format - skipping'
                 continue
-            class_name = urllib2.unquote(row[0])
+            dir_name = row[0]
+            wiki_class_name = row[0].split('|')[0]
             image_file_url = row[1]
             # check format of image
             image_format = image_file_url.split('.')[-1]
@@ -224,13 +231,13 @@ class WikipediaImageExtractor(object):
                     image_download_url = original_image_url
 
             # make class dir
-            class_dir = '%s/%s' % (self.out_dir, class_name)
+            class_dir = '%s/%s' % (self.out_dir, dir_name)
             if not os.path.exists(class_dir):
                 os.makedirs(class_dir)
                 print 'Created %s' % class_dir
 
             # download the image
-            out_filename = '%s/%s|%s.%s' % (class_dir, str(i), class_name, image_format.lower())
+            out_filename = '%s/%s|%s.%s' % (class_dir, str(i), wiki_class_name, image_format.lower())
             try:
                 print 'Downloading from %s to %s' % (image_download_url, out_filename)
             except UnicodeDecodeError:
@@ -254,7 +261,7 @@ album_list_pages = [
     'http://en.wikipedia.org/wiki/List_of_number-one_albums_from_the_2010s_(UK)',
 ]
 
-#crawler = Crawler()
-#crawler.crawl(album_list_pages, csv_filename='/Volumes/4YP/Images/ukno1albums.csv')
+crawler = Crawler()
+crawler.crawl(album_list_pages, csv_filename='/Volumes/4YP/Images/ukno1albums.csv')
 extractor = WikipediaImageExtractor('/Volumes/4YP/Images/ukno1albums.csv', '/Volumes/4YP/Images/ukno1albums_wiki', ['jpeg','jpg','JPG','JPEG'], 1000)
 extractor.download_images()
