@@ -30,7 +30,7 @@ unmatched_dir = fullfile(validation_results_dir, 'unmatched');
 vl_xmkdir(unmatched_dir);
 
 conf.validationResultsDir = validation_results_dir;
-conf.validationDir = '~/4YP/data/validation_images';
+conf.validationDir = '~/4YP/data/ukno1albums_ebay';
 % save conf
 save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
 
