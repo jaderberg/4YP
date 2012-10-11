@@ -90,9 +90,10 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
         	file_path = fullfile(class_dir, filename);
             % Get image info
             try
-                info = imfinfo(file_path) ;
+                im = imread(file_path);
             catch exc
                 fprintf('Could not process image %s - skipping\n', filename);
+                clear im;
                 failed = failed + 1;
                 continue
             end
@@ -109,7 +110,6 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
 
             % copy image to new working directory and resize if required
             if opts.copyImages || opts.maxResolution
-                im = imread(file_path);
                 if opts.maxResolution
                     [maxRes maxDim] = max(size(im));
                     if maxRes > opts.maxResolution
@@ -120,9 +120,7 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
                 vl_xmkdir(fullfile(conf.imageDir, class_name));
                 new_filepath = fullfile(conf.imageDir, class_name, filename);
                 imwrite(im, new_filepath);
-                clear im
                 % getting info of copied file
-                info = imfinfo(new_filepath) ;
                 file_path = new_filepath;
             end
             
@@ -130,8 +128,9 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
 
             image_doc.put('class', class_name);
             size_db = BasicDBObject();
-            size_db.put('width', info.Width); size_db.put('height', info.Height);
+            size_db.put('width', size(im,2)); size_db.put('height', size(im,1));
             image_doc.put('size', size_db);
+            clear im;
 
             doc(1) = image_doc;
             coll.insert(doc);
