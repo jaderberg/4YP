@@ -113,6 +113,7 @@ for n=1:length(class_names)
     search_term = class_name;
     search_term = strrep(search_term, ' ', '%20');
     search_term = strrep(search_term, '_', '%20');
+    search_term = [search_term ' -site:wikipedia.org'];
 
     request_url = ['http://api.bing.net/json.aspx?' ...
                    'AppId=' app_id ...
