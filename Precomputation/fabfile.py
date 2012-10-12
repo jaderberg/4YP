@@ -4,6 +4,7 @@ from fabric.contrib.files import exists
 from fabric.contrib.console import confirm
 import time
 import paramiko
+import sys
 
 host_template = 'engs-station%s.eng.ox.ac.uk'
 env.host_string = 'kebl3465@engs-station49.eng.ox.ac.uk'
@@ -106,46 +107,46 @@ def full_precompute():
         print_message('CANCELLED!')
         return False
 
-    # build db
-    env.matlab_func = 'dist_wikilist_db_creator'
-    run_on_each_host()
-    wait_for_all_finish()
-
-    # extract features
-    env.matlab_func = 'dist_compute_features'
-    run_on_each_host()
-    wait_for_all_finish()
-
-    # create vocab
-    if not skip_vocab:
-        env.matlab_func = 'dist_vocab_creation'
-        run_single(0)
-        wait_for_single_finish(0)
-    else:
-        if good_hosts:
-            use_host(0)
-        put(vocab_file, '%s/data/model/vocab.mat' % root_dir)
-        print_message('Uploaded vocab file')
-
-    # create words
-    env.matlab_func = 'dist_compute_words'
-    run_on_each_host()
-    wait_for_all_finish()
-
-    # compute weights
-    env.matlab_func = 'dist_compute_weights'
-    run_single(0)
-    wait_for_single_finish(0)
-
-    # compute histograms
-    env.matlab_func = 'dist_compute_histograms'
-    run_on_each_host()
-    wait_for_all_finish()
-
-    # concatenate histogram fragments
-    env.matlab_func = 'dist_cat_histograms'
-    run_single(0)
-    wait_for_single_finish(0)
+#    # build db
+#    env.matlab_func = 'dist_wikilist_db_creator'
+#    run_on_each_host()
+#    wait_for_all_finish()
+#
+#    # extract features
+#    env.matlab_func = 'dist_compute_features'
+#    run_on_each_host()
+#    wait_for_all_finish()
+#
+#    # create vocab
+#    if not skip_vocab:
+#        env.matlab_func = 'dist_vocab_creation'
+#        run_single(0)
+#        wait_for_single_finish(0)
+#    else:
+#        if good_hosts:
+#            use_host(0)
+#        put(vocab_file, '%s/data/model/vocab.mat' % root_dir)
+#        print_message('Uploaded vocab file')
+#
+#    # create words
+#    env.matlab_func = 'dist_compute_words'
+#    run_on_each_host()
+#    wait_for_all_finish()
+#
+#    # compute weights
+#    env.matlab_func = 'dist_compute_weights'
+#    run_single(0)
+#    wait_for_single_finish(0)
+#
+#    # compute histograms
+#    env.matlab_func = 'dist_compute_histograms'
+#    run_on_each_host()
+#    wait_for_all_finish()
+#
+#    # concatenate histogram fragments
+#    env.matlab_func = 'dist_cat_histograms'
+#    run_single(0)
+#    wait_for_single_finish(0)
 
 #    # NOW FOR BING EXPANSION!
 #    env.matlab_func = 'dist_bing_expansion_download'
@@ -181,7 +182,7 @@ def full_precompute():
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
 
-def kill_all_matlab_mongo():
+def kill_all():
     start_machine_num = prompt('Starting machine #: ', key='start_machine', default='39')
     stop_machine_num = prompt('Stop machine #: ', key='stop_machine', default='70')
     get_good_hosts()
@@ -253,6 +254,7 @@ def all_jobs_finished(m_func):
     if errors:
         print_message('ERRORS!!!!!')
         all_exist = True
+        sys.exit()
     return all_exist
 
 def upload_scripts():
