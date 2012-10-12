@@ -85,7 +85,7 @@ def full_precompute():
 
     skip_vocab = confirm('Use existing vocab?', default=True)
     if skip_vocab:
-        vocab_file = prompt('Existing vocab.mat file to use: ', default='/Users/jaderberg/Sites/4YP/Precomputation/kebl3465@engs-station49.eng.ox.ac.uk/vocab.mat')
+        vocab_file = prompt('Existing vocab.mat file to use: ', default='/Users/jaderberg/Sites/4YP/Precomputation/kebl3465@engs-station49.eng.ox.ac.uk/album_vocab.mat')
         root_dir = prompt('Project root dir: ', default='~/4YP/data/%s' % data_dir)
 
     tasks = []
