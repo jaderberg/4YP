@@ -15,7 +15,7 @@ from google import Google, ImageOptions, ImageType
 
 IN_DIR = '/Volumes/4YP/Images/ukno1albums_wiki'
 OUT_DIR = '/Volumes/4YP/Images/ukno1albums_google'
-IMS_PER_CLASS = 5
+IMS_PER_CLASS = 25
 EXCLUDE_DOMAIN = 'wikipedia.org'
 
 def error(msg):
