@@ -33,6 +33,9 @@ function [score, matches] = spatially_verify(f1,w1,f2,w2,size,varargin)
     f2 = f2(:,p2);    
     i = 1;
     while i <= length(w1)
+        if i > 6000
+            break
+        end
         % get the run of same values
         n1 = find(w1==w1(i)); nn1 = length(n1);
         n2 = find(w2==w1(i)); nn2 = length(n2);

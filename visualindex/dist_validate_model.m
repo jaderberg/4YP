@@ -37,9 +37,17 @@ if ~isfield(conf, 'validationResultsDir')
 end
 
 % find all the folders in that directory
-folders = dir(fullfile(conf.validationDir, '*')) ;
-folders = {folders([folders.isdir]).name} ; 
-folders = folders(3:end);
+folders_raw = dir(fullfile(conf.validationDir, '*')) ;
+folders_raw = {folders_raw([folders_raw.isdir]).name} ; 
+i = 1;
+for n=1:length(folders_raw)
+    folder_name = folders_raw{n};
+    if folder_name(1) ~= '.'
+        folders{i} = folder_name;
+        i = i + 1;
+    end
+end
+clear folders_raw;
 
 % split folders into N parts
 split = floor(length(folders)/N_split);

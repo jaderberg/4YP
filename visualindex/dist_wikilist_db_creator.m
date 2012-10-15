@@ -54,9 +54,12 @@ function [conf, class_names, coll] = dist_wikilist_db_creator(n_split, N_split, 
     folders_raw = dir(fullfile(image_dir, '*')) ;
     folders_raw = {folders_raw([folders_raw.isdir]).name} ; 
     i = 1;
-    for n=3:length(folders_raw)
-        folders{i} = folders_raw{n};
-        i = i + 1;
+    for n=1:length(folders_raw)
+        folder_name = folders_raw{n};
+        if folder_name(1) ~= '.'
+            folders{i} = folder_name;
+            i = i + 1;
+        end
     end
     clear folders_raw;
     class_names = folders;

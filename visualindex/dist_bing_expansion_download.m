@@ -118,21 +118,40 @@ for n=1:length(class_names)
     
     n_files = length(files);
     if opts.nPhotos > n_files
-        error('There are not enough pre-downloaded files to expand the full amount');
+        warning('There are not enough pre-downloaded files to expand the full amount');
     end
-    n_photos = opts.nPhotos;
+    n_photos = n_files;
 
     f_filenames = {};
     f_words = {};
     f_frames = {};
     for i=1:n_photos
         filename = files{i};
-        fprintf('Reading %s...\n', filename);
-        im = imread(fullfile(class_dir, filename));
+        try
+            fprintf('Reading %s...', filename);
+            im = imread(fullfile(class_dir, filename));
+            fprintf('loaded!\n');
+        catch exc
+            % this seems to be due to unknown image format or something?!
+            fprintf('ERROR - skipping\n');
+            continue
+        end
+        % resize if huge
+        [maxRes maxDim] = max(size(im));
+        if maxRes > 1000
+            scale_factor = 1000/maxRes;
+            im = imresize(im, scale_factor);
+            imwrite(im, fullfile(class_dir, filename));
+        end
         
 %             get features + words
-        [frames, descrs] = visualindex_get_features(im);
-        words = visualindex_get_words(vocab, descrs);
+        try
+            [frames, descrs] = visualindex_get_features(im);
+            words = visualindex_get_words(vocab, descrs);
+        catch
+            fprintf('Error getting features - skipping\n');
+            continue
+        end
         f_filenames{i} = filename;
         f_words{i} = words;
         f_frames{i} = frames;
@@ -165,6 +184,7 @@ for n=1:length(class_names)
             if isempty(f_filenames{j})
                 continue
             end
+            fprintf('Trying to match %s...\n', f_filenames{j});
             [score matches] = spatially_verify(c_frames,c_words,f_frames{j},f_words{j},size(c_im), 'includeRepeated', 0, 'repeatedScore', 0);
             if score > opts.matchThresh
                 fprintf('### %s from bing is similar (score: %d) - adding words\n', f_filenames{j}, score);
@@ -179,7 +199,7 @@ for n=1:length(class_names)
                 axis image off ; drawnow ;
                 subplot_tight(2,2,3,[0.02 0.01]);
                 visualindex_plot_matches(matches, c_im, f_im) ;
-                save_figure(1, fullfile(class_report_dir, [c_id '|' f_filenames{j}]));
+%                 save_figure(1, fullfile(class_report_dir, [c_id '|' f_filenames{j}]));
                 total_expanded = total_expanded + 1;
                 class_total_expanded = class_total_expanded + 1;
 %                     rectangle of matched words on bing image
