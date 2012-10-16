@@ -40,7 +40,7 @@ opts.matchThresh = 9;
 opts.force = 1;
 
 
-conf.bingDir = '~/4YP/data/ukno1albums_google';
+conf.bingDir = '~/4YP/data/ukno1albums_google_full';
 
 % Create a report on expansion
 conf.expansionResultsDir = fullfile(conf.rootDir, 'bing_expansion_results');
