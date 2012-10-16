@@ -133,7 +133,7 @@ function [conf, class_names, coll] = wikilist_db_creator(root_dir, image_dir, va
     end
     
     
-    fprintf('%d added, %d failed to add\n', n_images - failed, failed);
+    fprintf('%d added, %d failed to add\n', n_image - failed, failed);
     
 % %     Create an index on 'name' for fast querying
 %     coll.createIndex(BasicDBObject('name', 1));

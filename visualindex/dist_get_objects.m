@@ -8,7 +8,7 @@ function result = dist_get_objects(args, conf, coll)
 
 %--------------------------------------------------------------------------
 % SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
-    ROOT_DIR = '~/4YP/data/d_nosac';
+    ROOT_DIR = '~/4YP/data/album_ransac';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
     global file_prefix;
@@ -107,7 +107,7 @@ function result = dist_get_objects(args, conf, coll)
 
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
-        if best_match.score < 4 || isnan(best_match.score)
+        if best_match.score < 7 || isnan(best_match.score)
             fprintf('Score not large enough to be certain - no match\n');
             fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break
@@ -142,6 +142,11 @@ function result = dist_get_objects(args, conf, coll)
         
         db_size = db_im.get('size');
         match_image.sz = [db_size.get('width') db_size.get('height')];
+        if ~all(match_image.sz)
+            fprintf('No size data - disregarding match\n');
+            result.classes(end) = [];
+            break;
+        end
         match_image.path = db_im.get('path');
         match_image.image = imread(match_image.path);
         match_image.matches = best_match.match;
@@ -159,6 +164,11 @@ function result = dist_get_objects(args, conf, coll)
         match_coords_y = match_image.matches.f2(2,:);
         xmin = min(match_coords_x); ymin = min(match_coords_y); xmax = max(match_coords_x); ymax = max(match_coords_y);
         width = xmax - xmin; height = ymax - ymin;    % rect width and height
+        if ~width || ~height
+            fprintf('Invalid match area - disregarding match\n');
+            result.classes(end) = [];
+            break;
+        end
         rect = [xmin ymin width height];
         if display
             figure(1);

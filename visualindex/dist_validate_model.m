@@ -7,15 +7,14 @@ function dist_validate_model( n_split, N_split, first_host, this_host )
 %     load config file
 conf = [];
 while isempty(conf)
-    pause(3*rand);
+    pause(10*rand);
     try
         fprintf('Loading conf from %s...\n', fullfile(root_dir, 'conf.mat'));
-        conf = load(fullfile(root_dir, 'conf.mat'));
+        conf = load(fullfile(root_dir, 'conf.mat'))
     catch
         fprintf('ERROR: could not find conf.mat. Make sure preprocess_solution.m has been run.\n');
     end
 end
-
 
 %     get mongodb collection
 [m db coll] = mongo_get_collection('server',first_host);
@@ -29,10 +28,13 @@ vl_xmkdir(false_pos_dir);
 unmatched_dir = fullfile(validation_results_dir, 'unmatched');
 vl_xmkdir(unmatched_dir);
 
-conf.validationResultsDir = validation_results_dir;
-conf.validationDir = '~/4YP/data/validation_images';
-% save conf
-save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
+
+if ~isfield(conf, 'validationResultsDir')
+    conf.validationResultsDir = validation_results_dir;
+    conf.validationDir = '~/4YP/data/ukno1albums_ebay';
+    % save conf
+    save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
+end
 
 % find all the folders in that directory
 folders = dir(fullfile(conf.validationDir, '*')) ;

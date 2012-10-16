@@ -7,7 +7,7 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
     opts.maxResolution = 1000;
     opts.nPhotos = '25';
     opts.matchThresh = 9;
-    opts.force = 0;
+    opts.force = 1;
     opts = vl_argparse(opts, varargin);
 
     app_id = '243C9AAF515AE3EE49D775D19F5F8F3F0F0A3D84';
@@ -27,6 +27,10 @@ function [conf, vocab, histograms, ids] = bing_expansion(classes, conf, coll, vo
     n_image = 1;
     for n=1:length(classes)
         class_name = classes{n};
+        if ~strcmp(class_name,'Tower_Bridge')
+            fprintf(class_name);
+            continue
+        end
         
         % Check if already done this class fully
         class_ims = coll.find(BasicDBObject('class', class_name));

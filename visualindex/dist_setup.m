@@ -7,8 +7,8 @@ function [ROOT_DIR IMAGE_DIR NUM_WORDS] = dist_setup(n, N)
     run vlfeat/toolbox/vl_setup ;
 
     % setup directories
-    ROOT_DIR = '~/4YP/data/d_nosac';
-    IMAGE_DIR = '~/4YP/data/List_of_structures_in_London';
+    ROOT_DIR = '~/4YP/data/album_nosac';
+    IMAGE_DIR = '~/4YP/data/ukno1albums_wiki';
     MONGODB_DIR = fullfile(ROOT_DIR, 'mongodb'); 
     MONGO_LOGS_DIR = fullfile(ROOT_DIR, 'mongo_logs');
     vl_xmkdir(ROOT_DIR);
