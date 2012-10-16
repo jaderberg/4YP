@@ -16,8 +16,15 @@ im3 = zeros(max(h1,h2),w1+w2,3,'uint8') ;
 im3(1:h1,1:w1,:) = im1 ;
 im3(1:h2,w1+(1:w2),:) = im2 ;
 
-S1 = diag([s1 s1 s1 1]) ;
-S2 = diag([s2 s2 s2 1]) ;
+if length(matches.f1(:,1)) == 4
+    S1 = diag([s1 s1 s1 1]) ;
+    S2 = diag([s2 s2 s2 1]) ;
+elseif length(matches.f1(:,1)) == 6
+    matches.f1 = matches.f1([1 2 4 5 6],:);
+    matches.f2 = matches.f2([1 2 4 5 6],:);
+    S1 = diag([s1 s1 s1 s1 s1]) ;
+    S2 = diag([s2 s2 s2 s2 s2]) ;
+end
 
 % Correct plotting for offsets in query image
 trans = zeros(size(matches.f2));

@@ -6,7 +6,7 @@ function [f,d] = visualindex_get_features(im,varargin)
 
 % Auhtor: Andrea Vedaldi
 
-opts.affine = false;
+opts.affine = true;
 opts = vl_argparse(opts,varargin);
 
 
@@ -39,15 +39,26 @@ else
     %--=-=--==---
     % TODO: Need to explore -sift vs -gloh (extended sift) 
     %--=-=--==---
+    global g_n;
+    if isempty(g_n)
+        file_num = randi(99999999);
+    else
+        file_num = g_n;
+    end
     % get hessian-affine features
-    imwrite(im, 'temp.jpg');
-    system('affine_detector/mac_bin/detect_points -i temp.jpg -hesaff -o det.txt > det_log.txt');
-    system('affine_detector/mac_bin/compute_descriptors -i temp.jpg -p1 det.txt -sift -o3 desc.txt -scale-mult 1.732 > desc_log.txt');
+    temp_im = sprintf('temp%d.jpg', file_num);
+    det = sprintf('det%d.txt', file_num);
+    det_log = sprintf('det_log%d.txt', file_num);
+    desc = sprintf('desc%d.txt', file_num);
+    desc_log = sprintf('desc_log%d.txt', file_num);
+    imwrite(im, temp_im);
+    system(['affine_detector/linux_bin2/detect_points -i ' temp_im ' -hesaff -o ' det ' > ' det_log]);
+    system(['affine_detector/linux_bin2/compute_descriptors -i ' temp_im ' -p1 ' det ' -sift -o3 ' desc ' -scale-mult 1.732 > ' desc_log]);
     % load detected points with corresponding descriptors
-    featData = importdata('desc.txt', ' ', 2);    
+    featData = importdata(desc, ' ', 2);    
     % descriptors
     d = single(featData.data(:, 7:end))';
     % descriptor measurement regions in the format [x; y; theta; a; b; c]
     f = double(featData.data(:, 1:6))';
-    system('rm -f desc.txt det.txt desc_log.txt det_log.txt temp.jpg');
+    system(['rm -f ' desc ' ' det ' ' desc_log ' ' det_log ' ' temp_im]);
 end
