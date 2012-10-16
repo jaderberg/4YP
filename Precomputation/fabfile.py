@@ -27,6 +27,7 @@ env.mongo_logs = None
 data_dir = "album_nosac"
 
 
+
 good_hosts = []
 
 def precompute():
@@ -148,6 +149,7 @@ def full_precompute():
     run_single(0)
     wait_for_single_finish(0)
 
+<<<<<<< HEAD
 #    # NOW FOR BING EXPANSION!
 #    env.matlab_func = 'dist_bing_expansion_download'
 #    run_on_each_host()
@@ -164,6 +166,24 @@ def full_precompute():
 #    env.matlab_func = 'dist_bing_expansion_cat'
 #    run_single(0)
 #    wait_for_single_finish(0)
+=======
+    # NOW FOR BING EXPANSION!
+    env.matlab_func = 'dist_bing_expansion_download'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    env.matlab_func = 'dist_bing_expansion_weights'
+    run_single(0)
+    wait_for_single_finish(0)
+
+    env.matlab_func = 'dist_bing_expansion_histograms'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    env.matlab_func = 'dist_bing_expansion_cat'
+    run_single(0)
+    wait_for_single_finish(0)
+>>>>>>> album_ransac_turbo
 
     print_message('PRECOMPUTE DONE')
 

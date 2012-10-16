@@ -1,5 +1,8 @@
 % Max Jaderberg 4/3/12
 
+% UPDATE: 12/10/12 Pre download images. For history I'm keeping the bing
+% names
+
 function dist_bing_expansion_download( n_split, N_split, first_host, this_host )
 
 [root_dir image_dir num_words] = dist_setup(n_split, N_split);
@@ -32,14 +35,12 @@ m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
 class_names = m.class_names;
 
 opts.maxResolution = 1000;
-opts.nPhotos = '25';
+opts.nPhotos = 25;
 opts.matchThresh = 9;
 opts.force = 1;
 
-app_id = '243C9AAF515AE3EE49D775D19F5F8F3F0F0A3D84';
-    
-conf.bingDir = fullfile(conf.rootDir, 'bing_images');
-vl_xmkdir(conf.bingDir);
+
+conf.bingDir = '~/4YP/data/ukno1albums_google_full';
 
 % Create a report on expansion
 conf.expansionResultsDir = fullfile(conf.rootDir, 'bing_expansion_results');
@@ -108,96 +109,49 @@ for n=1:length(class_names)
     %-=-=-=-=-=-=-==-=-=-=-=-=-=-=-=-=-=-=-=-=
         
     class_dir = fullfile(conf.bingDir, class_name);
-    vl_xmkdir(class_dir);
     fprintf('Expanding images for class %s...\n', class_name);
-    search_term = class_name;
-    search_term = strrep(search_term, ' ', '%20');
-    search_term = strrep(search_term, '_', '%20');
-
-    request_url = ['http://api.bing.net/json.aspx?' ...
-                   'AppId=' app_id ...
-                   '&Query=' search_term ...
-                   '&Sources=Image' ...
-                   '&Version=2.0' ...
-                   '&Adult=Strict' ...
-                   '&Image.Count=' opts.nPhotos ...
-                   '&Image.Filters=Style:Photo+Size:Large' ...
-                   '&JsonType=raw' ...
-                  ];
-    fprintf('Searching bing for %s...\n', search_term);
-    try
-        response = urlread(request_url);
-    catch
-        try
-            response = urlread(request_url);
-        catch
-            response = [];
-        end
+    
+    % See how many photos in the directory
+    files = dir(fullfile(class_dir, '*.jpg')) ;
+    files = [files; dir(fullfile(class_dir, '*.jpeg'))];
+    files = {files(~[files.isdir]).name} ; 
+    
+    n_files = length(files);
+    if opts.nPhotos > n_files
+        warning('There are not enough pre-downloaded files to expand the full amount');
     end
-    resp_struct = parse_json(response);
-
-    try
-        photos = resp_struct{1}.SearchResponse.Image.Results;
-    catch 
-        photos = [];
-    end
-    n_photos = length(photos);
-
-    fprintf('Downloading %d photos to %s...\n', n_photos, conf.imageDir);
+    n_photos = n_files;
 
     f_filenames = {};
     f_words = {};
     f_frames = {};
     for i=1:n_photos
+        filename = files{i};
         try
-            photo_struct = photos{i};
-        catch
+            fprintf('Reading %s...', filename);
+            im = imread(fullfile(class_dir, filename));
+            fprintf('loaded!\n');
+        catch exc
+            % this seems to be due to unknown image format or something?!
+            fprintf('ERROR - skipping\n');
             continue
         end
-        fprintf('-> %s (%d of %d)\n', photo_struct.Title, i, n_photos);
-        filename = [class_name '|' strrep(strrep(photo_struct.Title, '.', ''), '/', '') int2str(i) '.jpg'];
-%             check if photo exists
-        if exist(fullfile(class_dir, filename), 'file')
-            fprintf('   ...file already exists!\n');
-            im = imread(fullfile(class_dir, filename));
-        else          
-%             grab it from bing
-            photo_url = photo_struct.MediaUrl;
-            fprintf('   ...downloading %s\n', photo_url);
-            try
-                im = imreadurl(photo_url,30000);
-            catch err
-                try
-                    im = imreadurl(photo_url,60000);
-                catch err
-                    fprintf('   ...ERROR: TIMEOUT\n');
-                    continue
-                end
-            end
-%             resize if too big
-            if opts.maxResolution
-                [maxRes maxDim] = max(size(im));
-                if maxRes > opts.maxResolution
-                    scale_factor = opts.maxResolution/maxRes;
-                    im = imresize(im, scale_factor);
-                end
-            end
-%             save to bingDir
-            fprintf('   ...saved as %s!\n', filename);
-            try
-                imwrite(im, fullfile(class_dir, filename));
-            catch
-                try
-                    imwrite(im, fullfile(class_dir, filename));
-                catch
-                    fprintf('   ...ERROR: FAILED imwrite\n');
-                    continue
-                end
-            end
+        % resize if huge
+        [maxRes maxDim] = max(size(im));
+        if maxRes > 1000
+            scale_factor = 1000/maxRes;
+            im = imresize(im, scale_factor);
+            imwrite(im, fullfile(class_dir, filename));
         end
+        
 %             get features + words
-        [frames, descrs] = visualindex_get_features(im);
-        words = visualindex_get_words(vocab, descrs);
+        try
+            [frames, descrs] = visualindex_get_features(im);
+            words = visualindex_get_words(vocab, descrs);
+        catch
+            fprintf('Error getting features - skipping\n');
+            continue
+        end
         f_filenames{i} = filename;
         f_words{i} = words;
         f_frames{i} = frames;
@@ -230,6 +184,7 @@ for n=1:length(class_names)
             if isempty(f_filenames{j})
                 continue
             end
+            fprintf('Trying to match %s...\n', f_filenames{j});
             [score matches] = spatially_verify(c_frames,c_words,f_frames{j},f_words{j},size(c_im), 'includeRepeated', 0, 'repeatedScore', 0);
             if score > opts.matchThresh
                 fprintf('### %s from bing is similar (score: %d) - adding words\n', f_filenames{j}, score);
@@ -244,7 +199,7 @@ for n=1:length(class_names)
                 axis image off ; drawnow ;
                 subplot_tight(2,2,3,[0.02 0.01]);
                 visualindex_plot_matches(matches, c_im, f_im) ;
-                save_figure(1, fullfile(class_report_dir, [c_id '|' f_filenames{j}]));
+%                 save_figure(1, fullfile(class_report_dir, [c_id '|' f_filenames{j}]));
                 total_expanded = total_expanded + 1;
                 class_total_expanded = class_total_expanded + 1;
 %                     rectangle of matched words on bing image
