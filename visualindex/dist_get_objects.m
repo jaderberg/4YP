@@ -107,7 +107,7 @@ function result = dist_get_objects(args, conf, coll)
 
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
-        if best_match.score < 4 || isnan(best_match.score)
+        if best_match.score < 7 || isnan(best_match.score)
             fprintf('Score not large enough to be certain - no match\n');
             fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break
