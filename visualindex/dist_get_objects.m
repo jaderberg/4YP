@@ -8,7 +8,7 @@ function result = dist_get_objects(args, conf, coll)
 
 %--------------------------------------------------------------------------
 % SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
-    ROOT_DIR = '~/4YP/data/album_nosac';
+    ROOT_DIR = '~/4YP/data/album_ransac';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 %--------------------------------------------------------------------------
