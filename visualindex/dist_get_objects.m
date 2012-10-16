@@ -8,13 +8,13 @@ function result = dist_get_objects(args, conf, coll)
 
 %--------------------------------------------------------------------------
 % SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
-    ROOT_DIR = '~/4YP/data/album_ransac_turbo';
+    ROOT_DIR = '~/4YP/data/album_nosac';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 %--------------------------------------------------------------------------
 % IF TURBO MODE THEN SET TO 'bingaugmented', else ''
     global file_prefix;
-    file_prefix = 'bingaugmented';
+    file_prefix = '';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
@@ -46,15 +46,15 @@ function result = dist_get_objects(args, conf, coll)
     if isempty(histograms) || isempty(ids) || isempty(vocab)
         fprintf('Loading histograms from %s\n', conf.modelDataDir);
         fprintf(log_file, 'Loading histograms from %s\n', conf.modelDataDir);
-        m = load(fullfile(conf.modelDataDir, 'histograms-bing-all.mat'));
+        m = load(fullfile(conf.modelDataDir, 'histograms-all.mat'));
         histograms = m.histograms;
         fprintf('Loading ids from %s\n', conf.modelDataDir);
         fprintf(log_file, 'Loading ids from %s\n', conf.modelDataDir);
-        m = load(fullfile(conf.modelDataDir, 'ids-bing-all.mat'));
+        m = load(fullfile(conf.modelDataDir, 'ids-all.mat'));
         ids = m.ids;
         fprintf('Loading vocab from %s\n', conf.modelDataDir);
         fprintf(log_file, 'Loading vocab from %s\n', conf.modelDataDir);
-        vocab = load(fullfile(conf.modelDataDir, 'vocab-bing.mat'));
+        vocab = load(fullfile(conf.modelDataDir, 'vocab.mat'));
         fprintf('Loading super histograms...\n');
         m = load(fullfile(conf.modelDataDir, 'class_names.mat'));
         class_names = m.class_names;
