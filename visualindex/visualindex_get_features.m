@@ -55,10 +55,16 @@ else
     system(['affine_detector/linux_bin2/detect_points -i ' temp_im ' -hesaff -o ' det ' > ' det_log]);
     system(['affine_detector/linux_bin2/compute_descriptors -i ' temp_im ' -p1 ' det ' -sift -o3 ' desc ' -scale-mult 1.732 > ' desc_log]);
     % load detected points with corresponding descriptors
-    featData = importdata(desc, ' ', 2);    
-    % descriptors
-    d = single(featData.data(:, 7:end))';
-    % descriptor measurement regions in the format [x; y; theta; a; b; c]
-    f = double(featData.data(:, 1:6))';
+    try
+        featData = importdata(desc, ' ', 2);
+        % descriptors
+        d = single(featData.data(:, 7:end))';
+        % descriptor measurement regions in the format [x; y; theta; a; b; c]
+        f = double(featData.data(:, 1:6))';
+    catch exc
+        fprintf('Error computing features\n');
+        d = single(zeros(4,0));
+        f = double(zeros(128,0));
+    end
     system(['rm -f ' desc ' ' det ' ' desc_log ' ' det_log ' ' temp_im]);
 end
