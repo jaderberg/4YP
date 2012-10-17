@@ -216,7 +216,10 @@ for n=1:length(class_names)
                 extra_words = f_words{j}(extra_i);
                 % transform frames to wiki image coords
                 Xc = transformation*[extra_frames_f(1:2,:); ones(1,length(extra_words))];
-                extra_frames_c = [Xc(1:2,:); extra_frames_f(3:end,:)];
+                % transform scales
+                s = (transformation(1,1) + transformation(2,2))/2; %estimate scale
+                new_scales = s*extra_frames_f(3,:);
+                extra_frames_c = [Xc(1:2,:); new_scales; extra_frames_f(4:end,:)];
                 c_frames = [c_frames extra_frames_c];
                 c_words = [c_words extra_words];
             else
