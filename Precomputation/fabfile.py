@@ -24,7 +24,7 @@ env.suppress_errors = True
 env.mongo_data = None
 env.mongo_logs = None
 
-data_dir = "album_affine"
+data_dir = "album_rootaffine"
 
 
 
@@ -45,6 +45,7 @@ def precompute():
     if run_mongodb:
         prompt('Mongodb data directory: ', key='mongo_data', default='~/4YP/data/%s/mongodb' % data_dir)
         prompt('Mongodb log directory: ', key='mongo_logs', default='~/4YP/data/%s/mongo_logs' % data_dir)
+
 
     tasks = []
 

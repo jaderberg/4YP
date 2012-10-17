@@ -7,6 +7,7 @@ function [f,d] = visualindex_get_features(im,varargin)
 % Auhtor: Andrea Vedaldi
 
 opts.affine = true;
+opts.root = true;
 opts = vl_argparse(opts,varargin);
 
 
@@ -67,4 +68,11 @@ else
         f = double(zeros(128,0));
     end
     system(['rm -f ' desc ' ' det ' ' desc_log ' ' det_log ' ' temp_im]);
+end
+
+if opts.root
+    for i=1:size(d,2)
+        d_i = d(:,i);
+        d(:,i) = sqrt(d_i/sum(d_i));
+    end
 end
