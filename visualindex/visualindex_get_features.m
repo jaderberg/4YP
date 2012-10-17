@@ -63,8 +63,8 @@ else
         f = double(featData.data(:, 1:6))';
     catch exc
         fprintf('Error computing features\n');
-        d = single(zeros(4,0));
-        f = double(zeros(128,0));
+        d = single(zeros(128,0));
+        f = double(zeros(4,0));
     end
     system(['rm -f ' desc ' ' det ' ' desc_log ' ' det_log ' ' temp_im]);
 end
