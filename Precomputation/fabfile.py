@@ -27,6 +27,8 @@ env.mongo_logs = None
 data_dir = "album_rootaffine"
 
 
+exclude_hosts = [44,54]
+
 
 good_hosts = []
 
@@ -322,6 +324,8 @@ def test_server():
 def get_good_hosts():
     # Test for good machines to use
     for i in range(int(env.start_machine), int(env.stop_machine), 1):
+        if i in exclude_hosts:
+            continue
         env.host = host_template % i
         env.host_string = '%s@%s' % (env.user,  env.host)
         try:
