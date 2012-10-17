@@ -217,7 +217,7 @@ for n=1:length(class_names)
                 % transform frames to wiki image coords
                 Xc = transformation*[extra_frames_f(1:2,:); ones(1,length(extra_words))];
                 % transform the ellipse centres
-                trans_A = tranformation(1:2, 1:2);
+                trans_A = transformation(1:2, 1:2);
                 invAt = inv(trans_A');
                 invA = inv(trans_A);
                 for k=1:size(extra_frames_f, 2)
