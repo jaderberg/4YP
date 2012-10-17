@@ -106,9 +106,14 @@ function result = dist_get_objects(args, conf, coll)
     
     while pass_number < max_objects*max_tries_per_object
         
-        [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
-        %[best_match frames descrs] = image_query2(im, class_hists, class_names, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs, 'pass_number', pass_number);
-
+        try
+            [best_match frames descrs] = image_query(im, histograms, ids, vocab, conf, coll, 'excludeClasses', result.classes,'exclude', exclusion_matrix,'frames', frames, 'descrs', descrs);
+        catch exc
+            fprintf('Image query error: %s\n', exc.message);
+            break
+        end
+            
+            
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
         if best_match.score < 7 || isnan(best_match.score)
