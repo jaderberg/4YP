@@ -24,9 +24,9 @@ env.suppress_errors = True
 env.mongo_data = None
 env.mongo_logs = None
 
-data_dir = "album_affine_turbo"
+data_dir = "album_affine_turbo+"
 
-exclude_hosts = [53, 44]
+exclude_hosts = [44,]
 
 
 good_hosts = []

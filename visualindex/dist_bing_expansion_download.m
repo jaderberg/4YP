@@ -216,6 +216,17 @@ for n=1:length(class_names)
                 extra_words = f_words{j}(extra_i);
                 % transform frames to wiki image coords
                 Xc = transformation*[extra_frames_f(1:2,:); ones(1,length(extra_words))];
+                % transform the ellipse centres
+                trans_A = tranformation(1:2, 1:2);
+                invAt = inv(trans_A');
+                invA = inv(trans_A);
+                for k=1:size(extra_frames_f, 2)
+                    orig_ellipse = [extra_frames_f(4,k) extra_frames_f(5,k); extra_frames_f(5,k) extra_frames_f(6,k)];
+                    trans_ellipse = invAt*orig_ellipse*invA;
+                    extra_frames_f(4,k) = trans_ellipse(1,1);
+                    extra_frames_f(5,k) = trans_ellipse(1,2);
+                    extra_frames_f(6,k) = trans_ellipse(2,2);
+                end
                 extra_frames_c = [Xc(1:2,:); extra_frames_f(3:end,:)];
                 c_frames = [c_frames extra_frames_c];
                 c_words = [c_words extra_words];
