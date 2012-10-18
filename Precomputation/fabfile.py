@@ -27,7 +27,7 @@ env.mongo_logs = None
 data_dir = "album_rootaffine_turbo"
 
 
-exclude_hosts = [44,54]
+exclude_hosts = [44,54,53]
 
 
 good_hosts = []
