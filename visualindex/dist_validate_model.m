@@ -31,7 +31,7 @@ vl_xmkdir(unmatched_dir);
 
 if ~isfield(conf, 'validationResultsDir')
     conf.validationResultsDir = validation_results_dir;
-    conf.validationDir = '~/4YP/data/ukno1albums_ebay';
+    conf.validationDir = '~/4YP/data/validation_images';
     % save conf
     save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
 end
