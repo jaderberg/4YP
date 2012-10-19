@@ -24,7 +24,7 @@ env.suppress_errors = True
 env.mongo_data = None
 env.mongo_logs = None
 
-data_dir = "album_nosac_turbo+"
+data_dir = "album11_nosac_turbo+"
 
 
 

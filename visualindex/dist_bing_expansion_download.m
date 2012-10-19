@@ -36,7 +36,7 @@ class_names = m.class_names;
 
 opts.maxResolution = 1000;
 opts.nPhotos = 25;
-opts.matchThresh = 9;
+opts.matchThresh = 15;
 opts.force = 1;
 
 
