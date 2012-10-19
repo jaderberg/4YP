@@ -8,7 +8,7 @@ function result = dist_get_objects(args, conf, coll)
 
 %--------------------------------------------------------------------------
 % SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
-    ROOT_DIR = '~/4YP/data/album_rootaffine_turbo+';
+    ROOT_DIR = '~/4YP/data/d_rootaffine_turbo+';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 %--------------------------------------------------------------------------
@@ -116,7 +116,7 @@ function result = dist_get_objects(args, conf, coll)
             
         fprintf('Match has a score of %d. ', best_match.score);
         fprintf(log_file, 'Match has a score of %d. ', best_match.score);
-        if best_match.score < 7 || isnan(best_match.score)
+        if best_match.score < 5 || isnan(best_match.score)
             fprintf('Score not large enough to be certain - no match\n');
             fprintf(log_file, 'Score not large enough to be certain - no match\n');
             break

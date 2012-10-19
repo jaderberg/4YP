@@ -36,11 +36,11 @@ class_names = m.class_names;
 
 opts.maxResolution = 1000;
 opts.nPhotos = 25;
-opts.matchThresh = 9;
+opts.matchThresh = 7;
 opts.force = 1;
 
 
-conf.bingDir = '~/4YP/data/ukno1albums_google_full';
+conf.bingDir = '~/4YP/data/london_bing_images';
 
 % Create a report on expansion
 conf.expansionResultsDir = fullfile(conf.rootDir, 'bing_expansion_results');

@@ -24,10 +24,10 @@ env.suppress_errors = True
 env.mongo_data = None
 env.mongo_logs = None
 
-data_dir = "album_rootaffine_turbo+"
+data_dir = "d_rootaffine_turbo+"
 
 
-exclude_hosts = [44,54,53]
+exclude_hosts = [44,]
 
 
 good_hosts = []
@@ -90,7 +90,7 @@ def full_precompute():
 
     skip_vocab = confirm('Use existing vocab?', default=True)
     if skip_vocab:
-        vocab_file = prompt('Existing vocab.mat file to use: ', default='/Users/jaderberg/Sites/4YP/Precomputation/kebl3465@engs-station49.eng.ox.ac.uk/album_rootaffine_vocab.mat')
+        vocab_file = prompt('Existing vocab.mat file to use: ', default='/Users/jaderberg/Sites/4YP/Precomputation/kebl3465@engs-station49.eng.ox.ac.uk/vocab_rootaffine.mat')
         root_dir = prompt('Project root dir: ', default='~/4YP/data/%s' % data_dir)
 
     tasks = []
