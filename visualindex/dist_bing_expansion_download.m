@@ -3,6 +3,8 @@
 % UPDATE: 12/10/12 Pre download images. For history I'm keeping the bing
 % names
 
+% UPDATE: 19/10/12 work out object boundries.
+
 function dist_bing_expansion_download( n_split, N_split, first_host, this_host )
 
 [root_dir image_dir num_words] = dist_setup(n_split, N_split);
@@ -176,6 +178,8 @@ for n=1:length(class_names)
         c_frames = load_frames(c_id, conf);
         c_words = load_words(c_id, conf);
         c_im = imread(class_im.get('path'));
+        
+        word_votes = zeros(size(c_words));
 
         extra_words = [];
 %             for each bing image for this class try and pull in some
@@ -202,6 +206,14 @@ for n=1:length(class_names)
 %                 save_figure(1, fullfile(class_report_dir, [c_id '|' f_filenames{j}]));
                 total_expanded = total_expanded + 1;
                 class_total_expanded = class_total_expanded + 1;
+                
+                %% turbo boundry
+                % add a vote for the frames which were in the match
+                [~, m] = ismember(c_frames', matches.f1', 'rows');
+                m = m > 0;
+                word_votes = word_votes + m;
+                
+                %% turbo charging
 %                     rectangle of matched words on bing image
                 f_xmin = min(matches.f2(1,:)); f_ymin = min(matches.f2(2,:));
                 f_xmax = max(matches.f2(1,:)); f_ymax = max(matches.f2(2,:));
@@ -240,6 +252,7 @@ for n=1:length(class_names)
         % save the augmented frames and words
         save(fullfile(conf.framesDataDir, [c_id '-bingaugmentedframes.mat']), 'c_frames');
         save(fullfile(conf.wordsDataDir, [c_id '-bingaugmentedwords.mat']), 'c_words');
+        save(fullfile(conf.wordsDataDir, [c_id '-wordvotes.mat']), 'word_votes');
 
         % create the new histogram
         im_histogram = sparse(double(c_words),1,...
