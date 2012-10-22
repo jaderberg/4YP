@@ -8,7 +8,7 @@ function result = dist_get_objects(args, conf, coll)
 
 %--------------------------------------------------------------------------
 % SET THIS TO THE ROOT_DIR USED IN preprocess_solution.m
-    ROOT_DIR = '~/4YP/data/d_rootaffine_turbo+';
+    ROOT_DIR = '~/4YP/data/d_wordvotes';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 %--------------------------------------------------------------------------

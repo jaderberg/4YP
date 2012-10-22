@@ -121,8 +121,11 @@ for n=1:length(class_names)
     n_files = length(files);
     if opts.nPhotos > n_files
         warning('There are not enough pre-downloaded files to expand the full amount');
+        n_photos = n_files;
+    else
+        n_photos = opts.nPhotos;
     end
-    n_photos = n_files;
+    
 
     f_filenames = {};
     f_words = {};
@@ -177,6 +180,7 @@ for n=1:length(class_names)
         c_id = class_im.get('_id').toString.toCharArray';
         c_frames = load_frames(c_id, conf);
         c_words = load_words(c_id, conf);
+%         c_im = imread(strrep(class_im.get('path'), '~/4YP/data/', '/Volumes/4YP/'));
         c_im = imread(class_im.get('path'));
         
         word_votes = zeros(size(c_words));
@@ -211,7 +215,7 @@ for n=1:length(class_names)
                 % add a vote for the frames which were in the match
                 [~, m] = ismember(c_frames', matches.f1', 'rows');
                 m = m > 0;
-                word_votes = word_votes + m;
+                word_votes = word_votes + m';
                 
                 %% turbo charging
 %                     rectangle of matched words on bing image
@@ -242,6 +246,8 @@ for n=1:length(class_names)
                 extra_frames_c = [Xc(1:2,:); extra_frames_f(3:end,:)];
                 c_frames = [c_frames extra_frames_c];
                 c_words = [c_words extra_words];
+                % append to word votes as well with a vote of 1
+                word_votes = [word_votes zeros(size(extra_words))];
             else
                 fprintf('--- %s from bing is not similar (score: %d) - ignoring\n', f_filenames{j}, score);
             end
@@ -252,7 +258,22 @@ for n=1:length(class_names)
         % save the augmented frames and words
         save(fullfile(conf.framesDataDir, [c_id '-bingaugmentedframes.mat']), 'c_frames');
         save(fullfile(conf.wordsDataDir, [c_id '-bingaugmentedwords.mat']), 'c_words');
+        
+        % save word votes and draw them
         save(fullfile(conf.wordsDataDir, [c_id '-wordvotes.mat']), 'word_votes');
+        if sum(word_votes)
+            figure(1); clf;
+            imagesc(c_im) ; title(['Word votes ' c_id ]) ;
+            axis image off ; drawnow ; hold on;
+            vl_plotframe(c_frames(:, word_votes > 0), 'Color', 'blue');
+            vl_plotframe(c_frames(:, word_votes > 1), 'Color', 'green');
+            vl_plotframe(c_frames(:, word_votes > 2), 'Color', 'red');
+            vl_plotframe(c_frames(:, word_votes > 3), 'Color', 'magenta');
+            vl_plotframe(c_frames(:, word_votes > 4), 'Color', 'yellow');
+            hold off;
+            save_figure(1, fullfile(class_report_dir, ['wv-' c_id ]));
+        end
+        
 
         % create the new histogram
         im_histogram = sparse(double(c_words),1,...

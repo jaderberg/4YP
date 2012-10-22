@@ -2,6 +2,7 @@
 
 function [m db coll] = mongo_get_collection(varargin)
 % REMEMBER TO CALL m.close() AFTER FINISHED TO DISPOSE OF RESOURCES
+% on mac book pro use: /usr/local/Cellar/mongodb/2.0.1-x86_64/bin/mongod --dbpath /Volumes/4YP/wikilist_visualindex/mongo_db/
 
     import com.mongodb.Mongo;
     import com.mongodb.DB;
