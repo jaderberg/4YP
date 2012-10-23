@@ -2,9 +2,9 @@
 
 function save_figure(fig, filepath)
 
-    if length(filepath) > 86
-        filepath = filepath(1:86);
-    end
+%     if length(filepath) > 86
+%         filepath = filepath(1:86);
+%     end
     fprintf('Saving figure to %s\n', filepath);
     try
         vl_printsize(fig,1);

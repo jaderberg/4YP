@@ -224,7 +224,7 @@ for n=1:length(class_names)
             end
             fprintf('Trying to match %s...\n', f_filenames{j});
             [score matches] = spatially_verify(c_frames,c_words,f_frames{j},f_words{j},size(c_im), 'includeRepeated', 0, 'repeatedScore', 0);
-            if score > opts.matchThresh
+            if score > opts.matchThresh && score < 1000
                 fprintf('### %s from bing is similar (score: %d) - adding words\n', f_filenames{j}, score);
                 f_im = imread(fullfile(class_dir, f_filenames{j}));
                 figure(1); clf;
