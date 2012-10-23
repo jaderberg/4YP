@@ -159,7 +159,7 @@ for n=1:length(class_names)
         if ~exist(words_file, 'file')
     %             get features + words
             try
-                [frames, descrs] = local_visualindex_get_features(im);
+                [frames, descrs] = visualindex_get_features(im);
                 words = visualindex_get_words(vocab, descrs);
             catch
                 fprintf('Error getting features - skipping\n');
