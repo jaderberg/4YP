@@ -5,9 +5,9 @@
 
 % UPDATE: 19/10/12 work out object boundries.
 
-function dist_bing_expansion_download( n_split, N_split, first_host, this_host )
+function local_bing_expansion_download( n_split, N_split, first_host, this_host )
 
-[root_dir image_dir num_words] = dist_setup(n_split, N_split);
+[root_dir image_dir num_words] = local_setup(n_split, N_split);
 
 import com.mongodb.BasicDBObject;
 
@@ -42,7 +42,7 @@ opts.matchThresh = 7;
 opts.force = 1;
 
 
-conf.bingDir = '~/4YP/data/london_bing_images';
+conf.bingDir = '/Volumes/4YP/Images/london_bing_images';
 
 % Create a report on expansion
 conf.expansionResultsDir = fullfile(conf.rootDir, 'bing_expansion_results');
@@ -210,8 +210,8 @@ for n=1:length(class_names)
         c_id = class_im.get('_id').toString.toCharArray';
         c_frames = load_frames(c_id, conf);
         c_words = load_words(c_id, conf);
-%         c_im = imread(strrep(class_im.get('path'), '~/4YP/data/', '/Volumes/4YP/'));
-        c_im = imread(class_im.get('path'));
+        c_im = imread(strrep(class_im.get('path'), '~/4YP/data/', '/Volumes/4YP/'));
+%         c_im = imread(class_im.get('path'));
         
         word_votes = zeros(size(c_words));
 
