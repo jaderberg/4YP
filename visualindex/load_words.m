@@ -7,6 +7,7 @@ function words = load_words(image_id, conf, varargin)
     
     if ~exist(word_file, 'file')
         words = [];
+        fprintf('Word file does not exist\n')
         return
     end
     
