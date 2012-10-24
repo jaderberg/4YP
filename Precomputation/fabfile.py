@@ -90,7 +90,7 @@ def full_precompute():
 
     skip_vocab = confirm('Use existing vocab?', default=True)
     if skip_vocab:
-        vocab_file = prompt('Existing vocab.mat file to use: ', default='/Users/jaderberg/Sites/4YP/Precomputation/kebl3465@engs-station49.eng.ox.ac.uk/vocab_rootaffine.mat')
+        vocab_file = prompt('Existing vocab.mat file to use: ', default='./kebl3465@engs-station49.eng.ox.ac.uk/vocab_rootaffine.mat')
         root_dir = prompt('Project root dir: ', default='~/4YP/data/%s' % data_dir)
 
     tasks = []
@@ -348,7 +348,7 @@ def upload_current_matlab():
         # remove existing
         run('rm -f visualindex.zip')
         # upload
-        put('/Users/jaderberg/Sites/4YP/Precomputation/visualindex.zip','%(root_path)s/visualindex.zip' % env)
+        put('./visualindex.zip','%(root_path)s/visualindex.zip' % env)
         # remove existing
         env.warn_only = True
         run('rm -rf visualindex')
