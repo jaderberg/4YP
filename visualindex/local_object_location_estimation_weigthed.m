@@ -3,7 +3,7 @@
 % Works out the object location ellipse from word votes. If no word votes
 % then just by feature locations.
 
-function local_object_location_estimation( n_split, N_split, first_host, this_host)
+function local_object_location_estimation_weighted( n_split, N_split, first_host, this_host)
     [root_dir image_dir num_words] = local_setup(n_split, N_split);
 
     %     load config file
@@ -70,6 +70,7 @@ function local_object_location_estimation( n_split, N_split, first_host, this_ho
         if sum(word_votes)
             % there are some high voted words, so just use word votes
             voting = 1;
+            word_votes = ones(size(word_votes)) + 10.*word_votes;
         else
             % there was no turbo boosting so just estimate from all
             % features
@@ -83,7 +84,7 @@ function local_object_location_estimation( n_split, N_split, first_host, this_ho
         xmean = sum(w.*X, 2);
         C = weightedcov(X', word_votes);
         region = [xmean; C(1,1); C(1,2); C(2,2)];
-        save(fullfile(object_region_dir, [image_id '-region.mat']), 'region');
+        save(fullfile(object_region_dir, [image_id '-weightedregion.mat']), 'region');
         
         try
             im = imread(strrep(image.get('path'), '~/4YP/data/d_wordvotes/', '/Volumes/4YP/d_rootaffine_turbo+/'));
@@ -96,9 +97,9 @@ function local_object_location_estimation( n_split, N_split, first_host, this_ho
         axis image off ; drawnow ;
         vl_plotframe(region, 'Color', 'magenta');
         if voting
-            save_figure(1, fullfile(object_voted_results_dir, [image_id '-cov']));
+            save_figure(1, fullfile(object_voted_results_dir, [image_id '-wcov']));
         else
-            save_figure(1, fullfile(object_normal_results_dir, [image_id '-cov']));
+            save_figure(1, fullfile(object_normal_results_dir, [image_id '-wcov']));
         end
 
         
