@@ -97,9 +97,9 @@ function local_object_location_estimation_weighted( n_split, N_split, first_host
         axis image off ; drawnow ;
         vl_plotframe(region, 'Color', 'magenta');
         if voting
-            save_figure(1, fullfile(object_voted_results_dir, [image_id '-wcov']));
+            save_figure(1, fullfile(object_voted_results_dir, [image_id '-covw']));
         else
-            save_figure(1, fullfile(object_normal_results_dir, [image_id '-wcov']));
+            save_figure(1, fullfile(object_normal_results_dir, [image_id '-covw']));
         end
 
         

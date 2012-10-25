@@ -52,6 +52,11 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
         image = coll_ims.next();
         image_id = image.get('_id').toString.toCharArray';
         image_name = image.get('name');
+        
+        if exist(fullfile(object_region_dir, [image_id '-convhullkmeans.mat']), 'file')
+            fprintf('Skipping\n');
+            continue
+        end
 
         fprintf('Estimating object location for %s\n', image_name);
         
@@ -81,10 +86,17 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
         
         % work out convex hull of features
         good_frames = frames(:, word_votes > 0);
-%         [IDX, C] = kmeans(good_frames(1:2,:)', 10);
-        kmeansopts.weight = word_votes';
-        [IDX, C, D] = fkmeans(good_frames(1:2,:)', 10, kmeansopts);
-        x = C(:,1); y = C(:,2);
+        try
+            try
+                kmeansopts.weight = word_votes';
+                [IDX, C, D] = fkmeans(good_frames(1:2,:)', 10, kmeansopts);
+            catch
+                [IDX, C] = kmeans(good_frames(1:2,:)', 10);
+            end
+            x = C(:,1); y = C(:,2);
+        catch
+            x = good_frames(1,:)'; y = good_frames(2,:)';
+        end
         k = convhull(x,y);
         save(fullfile(object_region_dir, [image_id '-convhullkmeans.mat']), 'k');
         
