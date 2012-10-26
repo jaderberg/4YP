@@ -153,10 +153,10 @@ def full_precompute():
 #    wait_for_single_finish(0)
 
     # NOW FOR BING EXPANSION!
-    env.matlab_func = 'dist_bing_expansion_download'
-    run_on_each_host()
-    wait_for_all_finish()
-
+#    env.matlab_func = 'dist_bing_expansion_download'
+#    run_on_each_host()
+#    wait_for_all_finish()
+#
 #    env.matlab_func = 'dist_bing_expansion_weights'
 #    run_single(0)
 #    wait_for_single_finish(0)
@@ -168,8 +168,17 @@ def full_precompute():
 #    env.matlab_func = 'dist_bing_expansion_cat'
 #    run_single(0)
 #    wait_for_single_finish(0)
-#
-#
+
+    # OBJECT REGION ESTIMATION
+    env.matlab_func = 'dist_object_location_estimation_weighted'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    env.matlab_func = 'dist_object_location_estimation_convhullkmeans'
+    run_on_each_host()
+    wait_for_all_finish()
+
+
 #    print_message('PRECOMPUTE DONE')
 #
 #    # NOW VALIDATION

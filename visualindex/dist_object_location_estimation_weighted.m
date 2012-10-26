@@ -42,10 +42,9 @@ function local_object_location_estimation_weighted( n_split, N_split, first_host
     
     object_region_dir = fullfile(conf.dataDir, 'object_regions');
     vl_xmkdir(object_region_dir);
-    object_voted_results_dir = fullfile(conf.rootDir, 'voted_regions');
-    vl_xmkdir(object_voted_results_dir);
-    object_normal_results_dir = fullfile(conf.rootDir, 'normal_regions');
-    vl_xmkdir(object_normal_results_dir);
+    object_results_dir = fullfile(conf.rootDir, 'object_region_results');
+    vl_xmkdir(object_results_dir);
+
     
 
     while coll_ims.hasNext()
@@ -96,14 +95,8 @@ function local_object_location_estimation_weighted( n_split, N_split, first_host
         imagesc(im) ; title(['Word votes ' image_id ]) ;
         axis image off ; drawnow ;
         vl_plotframe(region, 'Color', 'magenta');
-        if voting
-            save_figure(1, fullfile(object_voted_results_dir, [image_id '-covw']));
-        else
-            save_figure(1, fullfile(object_normal_results_dir, [image_id '-covw']));
-        end
+        save_figure(1, fullfile(object_results_dir, [image_id '-covw']));
 
-        
-        
     end
     
     
@@ -125,5 +118,8 @@ function local_object_location_estimation_weighted( n_split, N_split, first_host
         save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
     end
     fprintf('All done!\n');
+    % save file to signal good ending
+    a = 1;
+    save(fullfile('finished_flags',[int2str(n_split) '-' mfilename '-finished.mat']), 'a');
 
     

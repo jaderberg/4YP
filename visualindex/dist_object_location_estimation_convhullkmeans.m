@@ -42,10 +42,9 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
     
     object_region_dir = fullfile(conf.dataDir, 'object_regions');
     vl_xmkdir(object_region_dir);
-    object_voted_results_dir = fullfile(conf.rootDir, 'voted_regions');
-    vl_xmkdir(object_voted_results_dir);
-    object_normal_results_dir = fullfile(conf.rootDir, 'normal_regions');
-    vl_xmkdir(object_normal_results_dir);
+    object_results_dir = fullfile(conf.rootDir, 'object_region_results');
+    vl_xmkdir(object_results_dir);
+
     
 
     while coll_ims.hasNext()
@@ -125,11 +124,7 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
         plot(hull(:,1),hull(:,2),'r-', 'LineWidth', 2);
 %         plot(x,y,'g.', 'LineWidth', 1);
         hold off;
-        if voting
-            save_figure(1, fullfile(object_voted_results_dir, [image_id '-hullkmeans']));
-        else
-            save_figure(1, fullfile(object_normal_results_dir, [image_id '-hullkmeans']));
-        end
+        save_figure(1, fullfile(object_results_dir, [image_id '-hullkmeans']));
 
         
     end
@@ -152,5 +147,8 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
         save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
     end
     fprintf('All done!\n');
+    % save file to signal good ending
+    a = 1;
+    save(fullfile('finished_flags',[int2str(n_split) '-' mfilename '-finished.mat']), 'a');
 
     
