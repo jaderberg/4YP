@@ -3,8 +3,8 @@
 % Works out the object location ellipse from word votes. If no word votes
 % then just by feature locations.
 
-function local_object_location_estimation_convhullkmeans( n_split, N_split, first_host, this_host)
-    [root_dir image_dir num_words] = local_setup(n_split, N_split);
+function local_object_location_estimation_weighted( n_split, N_split, first_host, this_host)
+    [root_dir image_dir num_words] = dist_setup(n_split, N_split);
 
     %     load config file
     try
@@ -52,11 +52,6 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
         image = coll_ims.next();
         image_id = image.get('_id').toString.toCharArray';
         image_name = image.get('name');
-        
-%         if exist(fullfile(object_region_dir, [image_id '-convhullkmeans.mat']), 'file')
-%             fprintf('Skipping\n');
-%             continue
-%         end
 
         fprintf('Estimating object location for %s\n', image_name);
         
@@ -75,64 +70,42 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
         if sum(word_votes)
             % there are some high voted words, so just use word votes
             voting = 1;
-            word_votes = ones(size(word_votes)) + 100.*word_votes;
+            word_votes = ones(size(word_votes)) + 10.*word_votes;
         else
             % there was no turbo boosting so just estimate from all
             % features
             word_votes = ones(size(word_votes));
         end
         
-        % do weighted kmeans
-        
-        % work out convex hull of features
-        good_frames = frames(:, word_votes > 0);
-        try
-            try
-                kmeansopts.weight = word_votes';
-                [IDX, C, D] = fkmeans(good_frames(1:2,:)', 10, kmeansopts);
-            catch
-                [IDX, C] = kmeans(good_frames(1:2,:)', 10);
-            end
-            x = C(:,1); y = C(:,2);
-        catch
-            x = good_frames(1,:)'; y = good_frames(2,:)';
-        end
-        k = convhull(x,y);
-        % add 20% to the hull (move away from centroid)
-        hull = [x(k) y(k)];
-        hull_centre = mean(hull);
-        hull = hull + 0.2*(hull - [hull_centre(1)*ones(size(hull,1),1) hull_centre(2)*ones(size(hull,1),1)]);
+        % work out weighted mean and cov
+        X = frames(1:2,:);
+        word_votes = word_votes./sum(word_votes);
+        w = [word_votes; word_votes];
+        xmean = sum(w.*X, 2);
+        C = weightedcov(X', word_votes);
+        region = [xmean; C(1,1); C(1,2); C(2,2)];
+        save(fullfile(object_region_dir, [image_id '-weightedregion.mat']), 'region');
         
         try
-            im = imread(strrep(image.get('path'), '~/4YP/data/d_wordvotes/', '/Volumes/4YP/d_rootaffine_turbo+/'));
+            im = imread(image.get('path'));
         catch err
             fprintf('Error loading image\n');
             continue
         end
-        
-        % hull max is edge of image
-        h = size(im,1); w = size(im,2);
-        hull(hull(:,1) > w,1) = w;
-        hull(hull(:,1) < 0,1) = 0;
-        hull(hull(:,2) > h,2) = h;
-        hull(hull(:,2) < 0,2) = 0;
-        save(fullfile(object_region_dir, [image_id '-convhullkmeans.mat']), 'k');
-        
         figure(1); clf;
         imagesc(im) ; title(['Word votes ' image_id ]) ;
         axis image off ; drawnow ;
-        hold on;
-        plot(hull(:,1),hull(:,2),'r-', 'LineWidth', 2);
-%         plot(x,y,'g.', 'LineWidth', 1);
-        hold off;
+        vl_plotframe(region, 'Color', 'magenta');
         if voting
-            save_figure(1, fullfile(object_voted_results_dir, [image_id '-hullkmeans']));
+            save_figure(1, fullfile(object_voted_results_dir, [image_id '-covw']));
         else
-            save_figure(1, fullfile(object_normal_results_dir, [image_id '-hullkmeans']));
+            save_figure(1, fullfile(object_normal_results_dir, [image_id '-covw']));
         end
 
         
+        
     end
+    
     
     try
         conf = load(fullfile(root_dir, 'conf.mat'));

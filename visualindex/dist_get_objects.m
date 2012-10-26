@@ -17,6 +17,12 @@ function result = dist_get_objects(args, conf, coll)
     file_prefix = 'bingaugmented';
 %=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+%--------------------------------------------------------------------------
+% OJBECT REGION METHOD TO USE, only one should be 1
+    rect_method = true;
+    ellipse_method = false;
+    hull_method = false;
+%=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
     import com.mongodb.BasicDBObject;
     import org.bson.types.ObjectId;
@@ -165,33 +171,100 @@ function result = dist_get_objects(args, conf, coll)
             figure(1);
             subplot_tight(2,2,3,[0.02 0.01]);
             imagesc(match_image.image) ; title(sprintf('Best match: %s', match_image.path)) ;
-            axis image off ; drawnow ;
+            axis image off ; drawnow ; hold on;
         end
 
-    %         Plot matches on query image and bounding rectangle
-        match_coords_x = match_image.matches.f2(1,:);
-        match_coords_y = match_image.matches.f2(2,:);
-        xmin = min(match_coords_x); ymin = min(match_coords_y); xmax = max(match_coords_x); ymax = max(match_coords_y);
-        width = xmax - xmin; height = ymax - ymin;    % rect width and height
-        if ~width || ~height
-            fprintf('Invalid match area - disregarding match\n');
-            result.classes(end) = [];
-            break;
-        end
-        rect = [xmin ymin width height];
-        if display
-            figure(1);
-            subplot_tight(2,2,1,[0.02 0.01]);
-            vl_plotframe([match_image.matches.f2]);
-            rectangle('Position', rect, 'EdgeColor', 'r');
-            figure(1) ;
-            subplot_tight(2,2,2,[0.02 0.01]);
-            visualindex_plot_matches(match_image.matches, match_image.image, im, match_image.sz, sz) ;
-        end
+        if rect_method
+        %         Plot matches on query image and bounding rectangle
+            match_coords_x = match_image.matches.f2(1,:);
+            match_coords_y = match_image.matches.f2(2,:);
+            xmin = min(match_coords_x); ymin = min(match_coords_y); xmax = max(match_coords_x); ymax = max(match_coords_y);
+            width = xmax - xmin; height = ymax - ymin;    % rect width and height
+            if ~width || ~height
+                fprintf('Invalid match area - disregarding match\n');
+                result.classes(end) = [];
+                break;
+            end
+            rect = [xmin ymin width height];
+            if display
+                figure(1);
+                subplot_tight(2,2,1,[0.02 0.01]);
+                vl_plotframe([match_image.matches.f2]);
+                rectangle('Position', rect, 'EdgeColor', 'r');
+                figure(1) ;
+                subplot_tight(2,2,2,[0.02 0.01]);
+                visualindex_plot_matches(match_image.matches, match_image.image, im, match_image.sz, sz) ;
+            end
 
-        match.rectangle.top = ymax; match.rectangle.left = xmin;
-        match.rectangle.bottom = ymin; match.rectangle.right = xmax;
-        match.rectangle.width = width; match.rectangle.height = height;
+            match.rectangle.top = ymax; match.rectangle.left = xmin;
+            match.rectangle.bottom = ymin; match.rectangle.right = xmax;
+            match.rectangle.width = width; match.rectangle.height = height;
+        elseif ellipse_method
+            % load the ellipse of the database image
+            region_file = fullfile(conf.object_region_dir, [image_id '-weightedregion.mat']);
+            if ~exist(region_file, 'file')
+                fprintf('ERROR: No region file\n');
+                break
+            end
+            t = load(region_file);
+            fields = fieldnames(t);
+            if isempty(fields);
+                region = [];
+                fprintf('ERROR: No region field\n');
+                break
+            else
+                region = t.(fields{1});
+            end
+            clear t;
+            % transform the region to the query image domain
+            H = [matches.A matchest.t; 0 0 1];
+            region_query(1:3) = H*[region(1:2); 1]; % x, y pos
+            region_query_cov = inv(matches.A')*[region(3) region(4); region(4) region(5)]*inv(matches.A);
+            region_query(3:5) = [region_query_cov(1,1); region_query_cov(1,2); region_query_cov(2,2)];
+            if display
+                figure(1)
+                subplot_tight(2,2,1,[0.02 0.01]);
+                vl_plotframe([match_image.matches.f2]);
+                vl_plotframe(region_query, 'Color', 'magenta');
+                figure(1) ;
+                subplot_tight(2,2,2,[0.02 0.01]);
+                visualindex_plot_matches(match_image.matches, match_image.image, im, match_image.sz, sz) ;
+            end
+            match.ellipse = region_query;
+        elseif hull_method
+            % load the ellipse of the database image
+            region_file = fullfile(conf.object_region_dir, [image_id '-convhullkmeans.mat']);
+            if ~exist(region_file, 'file')
+                fprintf('ERROR: No region file\n');
+                break
+            end
+            t = load(region_file);
+            fields = fieldnames(t);
+            if isempty(fields);
+                hull = [];
+                fprintf('ERROR: No hull field\n');
+                break
+            else
+                hull = t.(fields{1});
+            end
+            clear t;
+            % transform hull on to query image
+            H = [matches.A matchest.t; 0 0 1];
+            X_query = H*[hull'; ones(1, size(hull,1))];
+            hull_query = X_query(1:2)';
+            if display
+                figure(1)
+                subplot_tight(2,2,1,[0.02 0.01]);
+                vl_plotframe([match_image.matches.f2]); 
+                plot(hull(:,1),hull(:,2),'r-', 'LineWidth', 2); 
+                figure(1) ;
+                subplot_tight(2,2,2,[0.02 0.01]);
+                visualindex_plot_matches(match_image.matches, match_image.image, im, match_image.sz, sz) ;
+            end
+            match.hull = hull_query;
+        end
+        
+        
         match.path = match_image.path;
         match.class = match_image.class;
 

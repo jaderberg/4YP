@@ -4,7 +4,7 @@
 % then just by feature locations.
 
 function local_object_location_estimation_convhullkmeans( n_split, N_split, first_host, this_host)
-    [root_dir image_dir num_words] = local_setup(n_split, N_split);
+    [root_dir image_dir num_words] = dist_setup(n_split, N_split);
 
     %     load config file
     try
@@ -104,7 +104,7 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
         hull = hull + 0.2*(hull - [hull_centre(1)*ones(size(hull,1),1) hull_centre(2)*ones(size(hull,1),1)]);
         
         try
-            im = imread(strrep(image.get('path'), '~/4YP/data/d_wordvotes/', '/Volumes/4YP/d_rootaffine_turbo+/'));
+            im = imread(image.get('path'));
         catch err
             fprintf('Error loading image\n');
             continue

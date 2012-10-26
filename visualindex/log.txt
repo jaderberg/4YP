@@ -1,6 +1,1 @@
-Querying image /Users/jaderberg/Desktop/Tourist Pics/Westminsterabbey.jpeg
-Starting match process...
-Match has a score of 1.560083e+02. Found new object, Westminster_Abbey
-Added to matches! 
-Search stopped as max_objects hit
-Query complete
+Loading histograms from /Volumes/4YP/d_rootaffine_turbo+/data/model

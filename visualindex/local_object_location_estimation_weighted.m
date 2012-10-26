@@ -103,7 +103,27 @@ function local_object_location_estimation_weighted( n_split, N_split, first_host
         end
 
         
-        fprintf('All done!\n');
+        
     end
+    
+    
+    try
+        conf = load(fullfile(root_dir, 'conf.mat'));
+        try
+            conf = conf.conf;
+        catch
+            conf = conf;
+        end
+    catch err
+        fprintf('ERROR: could not find conf.mat. Make sure preprocess_solution.m has been run.\n');
+        result = 0;
+        return
+    end
+    if ~isfield(conf, 'object_region_dir')
+        conf.object_region_dir = object_region_dir;
+        % save conf
+        save(fullfile(conf.rootDir, 'conf.mat'), '-STRUCT', 'conf');
+    end
+    fprintf('All done!\n');
 
     
