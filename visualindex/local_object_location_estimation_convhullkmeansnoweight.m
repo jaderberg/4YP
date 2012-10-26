@@ -3,7 +3,7 @@
 % Works out the object location ellipse from word votes. If no word votes
 % then just by feature locations.
 
-function local_object_location_estimation_convhullkmeans( n_split, N_split, first_host, this_host)
+function local_object_location_estimation_convhullkmeansnoweight( n_split, N_split, first_host, this_host)
     [root_dir image_dir num_words] = local_setup(n_split, N_split);
 
     %     load config file
@@ -75,7 +75,7 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
         if sum(word_votes)
             % there are some high voted words, so just use word votes
             voting = 1;
-            word_votes = ones(size(word_votes)) + 100.*word_votes;
+            word_votes = ones(size(word_votes));
         else
             % there was no turbo boosting so just estimate from all
             % features
@@ -98,10 +98,7 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
             x = good_frames(1,:)'; y = good_frames(2,:)';
         end
         k = convhull(x,y);
-        % add 20% to the hull (move away from centroid)
-        hull = [x(k) y(k)];
-        hull_centre = mean(hull);
-        hull = hull + 0.2*(hull - [hull_centre(1)*ones(size(hull,1),1) hull_centre(2)*ones(size(hull,1),1)]);
+%         save(fullfile(object_region_dir, [image_id '-convhullkmeans.mat']), 'k');
         
         try
             im = imread(strrep(image.get('path'), '~/4YP/data/d_wordvotes/', '/Volumes/4YP/d_rootaffine_turbo+/'));
@@ -109,26 +106,17 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
             fprintf('Error loading image\n');
             continue
         end
-        
-        % hull max is edge of image
-        h = size(im,1); w = size(im,2);
-        hull(hull(:,1) > w,1) = w;
-        hull(hull(:,1) < 0,1) = 0;
-        hull(hull(:,2) > h,2) = h;
-        hull(hull(:,2) < 0,2) = 0;
-        save(fullfile(object_region_dir, [image_id '-convhullkmeans.mat']), 'k');
-        
         figure(1); clf;
         imagesc(im) ; title(['Word votes ' image_id ]) ;
         axis image off ; drawnow ;
         hold on;
-        plot(hull(:,1),hull(:,2),'r-', 'LineWidth', 2);
+        plot(x(k),y(k),'r-', 'LineWidth', 2);
 %         plot(x,y,'g.', 'LineWidth', 1);
         hold off;
         if voting
-            save_figure(1, fullfile(object_voted_results_dir, [image_id '-hullkmeans']));
+            save_figure(1, fullfile(object_voted_results_dir, [image_id '-hullanoweightkmeans']));
         else
-            save_figure(1, fullfile(object_normal_results_dir, [image_id '-hullkmeans']));
+            save_figure(1, fullfile(object_normal_results_dir, [image_id '-hullanoweightkmeans']));
         end
 
         
