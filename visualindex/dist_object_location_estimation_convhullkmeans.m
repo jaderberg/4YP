@@ -115,7 +115,7 @@ function local_object_location_estimation_convhullkmeans( n_split, N_split, firs
         hull(hull(:,1) < 0,1) = 0;
         hull(hull(:,2) > h,2) = h;
         hull(hull(:,2) < 0,2) = 0;
-        save(fullfile(object_region_dir, [image_id '-convhullkmeans.mat']), 'k');
+        save(fullfile(object_region_dir, [image_id '-convhullkmeans.mat']), 'hull');
         
         figure(1); clf;
         imagesc(im) ; title(['Word votes ' image_id ]) ;

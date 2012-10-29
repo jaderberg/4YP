@@ -201,7 +201,7 @@ function result = dist_get_objects(args, conf, coll)
             match.rectangle.width = width; match.rectangle.height = height;
         elseif ellipse_method
             % load the ellipse of the database image
-            region_file = fullfile(conf.object_region_dir, [image_id '-weightedregion.mat']);
+            region_file = fullfile(conf.object_region_dir, [best_match.id '-weightedregion.mat']);
             if ~exist(region_file, 'file')
                 fprintf('ERROR: No region file\n');
                 break
@@ -217,9 +217,9 @@ function result = dist_get_objects(args, conf, coll)
             end
             clear t;
             % transform the region to the query image domain
-            H = [matches.A matchest.t; 0 0 1];
+            H = [ match_image.matches.A match_image.matches.T; 0 0 1];
             region_query(1:3) = H*[region(1:2); 1]; % x, y pos
-            region_query_cov = inv(matches.A')*[region(3) region(4); region(4) region(5)]*inv(matches.A);
+            region_query_cov = inv( match_image.matches.A')*[region(3) region(4); region(4) region(5)]*inv( match_image.matches.A);
             region_query(3:5) = [region_query_cov(1,1); region_query_cov(1,2); region_query_cov(2,2)];
             if display
                 figure(1)
@@ -233,7 +233,7 @@ function result = dist_get_objects(args, conf, coll)
             match.ellipse = region_query;
         elseif hull_method
             % load the ellipse of the database image
-            region_file = fullfile(conf.object_region_dir, [image_id '-convhullkmeans.mat']);
+            region_file = fullfile(conf.object_region_dir, [best_match.id '-convhullkmeans.mat']);
             if ~exist(region_file, 'file')
                 fprintf('ERROR: No region file\n');
                 break
@@ -249,14 +249,21 @@ function result = dist_get_objects(args, conf, coll)
             end
             clear t;
             % transform hull on to query image
-            H = [matches.A matchest.t; 0 0 1];
-            X_query = H*[hull'; ones(1, size(hull,1))];
-            hull_query = X_query(1:2)';
+            H = [ match_image.matches.A match_image.matches.T; 0 0 1];
+            X_hull = [hull'; ones(1, size(hull,1))];
+            X_query = H*X_hull;
+            hull_query = X_query(1:2,:)';
+            % hull max is edge of image
+            h = size(match_image.image,1); w = size(match_image.image,2);
+            hull_query(hull_query(:,1) > w,1) = w;
+            hull_query(hull_query(:,1) < 0,1) = 0;
+            hull_query(hull_query(:,2) > h,2) = h;
+            hull_query(hull_query(:,2) < 0,2) = 0;
             if display
                 figure(1)
                 subplot_tight(2,2,1,[0.02 0.01]);
-                vl_plotframe([match_image.matches.f2]); 
-                plot(hull(:,1),hull(:,2),'r-', 'LineWidth', 2); 
+                vl_plotframe([match_image.matches.f2]); hold on;
+                plot(hull_query(:,1),hull_query(:,2),'r-', 'LineWidth', 2); hold off;
                 figure(1) ;
                 subplot_tight(2,2,2,[0.02 0.01]);
                 visualindex_plot_matches(match_image.matches, match_image.image, im, match_image.sz, sz) ;
@@ -275,7 +282,9 @@ function result = dist_get_objects(args, conf, coll)
         fprintf(log_file, 'Added to matches! \n');
         
 %         add rectangle of match to exclusion region
-        exclusion_matrix(end+1,:) = rect;
+        if rect_method
+            exclusion_matrix(end+1,:) = rect;
+        end
         
         if length(result.matches) >= max_objects
             fprintf('Search stopped as max_objects hit\n');

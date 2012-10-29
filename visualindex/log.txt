@@ -1,1 +1,7 @@
 Loading histograms from /Volumes/4YP/d_rootaffine_turbo+/data/model
+Loading ids from /Volumes/4YP/d_rootaffine_turbo+/data/model
+Loading vocab from /Volumes/4YP/d_rootaffine_turbo+/data/model
+Querying image /Volumes/4YP/Images/validation_images/Big_Ben/ANd9GcRctbFwynQyDkjldS_JWEdUnCS-i9C55N5b9qR_LrKTZN6csXc6d_UPpPU.jpg
+Starting match process...
+Match has a score of NaN. Score not large enough to be certain - no match
+Query complete
