@@ -6,9 +6,11 @@ function [f,d] = visualindex_get_features(im,varargin)
 
 % Auhtor: Andrea Vedaldi
 
-opts.affine = true;
+opts.affine = false;
 opts.root = true;
+opts.colour = true;
 opts = vl_argparse(opts,varargin);
+
 
 
 if ~opts.affine
@@ -64,7 +66,11 @@ else
         f = double(featData.data(:, 1:6))';
     catch exc
         fprintf('Error computing features\n');
-        d = single(zeros(128,0));
+        if opts.colour
+            d = single(zeros(137,0));
+        else
+            d = single(zeros(128,0));
+        end
         f = double(zeros(4,0));
     end
     system(['rm -f ' desc ' ' det ' ' desc_log ' ' det_log ' ' temp_im]);
@@ -75,4 +81,44 @@ if opts.root
         d_i = d(:,i);
         d(:,i) = sqrt(d_i/sum(d_i));
     end
+end
+
+if opts.colour
+    % add in RGB, LAB, HSV to add 9 extra dimensions
+    im_hsv = rgb2hsv(im);
+    im_lab = vl_xyz2lab(vl_rgb2xyz(im));
+    width = 2; % window of averaging pixels
+    extra_d = zeros(9, size(f, 2));
+    for i=1:size(f, 2)
+        frame = f(:,i);
+        if opts.affine
+            scale = mean([frame(4) frame(6)]);
+        else
+            scale = frame(3);
+        end
+        w = ceil(width*scale);
+        x = round(frame(1)); y = round(frame(2));
+        l = x - w; r = x + w;
+        t = y - w; b = y + w;
+        if l < 0;
+            l = 0;
+        end
+        if r > size(im, 2)
+            r = size(im, 2);
+        end
+        if t < 0
+            t = 0;
+        end
+        if b > size(im, 1);
+            b = size(im, 1);
+        end
+        sub_rgb = im(t:b,l:r,:);
+        sub_lab = im_lab(t:b,l:r,:);
+        sub_hsv = im_hsv(t:b,l:r,:);
+        mean_rgb = squeeze(mean(mean(sub_rgb)));
+        mean_lab = squeeze(mean(mean(sub_lab)));
+        mean_hsv = squeeze(mean(mean(sub_hsv)));
+        extra_d(:,i) = [mean_rgb; mean_lab; mean_hsv];
+    end
+    d = [d; extra_d];
 end

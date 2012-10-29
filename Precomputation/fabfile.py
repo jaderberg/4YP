@@ -24,7 +24,7 @@ env.suppress_errors = True
 env.mongo_data = None
 env.mongo_logs = None
 
-data_dir = "d_wordvotes"
+data_dir = "d_colourmodel"
 
 
 exclude_hosts = [44,53,64]
@@ -90,7 +90,7 @@ def full_precompute():
 
     skip_vocab = confirm('Use existing vocab?', default=True)
     if skip_vocab:
-        vocab_file = prompt('Existing vocab.mat file to use: ', default='./kebl3465@engs-station49.eng.ox.ac.uk/vocab_rootaffine.mat')
+        vocab_file = prompt('Existing vocab.mat file to use: ', default='./kebl3465@engs-station49.eng.ox.ac.uk/vocab_colour.mat')
         root_dir = prompt('Project root dir: ', default='~/4YP/data/%s' % data_dir)
 
     tasks = []
@@ -111,46 +111,46 @@ def full_precompute():
         print_message('CANCELLED!')
         return False
 
-#    # build db
-#    env.matlab_func = 'dist_wikilist_db_creator'
-#    run_on_each_host()
-#    wait_for_all_finish()
-#
-#    # extract features
-#    env.matlab_func = 'dist_compute_features'
-#    run_on_each_host()
-#    wait_for_all_finish()
-#
-#    # create vocab
-#    if not skip_vocab:
-#        env.matlab_func = 'dist_vocab_creation'
-#        run_single(0)
-#        wait_for_single_finish(0)
-#    else:
-#        if good_hosts:
-#            use_host(0)
-#        put(vocab_file, '%s/data/model/vocab.mat' % root_dir)
-#        print_message('Uploaded vocab file')
-#
-#    # create words
-#    env.matlab_func = 'dist_compute_words'
-#    run_on_each_host()
-#    wait_for_all_finish()
-#
-#    # compute weights
-#    env.matlab_func = 'dist_compute_weights'
-#    run_single(0)
-#    wait_for_single_finish(0)
-#
-#    # compute histograms
-#    env.matlab_func = 'dist_compute_histograms'
-#    run_on_each_host()
-#    wait_for_all_finish()
-#
-#    # concatenate histogram fragments
-#    env.matlab_func = 'dist_cat_histograms'
-#    run_single(0)
-#    wait_for_single_finish(0)
+    # build db
+    env.matlab_func = 'dist_wikilist_db_creator'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # extract features
+    env.matlab_func = 'dist_compute_features'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # create vocab
+    if not skip_vocab:
+        env.matlab_func = 'dist_vocab_creation'
+        run_single(0)
+        wait_for_single_finish(0)
+    else:
+        if good_hosts:
+            use_host(0)
+        put(vocab_file, '%s/data/model/vocab.mat' % root_dir)
+        print_message('Uploaded vocab file')
+
+    # create words
+    env.matlab_func = 'dist_compute_words'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # compute weights
+    env.matlab_func = 'dist_compute_weights'
+    run_single(0)
+    wait_for_single_finish(0)
+
+    # compute histograms
+    env.matlab_func = 'dist_compute_histograms'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # concatenate histogram fragments
+    env.matlab_func = 'dist_cat_histograms'
+    run_single(0)
+    wait_for_single_finish(0)
 
     # NOW FOR BING EXPANSION!
 #    env.matlab_func = 'dist_bing_expansion_download'
