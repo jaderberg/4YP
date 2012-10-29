@@ -85,6 +85,14 @@ end
 
 if opts.colour
     % add in RGB, LAB, HSV to add 9 extra dimensions
+    size(im)
+    size(d)
+    size(f)
+    if size(im, 3) == 1
+        % not rgb
+        d = [d; zeros(9, size(f, 2))];
+        return
+    end
     im_hsv = rgb2hsv(im);
     im_lab = vl_xyz2lab(vl_rgb2xyz(im));
     width = 2; % window of averaging pixels
@@ -98,16 +106,18 @@ if opts.colour
         end
         w = ceil(width*scale);
         x = round(frame(1)); y = round(frame(2));
-        l = x - w; r = x + w;
-        t = y - w; b = y + w;
-        if l < 0;
-            l = 0;
+        l = x - w; 
+        r = x + w;
+        t = y - w;
+        b = y + w;
+        if l < 1;
+            l = 1;
         end
         if r > size(im, 2)
             r = size(im, 2);
         end
-        if t < 0
-            t = 0;
+        if t < 1
+            t = 1;
         end
         if b > size(im, 1);
             b = size(im, 1);
