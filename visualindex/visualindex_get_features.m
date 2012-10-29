@@ -85,16 +85,23 @@ end
 
 if opts.colour
     % add in RGB, LAB, HSV to add 9 extra dimensions
-    size(im)
-    size(d)
-    size(f)
     if size(im, 3) == 1
         % not rgb
         d = [d; zeros(9, size(f, 2))];
         return
     end
+    im_rgb = uint32(im);
+    I_rgb{1} = vl_imintegral(im_rgb(:,:,1));
+    I_rgb{2} = vl_imintegral(im_rgb(:,:,2));
+    I_rgb{3} = vl_imintegral(im_rgb(:,:,3));
     im_hsv = rgb2hsv(im);
+    I_hsv{1} = vl_imintegral(im_hsv(:,:,1));
+    I_hsv{2} = vl_imintegral(im_hsv(:,:,2));
+    I_hsv{3} = vl_imintegral(im_hsv(:,:,3));
     im_lab = vl_xyz2lab(vl_rgb2xyz(im));
+    I_lab{1} = vl_imintegral(im_lab(:,:,1));
+    I_lab{2} = vl_imintegral(im_lab(:,:,2));
+    I_lab{3} = vl_imintegral(im_lab(:,:,3));
     width = 2; % window of averaging pixels
     extra_d = zeros(9, size(f, 2));
     for i=1:size(f, 2)
@@ -122,13 +129,33 @@ if opts.colour
         if b > size(im, 1);
             b = size(im, 1);
         end
-        sub_rgb = im(t:b,l:r,:);
-        sub_lab = im_lab(t:b,l:r,:);
-        sub_hsv = im_hsv(t:b,l:r,:);
-        mean_rgb = squeeze(mean(mean(sub_rgb)));
-        mean_lab = squeeze(mean(mean(sub_lab)));
-        mean_hsv = squeeze(mean(mean(sub_hsv)));
+        rows = t:b;
+        cols = l:r;
+        mean_rgb = [integral_average(I_rgb{1}, rows, cols); integral_average(I_rgb{2}, rows, cols); integral_average(I_rgb{3}, rows, cols)];
+        mean_lab = [integral_average(I_lab{1}, rows, cols); integral_average(I_lab{2}, rows, cols); integral_average(I_lab{3}, rows, cols)];
+        mean_hsv = [integral_average(I_hsv{1}, rows, cols); integral_average(I_hsv{2}, rows, cols); integral_average(I_hsv{3}, rows, cols)];
+
         extra_d(:,i) = [mean_rgb; mean_lab; mean_hsv];
     end
     d = [d; extra_d];
 end
+
+function avg = integral_average(i_im, rows, cols)
+% http://computersciencesource.wordpress.com/2010/09/03/computer-vision-the-integral-image/
+    area = double(length(rows)*length(cols));
+    D = i_im(rows(end),cols(end));
+    if rows(1) == 1 && cols(1) == 1
+        avg = double(D)/area;
+        return
+    elseif rows(1) == 1
+        A = 0; B = 0;
+        C = i_im(rows(end),cols(1)-1);
+    elseif cols(1) == 1
+        A = 0; C = 0;
+        B = i_im(rows(1)-1,cols(end));
+    else
+        A = i_im(rows(1)-1,cols(1)-1);
+        B = i_im(rows(1)-1,cols(end));
+        C = i_im(rows(end),cols(1)-1);
+    end 
+    avg = double(A + D - B - C)/area;
