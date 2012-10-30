@@ -7,7 +7,7 @@ function [f,d] = visualindex_get_features(im,varargin)
 % Auhtor: Andrea Vedaldi
 
 opts.affine = false;
-opts.root = true;
+opts.root = false;
 opts.colour = true;
 opts = vl_argparse(opts,varargin);
 
@@ -102,7 +102,7 @@ if opts.colour
     I_lab{1} = vl_imintegral(im_lab(:,:,1));
     I_lab{2} = vl_imintegral(im_lab(:,:,2));
     I_lab{3} = vl_imintegral(im_lab(:,:,3));
-    width = 2; % window of averaging pixels
+    width = 1; % window of averaging pixels
     extra_d = zeros(9, size(f, 2));
     for i=1:size(f, 2)
         frame = f(:,i);
@@ -131,9 +131,9 @@ if opts.colour
         end
         rows = t:b;
         cols = l:r;
-        mean_rgb = [integral_average(I_rgb{1}, rows, cols); integral_average(I_rgb{2}, rows, cols); integral_average(I_rgb{3}, rows, cols)];
-        mean_lab = [integral_average(I_lab{1}, rows, cols); integral_average(I_lab{2}, rows, cols); integral_average(I_lab{3}, rows, cols)];
-        mean_hsv = [integral_average(I_hsv{1}, rows, cols); integral_average(I_hsv{2}, rows, cols); integral_average(I_hsv{3}, rows, cols)];
+        mean_rgb = (1/255)*[integral_average(I_rgb{1}, rows, cols); integral_average(I_rgb{2}, rows, cols); integral_average(I_rgb{3}, rows, cols)];
+        mean_lab = [0.01*integral_average(I_lab{1}, rows, cols); (1/256)*(integral_average(I_lab{2}, rows, cols) + 128); (1/256)*(integral_average(I_lab{3}, rows, cols) + 128)];
+        mean_hsv = abs([integral_average(I_hsv{1}, rows, cols); integral_average(I_hsv{2}, rows, cols); integral_average(I_hsv{3}, rows, cols)]);
 
         extra_d(:,i) = [mean_rgb; mean_lab; mean_hsv];
     end
