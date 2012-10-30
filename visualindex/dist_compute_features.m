@@ -60,10 +60,11 @@ descrs = [];
 % select n = 30*numWords descrs at random from all descrs, sample with
 % a frequency of n/total_descrs
 total_descrs = 2000*total_ims;  % approximate
-if 30*opts.numWords > total_descrs
+sample_rate = 20*opts.numWords;
+if sample_rate > total_descrs
     p = 1;
 else
-    p = 30*opts.numWords/total_descrs;
+    p = sample_rate/total_descrs;
 end
 p_ = ceil(1/p);
 
