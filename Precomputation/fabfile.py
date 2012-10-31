@@ -24,7 +24,7 @@ env.suppress_errors = True
 env.mongo_data = None
 env.mongo_logs = None
 
-data_dir = "d_colourmodel"
+data_dir = "d_colourmodel_ra"
 
 
 exclude_hosts = [44,53,64]
@@ -152,31 +152,31 @@ def full_precompute():
     run_single(0)
     wait_for_single_finish(0)
 
-#    # NOW FOR BING EXPANSION!
-##    env.matlab_func = 'dist_bing_expansion_download'
-##    run_on_each_host()
-##    wait_for_all_finish()
-##
-##    env.matlab_func = 'dist_bing_expansion_weights'
-##    run_single(0)
-##    wait_for_single_finish(0)
-##
-##    env.matlab_func = 'dist_bing_expansion_histograms'
-##    run_on_each_host()
-##    wait_for_all_finish()
-##
-##    env.matlab_func = 'dist_bing_expansion_cat'
-##    run_single(0)
-##    wait_for_single_finish(0)
-##
-##    # OBJECT REGION ESTIMATION
-##    env.matlab_func = 'dist_object_location_estimation_weighted'
-##    run_on_each_host()
-##    wait_for_all_finish()
-##
-##    env.matlab_func = 'dist_object_location_estimation_convhullkmeans'
-##    run_on_each_host()
-##    wait_for_all_finish()
+    # NOW FOR BING EXPANSION!
+    env.matlab_func = 'dist_bing_expansion_download'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    env.matlab_func = 'dist_bing_expansion_weights'
+    run_single(0)
+    wait_for_single_finish(0)
+
+    env.matlab_func = 'dist_bing_expansion_histograms'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    env.matlab_func = 'dist_bing_expansion_cat'
+    run_single(0)
+    wait_for_single_finish(0)
+
+    # OBJECT REGION ESTIMATION
+    env.matlab_func = 'dist_object_location_estimation_weighted'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    env.matlab_func = 'dist_object_location_estimation_convhullkmeans'
+    run_on_each_host()
+    wait_for_all_finish()
 
 
     print_message('PRECOMPUTE DONE')

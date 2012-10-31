@@ -6,8 +6,8 @@ function [f,d] = visualindex_get_features(im,varargin)
 
 % Auhtor: Andrea Vedaldi
 
-opts.affine = false;
-opts.root = false;
+opts.affine = true;
+opts.root = true;
 opts.colour = true;
 opts = vl_argparse(opts,varargin);
 
@@ -76,12 +76,7 @@ else
     system(['rm -f ' desc ' ' det ' ' desc_log ' ' det_log ' ' temp_im]);
 end
 
-if opts.root
-    for i=1:size(d,2)
-        d_i = d(:,i);
-        d(:,i) = sqrt(d_i/sum(d_i));
-    end
-end
+
 
 if opts.colour
     % add in RGB, LAB, HSV to add 9 extra dimensions
@@ -138,6 +133,13 @@ if opts.colour
         extra_d(:,i) = [mean_rgb; mean_lab; mean_hsv];
     end
     d = [d; extra_d];
+end
+
+if opts.root
+    for i=1:size(d,2)
+        d_i = d(:,i);
+        d(:,i) = sqrt(d_i/sum(d_i));
+    end
 end
 
 function avg = integral_average(i_im, rows, cols)
