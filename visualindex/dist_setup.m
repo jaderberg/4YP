@@ -16,7 +16,7 @@ function [ROOT_DIR IMAGE_DIR NUM_WORDS] = dist_setup(n, N)
     vl_xmkdir(MONGO_LOGS_DIR);
     
     % number of visual words in vocab
-    NUM_WORDS = 150000;
+    NUM_WORDS = 100000;
     
     global g_n;
     global g_N;

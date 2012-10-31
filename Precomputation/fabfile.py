@@ -132,26 +132,26 @@ def full_precompute():
         put(vocab_file, '%s/data/model/vocab.mat' % root_dir)
         print_message('Uploaded vocab file')
 
-#    # create words
-#    env.matlab_func = 'dist_compute_words'
-#    run_on_each_host()
-#    wait_for_all_finish()
-#
-#    # compute weights
-#    env.matlab_func = 'dist_compute_weights'
-#    run_single(0)
-#    wait_for_single_finish(0)
-#
-#    # compute histograms
-#    env.matlab_func = 'dist_compute_histograms'
-#    run_on_each_host()
-#    wait_for_all_finish()
-#
-#    # concatenate histogram fragments
-#    env.matlab_func = 'dist_cat_histograms'
-#    run_single(0)
-#    wait_for_single_finish(0)
-#
+    # create words
+    env.matlab_func = 'dist_compute_words'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # compute weights
+    env.matlab_func = 'dist_compute_weights'
+    run_single(0)
+    wait_for_single_finish(0)
+
+    # compute histograms
+    env.matlab_func = 'dist_compute_histograms'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    # concatenate histogram fragments
+    env.matlab_func = 'dist_cat_histograms'
+    run_single(0)
+    wait_for_single_finish(0)
+
 #    # NOW FOR BING EXPANSION!
 ##    env.matlab_func = 'dist_bing_expansion_download'
 ##    run_on_each_host()
@@ -177,21 +177,21 @@ def full_precompute():
 ##    env.matlab_func = 'dist_object_location_estimation_convhullkmeans'
 ##    run_on_each_host()
 ##    wait_for_all_finish()
-#
-#
-#    print_message('PRECOMPUTE DONE')
-#
-#    # NOW VALIDATION
-#
-#    env.matlab_func = 'dist_validate_model'
-#    run_on_each_host()
-#    wait_for_all_finish()
-#
-#    env.matlab_func = 'dist_validate_model_report'
-#    run_single(0)
-#    wait_for_single_finish(0)
-#
-#    print_message('VALIDATION COMPLETE')
+
+
+    print_message('PRECOMPUTE DONE')
+
+    # NOW VALIDATION
+
+    env.matlab_func = 'dist_validate_model'
+    run_on_each_host()
+    wait_for_all_finish()
+
+    env.matlab_func = 'dist_validate_model_report'
+    run_single(0)
+    wait_for_single_finish(0)
+
+    print_message('VALIDATION COMPLETE')
 
 #-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-#
 
