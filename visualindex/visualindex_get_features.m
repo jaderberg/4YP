@@ -102,7 +102,9 @@ if opts.colour
     for i=1:size(f, 2)
         frame = f(:,i);
         if opts.affine
-            scale = mean([frame(4) frame(6)]);
+            C = [frame(4) frame(5); frame(5) frame(6)];
+            C_area = abs(real(prod(sqrt(eig(C)))*pi)) ; % see comments of http://www.mathworks.com/matlabcentral/fileexchange/4705
+            scale = 19.6*C_area; % empirical scaling factor to get it inline with normal sift scales
         else
             scale = frame(3);
         end
